@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using InterWebs.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using MongoDB.AspNet.Identity;
 
 namespace InterWebs.Controllers
 {
@@ -11,7 +12,7 @@ namespace InterWebs.Controllers
     public class AccountController : Controller
     {
         public AccountController()
-            : this(new UserManager<ApplicationUser>(new ApplicationDbContext()))
+            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>("Mongo")))
         {
             //testing comment
         }
