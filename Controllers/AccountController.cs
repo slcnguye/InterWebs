@@ -13,6 +13,7 @@ namespace InterWebs.Controllers
         public AccountController()
             : this(new UserManager<ApplicationUser>(new ApplicationDbContext()))
         {
+            //testing comment
         }
 
         public AccountController(UserManager<ApplicationUser> userManager)
