@@ -22,5 +22,15 @@ namespace InterWebs.Controllers
 
             return View();
         }
+
+        public ActionResult Chat()
+        {
+            if (User.Identity.Name != "sang")
+            {
+                return RedirectToAction("Index", "Home");          
+            }
+
+            return View();   
+        }
     }
 }
