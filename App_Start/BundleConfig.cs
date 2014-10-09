@@ -7,7 +7,9 @@ namespace InterWebs
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/site").IncludeDirectory("~/Scripts/site/knockout-models", "*.js", true));
+            bundles.Add(new ScriptBundle("~/bundles/site")
+                .IncludeDirectory("~/Scripts/site/knockout-models", "*.js", true)
+                .IncludeDirectory("~/Scripts/site/knockout-bindings", "*.js", true));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));

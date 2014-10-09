@@ -1,5 +1,4 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
 }
 
@@ -38,4 +37,13 @@ input[type="checkbox"].input-validation-error {
 
 .validation-summary-valid {
     display: none;
+}
+
+#Chat .panel-body {
+    min-height: 500px; 
+    max-height: 500px;
+}
+
+.username-list {
+    vertical-align: top;
 }
