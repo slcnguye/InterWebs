@@ -38,7 +38,7 @@
         var vm = new IW.All.ChatViewModel({
             user: @Html.JavaScriptSerialize(ViewData["UserName"]),
             storeMessageUrl: @Html.JavaScriptSerialize(Url.Action("StoreChatMessage"))
-        });
+        }); 
 
         ko.applyBindings(vm, $('#Chat')[0]);
     });
