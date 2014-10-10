@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 namespace InterWebs.Controllers
 {
@@ -25,12 +26,19 @@ namespace InterWebs.Controllers
 
         public ActionResult Chat()
         {
+            ViewBag.UserName = User.Identity.Name;
             if (User.Identity.Name != "sang")
             {
                 return RedirectToAction("Index", "Home");          
             }
 
             return View();   
+        }
+
+        [HttpPost]
+        public void StoreChatMessage(string message)
+        {
+            Console.WriteLine(message);
         }
     }
 }

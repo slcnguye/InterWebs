@@ -9,6 +9,7 @@ namespace InterWebs
         {
             bundles.Add(new ScriptBundle("~/bundles/site")
                 .IncludeDirectory("~/Scripts/site/knockout-models", "*.js", true)
+                .IncludeDirectory("~/Scripts/site/knockout-extenders", "*.js", true)
                 .IncludeDirectory("~/Scripts/site/knockout-bindings", "*.js", true));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(

@@ -1,4 +1,4 @@
-﻿ko.bindingHandlers.onEnter = {
+﻿ko.bindingHandlers.executeOnEnter = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
         var allBindings = allBindingsAccessor();
         $(element).keypress(function (event) {
