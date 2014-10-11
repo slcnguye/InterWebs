@@ -47,3 +47,14 @@ input[type="checkbox"].input-validation-error {
 .username-list {
     vertical-align: top;
 }
+
+.loadingBody {
+    display: table;
+    width: 100%;
+}
+
+.loadingSpinner {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;    
+}

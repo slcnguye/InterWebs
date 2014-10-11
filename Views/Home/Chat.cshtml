@@ -6,14 +6,19 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Chat Room</h3>
             </div>
-            <div id="ChatMessages" class="panel-body pre-scrollable" data-bind="foreach: chatMessages">
+            <div class="panel-body loadingBody" data-bind="visible: !loadedMessages()">
+                <div class="loadingSpinner">
+                    <i class="fa fa-3x fa-spinner fa-spin"></i>
+                </div>
+            </div>
+            <div id="ChatMessages" class="panel-body pre-scrollable" data-bind="visible: loadedMessages, foreach: chatMessages">
                 <h5 style="font-weight: bold" data-bind="text: user + ':'"></h5>
                 <p data-bind="text: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + text"></p>
-                <hr/>
+                <hr />
             </div>
             <div class="panel-footer">
                 <form class="input-group">
-                    <input type="text" class="form-control" data-bind="textInput: message, attr: {placeholder: enterMessage}, hasFocus: enterMessageFocus, executeOnEnter: sendMessage">
+                    <input type="text" class="form-control" data-bind="enable: loadedMessages, textInput: message, attr: {placeholder: enterMessage}, hasFocus: enterMessageFocus, executeOnEnter: sendMessage">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button" data-bind="text: send, enable: message, click: sendMessage"></button>
                     </span>

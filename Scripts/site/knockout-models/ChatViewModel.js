@@ -2,7 +2,13 @@
     namespace("IW.All").ChatViewModel = function(object) {
         var self = this;
 
-        $.connection.hub.start();
+        $.connection.hub.start().done(
+            function() {
+                self.loadedMessages(true);
+                var chat = document.querySelector('#ChatMessages');
+                chat.scrollTop = chat.scrollHeight - chat.clientHeight;
+            }
+        );
         self.signalR = $.connection.chatHub;
         self.signalR.client.newMessage = function (chatName, username, message) {
             self.chatMessages.push({
@@ -34,6 +40,7 @@
             { name: "Thuy Truong" }
         ]);
         self.message = ko.observable("");
+        self.loadedMessages = ko.observable(false);
 
         self.sendMessage = function () {
             if (!self.message()) {
