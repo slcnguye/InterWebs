@@ -8,6 +8,7 @@ namespace InterWebs
     {
         protected void Application_Start()
         {
+            Bootstrapper.Initialize();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

@@ -20,13 +20,16 @@
                 return;
             }
 
+            var message = self.message();
             self.chatMessages.push({
                 user: self.user,
-                text: self.message()
+                text: message
             });
             
             self.message("");
             self.enterMessageFocus(true);
+//            debugger;
+            $.post(self.storeMessageUrl + "?message=" + message);
         };
     }
 }());

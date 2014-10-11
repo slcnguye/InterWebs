@@ -1,4 +1,4 @@
-﻿using IdentityUser = MongoDB.AspNet.Identity.IdentityUser;
+﻿using AspNet.Identity.MongoDB;
 
 namespace InterWebs.Models
 {

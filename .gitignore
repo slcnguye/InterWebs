@@ -42,3 +42,7 @@ Temporary Items
 .apdisk
 /obj/*
 /InterWebs.v12.suo
+/InterWebs.Domain/bin/Debug
+/InterWebs.Domain/obj/Debug
+/InterWebs.Persistence/bin/Debug
+/InterWebs.Persistence/obj/Debug

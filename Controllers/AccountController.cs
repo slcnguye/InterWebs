@@ -1,28 +1,23 @@
 ﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using AspNet.Identity.MongoDB;
+using InterWebs.Domain.Model;
+using InterWebs.Domain.Repository;
 using InterWebs.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
-using MongoDB.AspNet.Identity;
 
 namespace InterWebs.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        public AccountController()
-            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>("Mongo")))
-        {
-            //testing comment
-        }
-
-        public AccountController(UserManager<ApplicationUser> userManager)
-        {
-            UserManager = userManager;
-        }
-
         public UserManager<ApplicationUser> UserManager { get; private set; }
+        public AccountController(IPersistenceOrientedRepository<User> userRepository)
+        {
+            UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new IdentityContext(userRepository.GetCollection())));
+        }
 
         //
         // GET: /Account/Login
