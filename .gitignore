@@ -46,3 +46,6 @@ Temporary Items
 /InterWebs.Domain/obj/Debug
 /InterWebs.Persistence/bin/Debug
 /InterWebs.Persistence/obj/Debug
+Web.Debug.config
+Web.Release.config
+InterWebs.csproj.user
