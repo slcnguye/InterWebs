@@ -13,7 +13,8 @@ namespace InterWebs
                 .IncludeDirectory("~/Scripts/site/knockout-bindings", "*.js", true));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js").Include(
+                        "~/Scripts/jquery.signalR-2.1.2.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
             "~/Scripts/knockout-{version}.js",
