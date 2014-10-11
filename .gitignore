@@ -40,7 +40,7 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-/obj/*
+/obj
 /InterWebs.v12.suo
 /InterWebs.Domain/bin/Debug
 /InterWebs.Domain/obj/Debug
