@@ -2,7 +2,18 @@
     namespace("IW.All").ChatViewModel = function(object) {
         var self = this;
 
-        self.chatMessages = ko.observableArray([]).extend({ scrollFollow: '#ChatMessages' });
+        self.addChatHistory = function (historicMessages) {
+            var history = ko.observableArray([]).extend({ scrollFollow: '#ChatMessages' });
+            historicMessages.forEach(function (message) {
+                history.push({
+                    user: message.User,
+                    text: message.Message
+                });
+            });
+            return history;
+        }
+
+        self.chatMessages = self.addChatHistory(object.chatMessages);
         self.send = "Send";
         self.enterMessage = "Enter Message";
         self.enterMessageFocus = ko.observable(true);
@@ -28,7 +39,6 @@
             
             self.message("");
             self.enterMessageFocus(true);
-//            debugger;
             $.post(self.storeMessageUrl + "?message=" + message);
         };
     }

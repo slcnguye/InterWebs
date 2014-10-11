@@ -32,7 +32,7 @@ namespace InterWebs.Persistence.Repository
         private MongoCollection<TType> GetCollection<TType>()
         {
             var mongoDb = MongoConnection.GetDatabase();
-            var collectionName = typeof(TEntity).ToString();
+            var collectionName = typeof(TEntity).Name;
             if (!mongoDb.CollectionExists(collectionName))
             {
                 mongoDb.CreateCollection(collectionName);

@@ -37,6 +37,7 @@
     $(function () {
         var vm = new IW.All.ChatViewModel({
             user: @Html.JavaScriptSerialize(ViewData["UserName"]),
+            chatMessages: @Html.JavaScriptSerialize(ViewData["ChatMessages"]),
             storeMessageUrl: @Html.JavaScriptSerialize(Url.Action("StoreChatMessage"))
             }); 
 
