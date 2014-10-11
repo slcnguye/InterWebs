@@ -38,6 +38,11 @@ namespace InterWebs.Controllers
             ViewBag.UserName = User.Identity.Name;
             ViewBag.ChatMessages = chatMessageRepository.GetAll(x => x.ChatName == "All").ToList();
 
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index");
+            }
+
             return View();   
         }
 
