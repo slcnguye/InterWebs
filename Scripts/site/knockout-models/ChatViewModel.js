@@ -2,31 +2,44 @@
     namespace("IW.All").ChatViewModel = function(object) {
         var self = this;
 
+        self.user = object.user;
         self.signalR = $.connection.chatHub;
         self.activeUsersView = new IW.All.ActiveUsersView({
             signalRClient: self.signalR.client
         });
 
+        self.chatBoxView = new IW.All.ChatBoxView({
+            signalRClient: self.signalR.client,
+            signalRServer: self.signalR.server,
+            chatMessages: object.chatMessages,
+            storeMessageUrl: object.storeMessageUrl,
+            user: self.user
+        });
+
         $.connection.hub.start().done(
             function() {
-                self.loadedMessages(true);
-                var chat = document.querySelector('#ChatMessages');
-                chat.scrollTop = chat.scrollHeight - chat.clientHeight;
+                self.chatBoxView.loadedMessages(true);
+                self.chatBoxView.scrollChatDown();
                 self.activeUsersView.activeUsers.push(self.user);
                 self.signalR.server.joinChat("All", self.user);
             }
         );
 
-        self.signalR.client.newMessage = function (chatName, username, message) {
-            self.chatMessages.push({
-                user: username,
-                text: message
-            });
-        };
+        $(window).bind('beforeunload', function() {
+            self.signalR.server.leaveChat("All", self.user);
+        });
+    };
 
-        self.addChatHistory = function(historicMessages) {
+    namespace("IW.All").ChatBoxView = function (object) {
+        var self = this;
+        self.user = object.user;
+        self.signalRClient = object.signalRClient;
+        self.signalRServer = object.signalRServer;
+        self.storeMessageUrl = object.storeMessageUrl;
+
+        self.addChatHistory = function (historicMessages) {
             var history = ko.observableArray([]).extend({ scrollFollow: '#ChatMessages' });
-            historicMessages.forEach(function(message) {
+            historicMessages.forEach(function (message) {
                 history.push({
                     user: message.User,
                     text: message.Message
@@ -35,8 +48,6 @@
             return history;
         };
 
-        self.user = object.user;
-        self.storeMessageUrl = object.storeMessageUrl;
         self.chatMessages = self.addChatHistory(object.chatMessages);
 
         self.send = "Send";
@@ -46,7 +57,12 @@
         self.message = ko.observable("");
         self.loadedMessages = ko.observable(false);
 
-        self.sendMessage = function() {
+        self.scrollChatDown = function () {
+            var chat = document.querySelector('#ChatMessages');
+            chat.scrollTop = chat.scrollHeight - chat.clientHeight;
+        }
+
+        self.sendMessage = function () {
             if (!self.message()) {
                 return;
             }
@@ -59,17 +75,16 @@
                 user: self.user,
                 text: message
             });
-            self.signalR.server.send("All", self.user, message);
+            self.signalRServer.send("All", self.user, message);
         };
 
-        $(window).bind('beforeunload', function() {
-            self.signalR.server.leaveChat("All", self.user);
-        });
+        self.signalRClient.newMessage = function (chatName, username, message) {
+            self.chatMessages.push({
+                user: username,
+                text: message
+            });
+        };
     };
-
-//    namespace("IW.All").ChatBox = function() {
-//        var self = this;
-//    };
 
     namespace("IW.All").ActiveUsersView = function (object) {
         var self = this;
