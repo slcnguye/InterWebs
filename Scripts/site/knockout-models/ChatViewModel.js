@@ -37,6 +37,12 @@
         self.signalRServer = object.signalRServer;
         self.storeMessageUrl = object.storeMessageUrl;
 
+        self.send = "Send";
+        self.enterMessage = "Enter Message";
+        self.enterMessageFocus = ko.observable(true);
+        self.message = ko.observable("");
+        self.loadedMessages = ko.observable(false);
+
         self.addChatHistory = function (historicMessages) {
             var history = ko.observableArray([]).extend({ scrollFollow: '#ChatMessages' });
             historicMessages.forEach(function (message) {
@@ -49,13 +55,6 @@
         };
 
         self.chatMessages = self.addChatHistory(object.chatMessages);
-
-        self.send = "Send";
-        self.enterMessage = "Enter Message";
-
-        self.enterMessageFocus = ko.observable(true);
-        self.message = ko.observable("");
-        self.loadedMessages = ko.observable(false);
 
         self.scrollChatDown = function () {
             var chat = document.querySelector('#ChatMessages');
