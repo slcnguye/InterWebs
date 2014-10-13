@@ -11,7 +11,7 @@
                     <i class="fa fa-3x fa-spinner fa-spin"></i>
                 </div>
             </div>
-            <div id="ChatMessages" style="display: none" class="panel-body pre-scrollable" data-bind="visible: loadedMessages, foreach: chatMessages">
+            <div id="ChatMessages" class="panel-body pre-scrollable" data-bind="visible: loadedMessages(), foreach: chatMessages">
                 <h5 style="font-weight: bold" data-bind="text: user + ':'"></h5>
                 <p data-bind="text: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + text"></p>
                 <hr />
@@ -44,7 +44,6 @@
         var vm = new IW.All.ChatViewModel({
             user: @Html.JavaScriptSerialize(ViewData["UserName"]),
             chatMessages: @Html.JavaScriptSerialize(ViewData["ChatMessages"]),
-            storeMessageUrl: @Html.JavaScriptSerialize(Url.Action("StoreChatMessage"))
             }); 
 
         ko.applyBindings(vm, $('#Chat')[0]);

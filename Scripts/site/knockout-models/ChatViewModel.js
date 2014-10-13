@@ -18,8 +18,6 @@
 
         $.connection.hub.start().done(
             function() {
-                self.chatBoxView.loadedMessages(true);
-                self.chatBoxView.scrollChatDown();
                 self.activeUsersView.activeUsers.push(self.user);
                 self.signalR.server.joinChat("All", self.user);
             }
@@ -43,23 +41,19 @@
         self.message = ko.observable("");
         self.loadedMessages = ko.observable(false);
 
-        self.addChatHistory = function (historicMessages) {
-            var history = ko.observableArray([]).extend({ scrollFollow: '#ChatMessages' });
-            historicMessages.forEach(function (message) {
-                history.push({
+        self.addChatHistory = function () {
+            var messages = ko.observableArray([]).extend({ scrollFollow: '#ChatMessages' });
+            object.chatMessages.forEach(function (message) {
+                messages.push({
                     user: message.User,
                     text: message.Message
                 });
             });
-            return history;
+            self.loadedMessages(true);
+            return messages;
         };
 
-        self.chatMessages = self.addChatHistory(object.chatMessages);
-
-        self.scrollChatDown = function () {
-            var chat = document.querySelector('#ChatMessages');
-            chat.scrollTop = chat.scrollHeight - chat.clientHeight;
-        }
+        self.chatMessages = self.addChatHistory();
 
         self.sendMessage = function () {
             if (!self.message()) {
