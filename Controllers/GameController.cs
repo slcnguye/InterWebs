@@ -1,16 +1,20 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Web.Mvc;
-using InterWebs.Domain.Model;
 namespace InterWebs.Controllers
 {
     public class GameController : Controller
     {
-        public ActionResult GameTable()
+        public ActionResult Game()
         {
             if (!User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Home");
             }
+
+            ViewBag.UserName = User.Identity.Name;
+            ViewBag.Cards = Directory.GetFiles(Server.MapPath(@"~\Content\Images\Playing Cards")).Select(Path.GetFileName);
+            ViewBag.CardPath = "/InterWebs/Content/Images/Playing Cards/";
 
             return View();   
         }

@@ -11,7 +11,7 @@
                     <i class="fa fa-3x fa-spinner fa-spin"></i>
                 </div>
             </div>
-            <div id="ChatMessages" style="display: none" class="panel-body pre-scrollable" data-bind="visible: loadedMessages, foreach: chatMessages">
+            <div id="ChatMessages" style="display: none" class="panel-body pre-scrollable panel-display" data-bind="visible: loadedMessages, foreach: chatMessages">
                 <h5 style="font-weight: bold" data-bind="text: user + ':'"></h5>
                 <p data-bind="text: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + text"></p>
                 <hr />
@@ -31,7 +31,7 @@
             <div class="panel-heading">
                 <h2 class="panel-title">Active Users</h2>
             </div>
-            <div class="username-list panel-body" data-bind="foreach: activeUsers">
+            <div class="username-list panel-body panel-user-info" data-bind="foreach: activeUsers">
                 <p data-bind="text: $data"></p>
             </div>
         </div>

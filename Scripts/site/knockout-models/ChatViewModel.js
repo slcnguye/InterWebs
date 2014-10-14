@@ -5,7 +5,8 @@
         self.user = object.user;
         self.signalR = $.connection.chatHub;
         self.activeUsersView = new IW.All.ActiveUsersView({
-            signalRClient: self.signalR.client
+            signalRClient: self.signalR.client,
+            user: self.user
         });
 
         self.chatBoxView = new IW.All.ChatBoxView({
@@ -18,7 +19,6 @@
 
         $.connection.hub.start().done(
             function() {
-                self.activeUsersView.activeUsers.push(self.user);
                 self.signalR.server.joinChat("All", self.user);
             }
         );
@@ -82,7 +82,7 @@
     namespace("IW.All").ActiveUsersView = function (object) {
         var self = this;
         self.signalRClient = object.signalRClient;
-        self.activeUsers = ko.observableArray([]);
+        self.activeUsers = ko.observableArray([object.user]);
 
         self.signalRClient.usersInChat = function (chatName, users) {
             if ("All" == chatName) {

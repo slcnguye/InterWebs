@@ -39,10 +39,20 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
-#Chat .panel-body {
+.panel-display {
     min-height: 500px; 
     max-height: 500px;
 }
+
+.gameboard {
+    height: 500px;
+    width: 100%;
+}
+
+.panel-user-info {
+    height: 555px;
+}
+
 
 .username-list {
     vertical-align: top;
@@ -57,4 +67,25 @@ input[type="checkbox"].input-validation-error {
     text-align: center;
     display: table-cell;
     vertical-align: middle;    
+}
+
+.center-content {
+    text-align: center;
+    vertical-align: middle;   
+}
+
+.game-row {
+    height: calc(535px / 4);
+}
+
+.game-row-top {
+    padding-top: 10px;
+}
+
+.game-row-bottom {
+    padding-bottom: 10px;
+}
+
+.game-card {
+    height: calc(535px / 4);
 }
