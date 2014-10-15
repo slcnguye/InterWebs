@@ -42,7 +42,8 @@
         var vm = new IW.All.GameViewModel({
             user: @Html.JavaScriptSerialize(ViewData["UserName"]),
             cards: @Html.JavaScriptSerialize(ViewData["Cards"]),
-            cardPath: @Html.JavaScriptSerialize(ViewData["CardPath"])
+            cardPath: @Html.JavaScriptSerialize(ViewData["CardPath"]),
+            backCardPath: @Html.JavaScriptSerialize(ViewData["BackCardPath"])
             }); 
 
         ko.applyBindings(vm, $('#Game')[0]);

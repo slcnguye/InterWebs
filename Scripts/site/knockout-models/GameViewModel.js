@@ -14,6 +14,7 @@
             signalRServer: self.signalR.server,
             cards: object.cards,
             cardPath: object.cardPath,
+            backCardPath: object.backCardPath,
             user: self.user
         });
 
@@ -36,6 +37,7 @@
         self.signalRServer = object.signalRServer;
         self.cards = object.cards;
         self.cardPath = object.cardPath;
+        self.backCardPath = object.backCardPath,
         self.player1Cards = ko.observableArray([]);
         self.player2Cards = ko.observableArray([]);
 
@@ -53,7 +55,11 @@
             self.signalRServer.getCardsForPlayer("All", 2);
         };
 
-        self.getCard = function(cardIndex) {
+        self.getCard = function (cardIndex) {
+            if (cardIndex < 0) {
+                return self.backCardPath;
+            }
+
             return self.cardPath + self.cards[cardIndex];
         };
 

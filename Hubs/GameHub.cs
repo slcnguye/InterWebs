@@ -36,8 +36,8 @@ namespace InterWebs.Hubs
             var playersHand = player == 1 ? Player1 : Player2;
             if (!playersHand.Any())
             {
-                playersHand.Add(0);    
-                playersHand.Add(1);    
+                playersHand.Add(-1);    
+                playersHand.Add(-1);    
             }
 
             Clients.Caller.PlayersHand(gameName, player, playersHand);

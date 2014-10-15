@@ -15,6 +15,7 @@ namespace InterWebs.Controllers
             ViewBag.UserName = User.Identity.Name;
             ViewBag.Cards = Directory.GetFiles(Server.MapPath(@"~\Content\Images\Playing Cards")).Select(Path.GetFileName);
             ViewBag.CardPath = "/InterWebs/Content/Images/Playing Cards/";
+            ViewBag.BackCardPath = "/InterWebs/Content/Images/Playing Cards Back/Card_back.svg";
 
             return View();   
         }

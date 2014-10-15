@@ -234,6 +234,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Images\Playing Cards Back\Card_back.svg" />
     <Content Include="Content\Images\Playing Cards\10_of_clubs.svg" />
     <Content Include="Content\Images\Playing Cards\10_of_diamonds.svg" />
     <Content Include="Content\Images\Playing Cards\10_of_hearts.svg" />
