@@ -57,9 +57,8 @@
             return self.cardPath + self.cards[cardIndex];
         };
 
-        self.signalRClient.drawCard = function (gameName, player, card, newCard) {
+        self.signalRClient.drawCard = function (gameName, player, cardIndex, newCard) {
             if ("All" == gameName) {
-                var cardIndex = card - 1;
                 var playerCards = player == 1 ? self.player1Cards() : self.player2Cards();
                 playerCards[cardIndex].cardSrc(self.getCard(newCard));
             }
@@ -67,31 +66,17 @@
 
         self.signalRClient.playersHand = function(gameName, player, playersHand) {
             if ("All" == gameName) {
-                if (player == 1) {
-                    self.player1Cards.push({
-                        player: 1,
-                        card: 1,
-                        cardSrc: ko.observable(self.getCard(playersHand[0]))
-                    });
-                    self.player1Cards.push({
-                        player: 1,
-                        card: 2,
-                        cardSrc: ko.observable(self.getCard(playersHand[1]))
-                    });
-                }
-
-                if (player == 2) {
-                    self.player2Cards.push({
-                        player: 2,
-                        card: 1,
-                        cardSrc: ko.observable(self.getCard(playersHand[0]))
-                    });
-                    self.player2Cards.push({
-                        player: 2,
-                        card: 2,
-                        cardSrc: ko.observable(self.getCard(playersHand[1]))
-                    });
-                }
+                var playerInfo = player == 1 ? self.player1Cards : self.player2Cards;
+                playerInfo.push({
+                    player: player,
+                    card: 0,
+                    cardSrc: ko.observable(self.getCard(playersHand[0]))
+                });
+                playerInfo.push({
+                    player: player,
+                    card: 1,
+                    cardSrc: ko.observable(self.getCard(playersHand[1]))
+                });
             }
         };
     };

@@ -43,13 +43,12 @@ namespace InterWebs.Hubs
             Clients.Caller.PlayersHand(gameName, player, playersHand);
         }
 
-        public void DrawCard(string gameName, int player, int card)
+        public void DrawCard(string gameName, int player, int cardIndex)
         {
             var newCard = Random.Next(0,52);
-            var cardIndex = card - 1;
             var playersHand = player == 1 ? Player1 : Player2;
             playersHand[cardIndex] = newCard;
-            Clients.All.DrawCard(gameName, player, card, newCard);
+            Clients.All.DrawCard(gameName, player, cardIndex, newCard);
         }
     }
 }
