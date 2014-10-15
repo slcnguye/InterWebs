@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using InterWebs.Models.Game;
 using Microsoft.AspNet.SignalR;
 
 namespace InterWebs.Hubs
@@ -8,8 +8,8 @@ namespace InterWebs.Hubs
     public class GameHub : Hub
     {
         private static readonly Dictionary<string, List<string>> GameUsers = new Dictionary<string, List<string>>();  
-        private static readonly Random Random = new Random();
-
+        
+        private static readonly Deck Deck = new Deck();
         private static readonly List<int> Player1 = new List<int>();
         private static readonly List<int> Player2 = new List<int>();
 
@@ -38,6 +38,7 @@ namespace InterWebs.Hubs
             {
                 playersHand.Add(-1);    
                 playersHand.Add(-1);    
+                Deck.Shuffle();
             }
 
             Clients.Caller.PlayersHand(gameName, player, playersHand);
@@ -45,7 +46,7 @@ namespace InterWebs.Hubs
 
         public void DrawCard(string gameName, int player, int cardIndex)
         {
-            var newCard = Random.Next(0,52);
+            var newCard = Deck.Draw();
             var playersHand = player == 1 ? Player1 : Player2;
             playersHand[cardIndex] = newCard;
             Clients.All.DrawCard(gameName, player, cardIndex, newCard);
