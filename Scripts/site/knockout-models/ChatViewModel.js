@@ -30,13 +30,14 @@
 
     namespace("IW.All").ChatBoxView = function (object) {
         var self = this;
+        self.send = "Send";
+        self.enterMessage = "Enter Message";
+
         self.user = object.user;
         self.signalRClient = object.signalRClient;
         self.signalRServer = object.signalRServer;
         self.storeMessageUrl = object.storeMessageUrl;
 
-        self.send = "Send";
-        self.enterMessage = "Enter Message";
         self.enterMessageFocus = ko.observable(true);
         self.message = ko.observable("");
         self.loadedMessages = ko.observable(false);
