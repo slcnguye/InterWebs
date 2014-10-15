@@ -9,17 +9,15 @@
             <table class="gameboard">
                 <tbody>
                     <tr class="row game-row">
-                        <td class="center-content game-row-top">
-                            <img class="game-card" data-bind="click: $parent.changeCard" src="~/Content/Images/Playing Cards/10_of_diamonds.svg">
-                            <img class="game-card" data-bind="click: $parent.changeCard" src="~/Content/Images/Playing Cards/ace_of_diamonds.svg">
+                        <td class="center-content game-row-top" data-bind="foreach: player1Cards">
+                            <img class="game-card" data-bind="click: $parent.changeCard, attr:{src: cardSrc}">
                         </td>
                     </tr>
                     <tr class="row game-row"></tr>
                     <tr class="row game-row"></tr>
                     <tr class="row game-row">
-                        <td class="center-content game-row-bottom">
-                            <img class="game-card" data-bind="click: $parent.changeCard" src="~/Content/Images/Playing Cards/2_of_hearts.svg">
-                            <img class="game-card" data-bind="click: $parent.changeCard" src="~/Content/Images/Playing Cards/king_of_clubs2.svg">
+                        <td class="center-content game-row-bottom" data-bind="foreach: player2Cards">
+                            <img class="game-card" data-bind="click: $parent.changeCard, attr:{src: cardSrc}">
                         </td>
                     </tr>
                 </tbody>

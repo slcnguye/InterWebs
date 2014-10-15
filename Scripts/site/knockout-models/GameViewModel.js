@@ -1,9 +1,9 @@
 ﻿(function() {
     namespace("IW.All").GameViewModel = function (object) {
         var self = this;
-
         self.user = object.user;
         self.signalR = $.connection.gameHub;
+
         self.activeGameUsersView = new IW.All.ActiveGameUsersView({
             signalRClient: self.signalR.client,
             user: self.user
@@ -12,24 +12,15 @@
         self.gameBoxView = new IW.All.GameBoxView({
             signalRClient: self.signalR.client,
             signalRServer: self.signalR.server,
+            cards: object.cards,
+            cardPath: object.cardPath,
             user: self.user
         });
-
-        self.random = function (max) {
-            return Math.floor(Math.random() * max);
-        }
-
-        self.cards = object.cards;
-        self.cardPath = object.cardPath;
-        self.changeCard = function (ele, event) {
-            var imgSrc = event.target;
-            var randomCard = self.random(self.cards.length);
-            imgSrc.src = self.cardPath + self.cards[randomCard];
-        }
 
         $.connection.hub.start().done(
             function() {
                 self.signalR.server.joinGame("All", self.user);
+                self.gameBoxView.getPlayerHands();
             }
         );
 
@@ -38,11 +29,71 @@
         });
     };
 
-    namespace("IW.All").GameBoxView = function (object) {
+    namespace("IW.All").GameBoxView = function(object) {
         var self = this;
         self.user = object.user;
         self.signalRClient = object.signalRClient;
         self.signalRServer = object.signalRServer;
+        self.cards = object.cards;
+        self.cardPath = object.cardPath;
+        self.player1Cards = ko.observableArray([]);
+        self.player2Cards = ko.observableArray([]);
+
+        self.random = function(max) {
+            return Math.floor(Math.random() * max);
+        };
+
+        self.changeCard = function () {
+            var cardInfo = this;
+            self.signalRServer.drawCard("All", cardInfo.player, cardInfo.card);
+        };
+
+        self.getPlayerHands = function() {
+            self.signalRServer.getCardsForPlayer("All", 1);
+            self.signalRServer.getCardsForPlayer("All", 2);
+        };
+
+        self.getCard = function(cardIndex) {
+            return self.cardPath + self.cards[cardIndex];
+        };
+
+        self.signalRClient.drawCard = function (gameName, player, card, newCard) {
+            if ("All" == gameName) {
+                var cardIndex = card - 1;
+                var playerCards = player == 1 ? self.player1Cards() : self.player2Cards();
+                playerCards[cardIndex].cardSrc(self.getCard(newCard));
+            }
+        };
+
+        self.signalRClient.playersHand = function(gameName, player, playersHand) {
+            if ("All" == gameName) {
+                if (player == 1) {
+                    self.player1Cards.push({
+                        player: 1,
+                        card: 1,
+                        cardSrc: ko.observable(self.getCard(playersHand[0]))
+                    });
+                    self.player1Cards.push({
+                        player: 1,
+                        card: 2,
+                        cardSrc: ko.observable(self.getCard(playersHand[1]))
+                    });
+                }
+
+                if (player == 2) {
+                    self.player2Cards.push({
+                        player: 2,
+                        card: 1,
+                        cardSrc: ko.observable(self.getCard(playersHand[0]))
+                    });
+                    self.player2Cards.push({
+                        player: 2,
+                        card: 2,
+                        cardSrc: ko.observable(self.getCard(playersHand[1]))
+                    });
+                }
+            }
+        };
     };
 
     namespace("IW.All").ActiveGameUsersView = function (object) {
