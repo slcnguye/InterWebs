@@ -121,7 +121,7 @@
         self.activeUsers = ko.observableArray([object.user]);
 
         self.signalRClient.usersInGame = function (users) {
-            self.activeUsers.push(users);
+            ko.utils.arrayPushAll(self.activeUsers, users);
         }
 
         self.signalRClient.userJoinedGame = function (username) {
@@ -129,13 +129,7 @@
         }
 
         self.signalRClient.userLeftGame = function (username) {
-            var activeUsers = [];
-            self.activeUsers().forEach(function (user) {
-                if (user != username) {
-                    activeUsers.push(user);
-                }
-            });
-            self.activeUsers(activeUsers);
+            self.activeUsers.remove(username);
         }
     };
 }());

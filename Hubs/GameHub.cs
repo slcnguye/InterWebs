@@ -22,7 +22,7 @@ namespace InterWebs.Hubs
 
         public void LeaveGame(string userName)
         {
-            Clients.Others.userLeftGame(userName);
+            Clients.Others.UserLeftGame(userName);
             GameUsers.RemoveAll(x => x == userName);
         }
 
