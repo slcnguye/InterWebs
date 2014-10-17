@@ -74,18 +74,14 @@ input[type="checkbox"].input-validation-error {
     vertical-align: middle;   
 }
 
-.game-row {
-    height: calc(535px / 4);
-}
-
-.game-row-top {
+.game-card-area-top {
     padding-top: 10px;
 }
 
-.game-row-bottom {
+.game-card-area-bottom {
     padding-bottom: 10px;
 }
 
-.game-card {
-    height: calc(535px / 4);
+.game-row, .game-card {
+    height: calc((500px / 4) - 10px);
 }

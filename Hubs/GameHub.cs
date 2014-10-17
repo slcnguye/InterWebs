@@ -7,49 +7,62 @@ namespace InterWebs.Hubs
 {
     public class GameHub : Hub
     {
-        private static readonly Dictionary<string, List<string>> GameUsers = new Dictionary<string, List<string>>();  
+        private static readonly List<string> GameUsers = new List<string>();  
         
         private static readonly Deck Deck = new Deck();
-        private static readonly List<int> Player1 = new List<int>();
-        private static readonly List<int> Player2 = new List<int>();
+        private static readonly Player Player1 = new Player { Id = 0 };
+        private static readonly Player Player2 = new Player { Id = 1 };
 
-        public void JoinGame(string gameName, string userName)
+        public void JoinGame(string userName)
         {
-            if (!GameUsers.ContainsKey(gameName))
-            {
-                GameUsers[gameName] = new List<string>();
-            }
-            var chatUsers = GameUsers[gameName];
-            Clients.Caller.UsersInGame(gameName, chatUsers);
-            chatUsers.Add(userName);
-            Clients.Others.UserJoinedGame(gameName, userName);
+            Clients.Caller.UsersInGame(GameUsers);
+            GameUsers.Add(userName);
+            Clients.Others.UserJoinedGame(userName);
         }
 
-        public void LeaveGame(string gameName, string userName)
+        public void LeaveGame(string userName)
         {
-            Clients.Others.userLeftGame(gameName, userName);
-            GameUsers[gameName].RemoveAll(x => x == userName);
+            Clients.Others.userLeftGame(userName);
+            GameUsers.RemoveAll(x => x == userName);
         }
 
-        public void GetCardsForPlayer(string gameName, int player)
+        public void GetCardsForPlayer(int player)
         {
-            var playersHand = player == 1 ? Player1 : Player2;
+            var playerInfo = GetPlayer(player);
+            var playersHand = playerInfo.Cards;
             if (!playersHand.Any())
             {
                 playersHand.Add(-1);    
-                playersHand.Add(-1);    
+                playersHand.Add(-1);
                 Deck.Shuffle();
             }
 
-            Clients.Caller.PlayersHand(gameName, player, playersHand);
+            Clients.Caller.PlayersHand(playerInfo.Name, player, playersHand);
         }
 
-        public void DrawCard(string gameName, int player, int cardIndex)
+        public void DrawCard(int player, int cardIndex)
         {
             var newCard = Deck.Draw();
-            var playersHand = player == 1 ? Player1 : Player2;
+            var playersHand = GetPlayer(player).Cards;
             playersHand[cardIndex] = newCard;
-            Clients.All.DrawCard(gameName, player, cardIndex, newCard);
+            Clients.All.DrawCard(player, cardIndex, newCard);
+        }
+
+        public void JoinGameTable(string userName, int player)
+        {
+            GetPlayer(player).Name = userName;
+            Clients.Others.UserJoinedGameTable(userName, player);
+        }
+
+        public void LeaveGameTable(int player)
+        {
+            GetPlayer(player).Name = "";
+            Clients.Others.UserLeftGameTable(player);
+        }
+
+        private Player GetPlayer(int id)
+        {
+            return id == Player1.Id ? Player1 : Player2;
         }
     }
 }

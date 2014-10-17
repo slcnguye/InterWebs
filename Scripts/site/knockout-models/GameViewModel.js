@@ -20,70 +20,98 @@
 
         $.connection.hub.start().done(
             function() {
-                self.signalR.server.joinGame("All", self.user);
+                self.signalR.server.joinGame(self.user);
                 self.gameBoxView.getPlayerHands();
             }
         );
 
-        $(window).bind('beforeunload', function() {
-            self.signalR.server.leaveGame("All", self.user);
+        $(window).bind('beforeunload', function () {
+            if (self.gameBoxView.playing()) {
+                self.gameBoxView.leaveGame();
+            };
+
+            self.signalR.server.leaveGame(self.user);
         });
     };
 
     namespace("IW.All").GameBoxView = function(object) {
         var self = this;
+        self.join = "Join";
+        self.leave = "Leave";
+
         self.user = object.user;
         self.signalRClient = object.signalRClient;
         self.signalRServer = object.signalRServer;
         self.cards = object.cards;
         self.cardPath = object.cardPath;
-        self.backCardPath = object.backCardPath,
-        self.player1Cards = ko.observableArray([]);
-        self.player2Cards = ko.observableArray([]);
+        self.backCardPath = object.backCardPath;
+        self.playing = ko.observable(false);
+        self.players = [
+            ko.observable(new IW.All.Player({ playerId: 0, name: "" })),
+            ko.observable(new IW.All.Player({ playerId: 1, name: "" }))
+        ];
 
-        self.random = function(max) {
-            return Math.floor(Math.random() * max);
+        self.changeCard = function (cardInfo, event) {
+            var player = ko.contextFor(event.target).$parent;
+            if (player.name() != self.user) {
+                return;
+            }
+            
+            var playerId = player.playerId;
+            self.signalRServer.drawCard(playerId, cardInfo.index);
         };
 
-        self.changeCard = function () {
-            var cardInfo = this;
-            self.signalRServer.drawCard("All", cardInfo.player, cardInfo.card);
-        };
+        self.gameFull = function () {
+            return self.players[0]().name() != "" &&
+                   self.players[1]().name() != "";
+        }
+
+        self.joinGame = function() {
+            self.playing(true);
+            var name = self.players[0]().name();
+            var position = name == "" ? 0 : 1;
+            self.signalRServer.joinGameTable(self.user, position);
+            self.players[position]().name(self.user);
+        }
+
+        self.leaveGame = function () {
+            self.playing(false);
+            var name = self.players[0]().name();
+            var position = name == self.user ? 0 : 1;
+            self.signalRServer.leaveGameTable(position);
+            self.players[position]().name("");
+        }
 
         self.getPlayerHands = function() {
-            self.signalRServer.getCardsForPlayer("All", 1);
-            self.signalRServer.getCardsForPlayer("All", 2);
+            self.signalRServer.getCardsForPlayer(0);
+            self.signalRServer.getCardsForPlayer(1);
         };
 
         self.getCard = function (cardIndex) {
             if (cardIndex < 0) {
                 return self.backCardPath;
             }
-
             return self.cardPath + self.cards[cardIndex];
         };
 
-        self.signalRClient.drawCard = function (gameName, player, cardIndex, newCard) {
-            if ("All" == gameName) {
-                var playerCards = player == 1 ? self.player1Cards() : self.player2Cards();
-                playerCards[cardIndex].cardSrc(self.getCard(newCard));
-            }
+        self.signalRClient.userJoinedGameTable = function (username, player) {
+            self.players[player]().name(username);
         };
 
-        self.signalRClient.playersHand = function(gameName, player, playersHand) {
-            if ("All" == gameName) {
-                var playerInfo = player == 1 ? self.player1Cards : self.player2Cards;
-                playerInfo.push({
-                    player: player,
-                    card: 0,
-                    cardSrc: ko.observable(self.getCard(playersHand[0]))
-                });
-                playerInfo.push({
-                    player: player,
-                    card: 1,
-                    cardSrc: ko.observable(self.getCard(playersHand[1]))
-                });
-            }
+        self.signalRClient.userLeftGameTable = function (player) {
+            self.players[player]().name("");
+        };
+
+        self.signalRClient.drawCard = function (player, cardIndex, newCard) {
+            var playerInfo = self.players[player]();
+            playerInfo.cards()[cardIndex]({src: self.getCard(newCard), index: cardIndex});
+        };
+
+        self.signalRClient.playersHand = function (playerName, player, playersHand) {
+            var playerInfo = self.players[player]();
+            playerInfo.name(playerName);
+            playerInfo.cards.push(ko.observable({ src: self.getCard(playersHand[0]), index: 0 }));
+            playerInfo.cards.push(ko.observable({ src: self.getCard(playersHand[1]), index: 1 }));
         };
     };
 
@@ -92,19 +120,15 @@
         self.signalRClient = object.signalRClient;
         self.activeUsers = ko.observableArray([object.user]);
 
-        self.signalRClient.usersInGame = function (gameName, users) {
-            if ("All" == gameName) {
-                self.activeUsers.push(users);
-            }
+        self.signalRClient.usersInGame = function (users) {
+            self.activeUsers.push(users);
         }
 
-        self.signalRClient.userJoinedGame = function (gameName, username) {
-            if ("All" == gameName) {
-                self.activeUsers.push(username);
-            }
+        self.signalRClient.userJoinedGame = function (username) {
+            self.activeUsers.push(username);
         }
 
-        self.signalRClient.userLeftGame = function (gameName, username) {
+        self.signalRClient.userLeftGame = function (username) {
             var activeUsers = [];
             self.activeUsers().forEach(function (user) {
                 if (user != username) {

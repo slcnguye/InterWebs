@@ -8,20 +8,32 @@
             </div>
             <table class="gameboard">
                 <tbody>
-                    <tr class="row game-row">
-                        <td class="center-content game-row-top" data-bind="foreach: player1Cards">
-                            <img class="game-card" data-bind="click: $parent.changeCard, attr:{src: cardSrc}">
+                    <tr class="row game-row" data-bind="with: players[0]">
+                        <td style="width: 25%">
+                            <p data-bind="text: name"></p>
                         </td>
+                        <td class="center-content game-card-area-top" data-bind="foreach: cards">
+                            <img class="game-card" data-bind="click: $parents[1].changeCard, attr:{src: src}" alt="">
+                        </td>
+                        <td style="width: 25%"></td>
                     </tr>
                     <tr class="row game-row"></tr>
                     <tr class="row game-row"></tr>
-                    <tr class="row game-row">
-                        <td class="center-content game-row-bottom" data-bind="foreach: player2Cards">
-                            <img class="game-card" data-bind="click: $parent.changeCard, attr:{src: cardSrc}">
+                    <tr class="row game-row" data-bind="with: players[1]">
+                        <td style="width: 25%">
+                            <p data-bind="text: name"></p>
                         </td>
+                        <td class="center-content game-card-area-bottom" data-bind="foreach: cards">
+                            <img class="game-card" data-bind="click: $parents[1].changeCard, attr:{src: src}" alt="">
+                        </td>
+                        <td style="width: 25%"></td>
                     </tr>
                 </tbody>
             </table>
+            <div class="panel-footer">
+                <button class="btn btn-default" type="button" data-bind="disable: gameFull(), visible: !playing(), text: join, click: joinGame"></button>
+                <button class="btn btn-default" type="button" style="display: none;" data-bind="visible: playing(), text: leave, click: leaveGame"></button>
+            </div>
         </div>
     </div>
     <div class="col-md-3 hidden-xs hidden-sm" data-bind="with: activeGameUsersView">
