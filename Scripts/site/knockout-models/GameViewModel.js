@@ -18,7 +18,7 @@
             user: self.user
         });
 
-        $.connection.hub.start().done(
+        $.connection.hub.start({ jsonp: true }).done(
             function() {
                 self.signalR.server.joinGame(self.user);
                 self.gameBoxView.getPlayerHands();
@@ -26,11 +26,10 @@
         );
 
         $(window).bind('beforeunload', function () {
+            self.signalR.server.leaveGame(self.user);
             if (self.gameBoxView.playing()) {
                 self.gameBoxView.leaveGame();
             };
-
-            self.signalR.server.leaveGame(self.user);
         });
     };
 

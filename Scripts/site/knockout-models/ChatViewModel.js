@@ -17,7 +17,7 @@
             user: self.user
         });
 
-        $.connection.hub.start().done(
+        $.connection.hub.start({ jsonp: true }).done(
             function() {
                 self.signalR.server.joinChat("All", self.user);
             }
@@ -87,7 +87,7 @@
 
         self.signalRClient.usersInChat = function (chatName, users) {
             if ("All" == chatName) {
-                self.activeUsers.push(users);
+                ko.utils.arrayPushAll(self.activeUsers, users);
             }
         }
 
@@ -98,13 +98,7 @@
         }
 
         self.signalRClient.userLeftChat = function (chatName, username) {
-            var activeUsers = [];
-            self.activeUsers().forEach(function (user) {
-                if (user != username) {
-                    activeUsers.push(user);
-                }
-            });
-            self.activeUsers(activeUsers);
+            self.activeUsers.remove(username);
         }
     };
 }());
