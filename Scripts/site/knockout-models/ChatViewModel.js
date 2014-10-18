@@ -19,12 +19,12 @@
 
         $.connection.hub.start({ jsonp: true }).done(
             function() {
-                self.signalR.server.joinChat("All", self.user);
+                self.signalR.server.joinChat("All");
             }
         );
 
         $(window).bind('beforeunload', function() {
-            self.signalR.server.leaveChat("All", self.user);
+            self.signalR.server.leaveChat("All");
         });
     };
 
@@ -69,7 +69,7 @@
                 user: self.user,
                 text: message
             });
-            self.signalRServer.send("All", self.user, message);
+            self.signalRServer.send("All", message);
         };
 
         self.signalRClient.newMessage = function (chatName, username, message) {

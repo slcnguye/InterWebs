@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using InterWebs.Models.Game;
 using Microsoft.AspNet.SignalR;
 
@@ -7,62 +8,69 @@ namespace InterWebs.Hubs
 {
     public class GameHub : Hub
     {
-        private static readonly List<string> GameUsers = new List<string>();  
-        
-        private static readonly Deck Deck = new Deck();
-        private static readonly Player Player1 = new Player { Id = 0 };
-        private static readonly Player Player2 = new Player { Id = 1 };
+        private static readonly List<string> GameUsers;  
+        private static readonly Deck Deck;
+        private static readonly Player[] Players;
 
-        public void JoinGame(string userName)
+        static GameHub()
         {
+            GameUsers = new List<string>();
+            Deck = new Deck();
+            Deck.Shuffle();
+            var player1 = new Player {Id = 0};
+            player1.Cards.Add(-1);
+            player1.Cards.Add(-1);
+            var player2 = new Player {Id = 1};
+            player2.Cards.Add(-1);
+            player2.Cards.Add(-1);
+            Players = new[] {player1, player2};
+        }
+
+        public void JoinGame()
+        {
+            var userName = Context.User.Identity.Name;
             Clients.Caller.UsersInGame(GameUsers);
             GameUsers.Add(userName);
             Clients.Others.UserJoinedGame(userName);
         }
 
-        public void LeaveGame(string userName)
+        public Task LeavePage()
         {
-            Clients.Others.UserLeftGame(userName);
+            var userName = Context.User.Identity.Name;
             GameUsers.RemoveAll(x => x == userName);
+            return Clients.Others.UserLeftGame(userName);
         }
 
-        public void GetCardsForPlayer(int player)
+        public Player[] GetAllPlayers()
         {
-            var playerInfo = GetPlayer(player);
-            var playersHand = playerInfo.Cards;
-            if (!playersHand.Any())
+            return Players;
+        }
+
+        public Task DrawCard(int cardIndex)
+        {
+            var playerName = Context.User.Identity.Name;
+            var player = Players.FirstOrDefault(x => x.Name == playerName);
+            if (player == null)
             {
-                playersHand.Add(-1);    
-                playersHand.Add(-1);
-                Deck.Shuffle();
+                return null;
             }
 
-            Clients.Caller.PlayersHand(playerInfo.Name, player, playersHand);
-        }
-
-        public void DrawCard(int player, int cardIndex)
-        {
             var newCard = Deck.Draw();
-            var playersHand = GetPlayer(player).Cards;
-            playersHand[cardIndex] = newCard;
-            Clients.All.DrawCard(player, cardIndex, newCard);
+            player.Cards[cardIndex] = newCard;
+            return Clients.All.DrawCard(player.Id, cardIndex, newCard);
         }
 
-        public void JoinGameTable(string userName, int player)
+        public Task JoinGameTable(int player)
         {
-            GetPlayer(player).Name = userName;
-            Clients.Others.UserJoinedGameTable(userName, player);
+            var userName = Context.User.Identity.Name;
+            Players[player].Name = userName;
+            return Clients.Others.UserJoinedGameTable(userName, player);
         }
 
-        public void LeaveGameTable(int player)
+        public Task LeaveGameTable(int player)
         {
-            GetPlayer(player).Name = "";
-            Clients.Others.UserLeftGameTable(player);
-        }
-
-        private Player GetPlayer(int id)
-        {
-            return id == Player1.Id ? Player1 : Player2;
+            Players[player].Name = "";
+            return Clients.Others.UserLeftGameTable(player);
         }
     }
 }

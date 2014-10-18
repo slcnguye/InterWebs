@@ -20,13 +20,13 @@
 
         $.connection.hub.start({ jsonp: true }).done(
             function() {
-                self.signalR.server.joinGame(self.user);
+                self.signalR.server.joinGame();
                 self.gameBoxView.getPlayerHands();
             }
         );
 
         $(window).bind('beforeunload', function () {
-            self.signalR.server.leaveGame(self.user);
+            self.signalR.server.leavePage();
             if (self.gameBoxView.playing()) {
                 self.gameBoxView.leaveGame();
             };
@@ -55,9 +55,7 @@
             if (player.name() != self.user) {
                 return;
             }
-            
-            var playerId = player.playerId;
-            self.signalRServer.drawCard(playerId, cardInfo.index);
+            self.signalRServer.drawCard(cardInfo.index);
         };
 
         self.gameFull = function () {
@@ -67,9 +65,8 @@
 
         self.joinGame = function() {
             self.playing(true);
-            var name = self.players[0]().name();
-            var position = name == "" ? 0 : 1;
-            self.signalRServer.joinGameTable(self.user, position);
+            var position = self.players[0]().name() == "" ? 0 : 1;
+            self.signalRServer.joinGameTable(position);
             self.players[position]().name(self.user);
         }
 
@@ -81,9 +78,15 @@
             self.players[position]().name("");
         }
 
-        self.getPlayerHands = function() {
-            self.signalRServer.getCardsForPlayer(0);
-            self.signalRServer.getCardsForPlayer(1);
+        self.getPlayerHands = function () {
+            self.signalRServer.getAllPlayers().done(function (playersInfo) {
+                playersInfo.forEach(function (playerInfo) {
+                    var player = self.players[playerInfo.Id]();
+                    player.name(playerInfo.Name);
+                    player.cards.push(ko.observable({ src: self.getCard(playerInfo.Cards[0]), index: 0 }));
+                    player.cards.push(ko.observable({ src: self.getCard(playerInfo.Cards[1]), index: 1 }));
+                });
+            });
         };
 
         self.getCard = function (cardIndex) {
@@ -101,16 +104,9 @@
             self.players[player]().name("");
         };
 
-        self.signalRClient.drawCard = function (player, cardIndex, newCard) {
-            var playerInfo = self.players[player]();
+        self.signalRClient.drawCard = function (playerId, cardIndex, newCard) {
+            var playerInfo = self.players[playerId]();
             playerInfo.cards()[cardIndex]({src: self.getCard(newCard), index: cardIndex});
-        };
-
-        self.signalRClient.playersHand = function (playerName, player, playersHand) {
-            var playerInfo = self.players[player]();
-            playerInfo.name(playerName);
-            playerInfo.cards.push(ko.observable({ src: self.getCard(playersHand[0]), index: 0 }));
-            playerInfo.cards.push(ko.observable({ src: self.getCard(playersHand[1]), index: 1 }));
         };
     };
 

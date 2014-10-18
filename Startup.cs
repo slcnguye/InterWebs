@@ -11,9 +11,8 @@ namespace InterWebs
     {
         public void Configuration(IAppBuilder app)
         {
-            app.MapSignalR(new HubConfiguration {EnableJSONP = true});
-            app.MapSignalR().UseCors(CorsOptions.AllowAll);
             ConfigureAuth(app);
+            app.MapSignalR(new HubConfiguration { EnableJSONP = true }).UseCors(CorsOptions.AllowAll);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
     }
