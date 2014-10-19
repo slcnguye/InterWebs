@@ -1,0 +1,14 @@
+﻿{
+	"Chat": {
+		"ActiveUsers": "Active Users",
+		"ChatRoom": "Chat Room",
+		"EnterMessage": "Enter Message",
+		"Send": "Send"
+	},
+	"Game": {
+		"GameRoom": "Game Room",
+		"Join": "Join",
+		"Leave": "Leave",
+		"ActiveUsers": "Active Users"
+	}
+}

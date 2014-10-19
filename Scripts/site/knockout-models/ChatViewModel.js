@@ -22,8 +22,6 @@
 
     namespace("IW.All").ChatBoxView = function (object) {
         var self = this;
-        self.send = "Send";
-        self.enterMessage = "Enter Message";
 
         self.user = object.user;
         self.signalRClient = object.signalRClient;

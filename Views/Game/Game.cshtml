@@ -4,7 +4,7 @@
     <div class="col-md-9">
         <div class="panel panel-info" data-bind="with: gameBoxView">
             <div class="panel-heading">
-                <h3 class="panel-title">Game Room</h3>
+                <h3 class="panel-title" data-i18n="Game.GameRoom"></h3>
             </div>
             <div class="panel-body loadingBody panel-display" data-bind="visible: !loadedGame()">
                 <div class="loadingSpinner">
@@ -36,15 +36,15 @@
                 </tbody>
             </table>
             <div class="panel-footer">
-                <button class="btn btn-default" type="button" data-bind="disable: gameFull(), visible: !playing(), text: join, click: joinGame"></button>
-                <button class="btn btn-default" type="button" style="display: none;" data-bind="visible: playing(), text: leave, click: leaveGame"></button>
+                <button class="btn btn-default" type="button" data-bind="disable: gameFull(), visible: !playing(), text: $.t('Game.Join'), click: joinGame"></button>
+                <button class="btn btn-default" type="button" style="display: none;" data-bind="visible: playing(), text: $.t('Game.Leave'), click: leaveGame"></button>
             </div>
         </div>
     </div>
     <div class="col-md-3 hidden-xs hidden-sm" data-bind="with: activeGameUsersView">
         <div class="panel panel-success">
             <div class="panel-heading">
-                <h2 class="panel-title">Active Users</h2>
+                <h2 class="panel-title" data-i18n="Game.ActiveUsers"></h2>
             </div>
             <div class="username-list panel-body panel-user-info" data-bind="foreach: activeUsers">
                 <p data-bind="text: $data"></p>

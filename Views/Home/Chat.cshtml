@@ -4,7 +4,7 @@
     <div class="col-md-9">
         <div class="panel panel-info" data-bind="with: chatBoxView">
             <div class="panel-heading">
-                <h3 class="panel-title">Chat Room</h3>
+                <h3 class="panel-title" data-i18n="Chat.ChatRoom"></h3>
             </div>
             <div class="panel-body loadingBody panel-display" data-bind="visible: !loadedMessages()">
                 <div class="loadingSpinner">
@@ -18,9 +18,9 @@
             </div>
             <div class="panel-footer">
                 <form class="input-group">
-                    <input type="text" class="form-control" data-bind="enable: loadedMessages, textInput: message, attr: {placeholder: enterMessage}, hasFocus: enterMessageFocus, executeOnEnter: sendMessage">
+                    <input type="text" class="form-control" data-bind="enable: loadedMessages, textInput: message, attr: {placeholder: $.t('Chat.EnterMessage')}, hasFocus: enterMessageFocus, executeOnEnter: sendMessage">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" data-bind="text: send, enable: message, click: sendMessage"></button>
+                        <button class="btn btn-default" type="button" data-bind="text: $.t('Chat.Send'), enable: message, click: sendMessage"></button>
                     </span>
                 </form>
             </div>
@@ -29,7 +29,7 @@
     <div class="col-md-3 hidden-xs hidden-sm" data-bind="with: activeUsersView">
         <div class="panel panel-success">
             <div class="panel-heading">
-                <h2 class="panel-title">Active Users</h2>
+                <h2 class="panel-title" data-i18n="Chat.ActiveUsers"></h2>
             </div>
             <div class="username-list panel-body panel-user-info" data-bind="foreach: activeUsers">
                 <p data-bind="text: $data"></p>
@@ -45,8 +45,7 @@
             user: @Html.JavaScriptSerialize(ViewData["UserName"]),
             chatMessages: @Html.JavaScriptSerialize(ViewData["ChatMessages"]),
             storeMessageUrl: @Html.JavaScriptSerialize(Url.Action("StoreChatMessage"))
-            }); 
-
+            });
         ko.applyBindings(vm, $('#Chat')[0]);
     });
 </script>

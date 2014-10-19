@@ -1,38 +1,49 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/knockout")
-    @Scripts.Render("~/bundles/site")
-    @RenderSection("scripts", required: false)
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("InterWebs", "Index", "Home", null, new { @class = "navbar-brand" })
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My ASP.NET Application</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/knockout")
+        @Scripts.Render("~/bundles/site")
+        @Scripts.Render("~/bundles/i18n")
+        @RenderSection("scripts", required: false)
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("InterWebs", "Index", "Home", null, new { @class = "navbar-brand" })
+                </div>
+                @Html.Partial("_LoginPartial")
             </div>
-            @Html.Partial("_LoginPartial")
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-    </div>
-    <div class="panel-footer navbar-fixed-bottom">
-        <div class="container">
-            <p class="text-muted">&copy; @DateTime.Now.Year - Sang's Application</p>
+        <div class="container body-content">
+            @RenderBody()
         </div>
-    </div>
-</body>
+        <div class="panel-footer navbar-fixed-bottom">
+            <div class="container">
+                <p class="text-muted">&copy; @DateTime.Now.Year - Sang's Application</p>
+            </div>
+        </div>
+    </body>
 </html>
+
+<script>
+    $.i18n.init({
+        lng: "en-US",
+        resGetPath: '@Url.Content("~/Content/Translations/")' + 'en-US.json',
+        getAsync: false
+    }).done(function () {
+        $("[data-i18n]").i18n();
+    });
+</script>

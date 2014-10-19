@@ -27,9 +27,6 @@
 
     namespace("IW.All").GameBoxView = function(object) {
         var self = this;
-        self.join = "Join";
-        self.leave = "Leave";
-
         self.user = object.user;
         self.signalRClient = object.signalRClient;
         self.signalRServer = object.signalRServer;
