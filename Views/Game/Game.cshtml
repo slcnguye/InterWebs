@@ -6,9 +6,14 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Game Room</h3>
             </div>
-            <table class="gameboard">
+            <div class="panel-body loadingBody panel-display" data-bind="visible: !loadedGame()">
+                <div class="loadingSpinner">
+                    <i class="fa fa-3x fa-spinner fa-spin"></i>
+                </div>
+            </div>
+            <table class="gameboard" style="display: none" data-bind="visible: loadedGame">
                 <tbody>
-                    <tr class="row game-row" data-bind="with: players[0]">
+                    <tr class=" row game-row" data-bind="with: players[0]">
                         <td style="width: 25%">
                             <p data-bind="text: name"></p>
                         </td>

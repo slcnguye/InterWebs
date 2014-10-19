@@ -37,6 +37,7 @@
         self.cardPath = object.cardPath;
         self.backCardPath = object.backCardPath;
         self.playing = ko.observable(false);
+        self.loadedGame = ko.observable(false);
         self.players = [
             ko.observable(new IW.All.Player({ playerId: 0, name: "" })),
             ko.observable(new IW.All.Player({ playerId: 1, name: "" }))
@@ -79,6 +80,7 @@
                     player.cards.push(ko.observable({ src: self.getCard(playerInfo.Cards[1]), index: 1 }));
                 });
             });
+            self.loadedGame(true);
         };
 
         self.getCard = function (cardIndex) {
