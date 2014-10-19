@@ -17,15 +17,7 @@
             user: self.user
         });
 
-        $.connection.hub.start({ jsonp: true }).done(
-            function() {
-                self.signalR.server.joinChat("All");
-            }
-        );
-
-        $(window).bind('beforeunload', function() {
-            self.signalR.server.leaveChat("All");
-        });
+        $.connection.hub.start({ jsonp: true });
     };
 
     namespace("IW.All").ChatBoxView = function (object) {
@@ -69,10 +61,10 @@
                 user: self.user,
                 text: message
             });
-            self.signalRServer.send("All", message);
+            self.signalRServer.send(message);
         };
 
-        self.signalRClient.newMessage = function (chatName, username, message) {
+        self.signalRClient.newMessage = function (username, message) {
             self.chatMessages.push({
                 user: username,
                 text: message
@@ -83,21 +75,17 @@
     namespace("IW.All").ActiveUsersView = function (object) {
         var self = this;
         self.signalRClient = object.signalRClient;
-        self.activeUsers = ko.observableArray([object.user]);
+        self.activeUsers = ko.observableArray([]);
 
-        self.signalRClient.usersInChat = function (chatName, users) {
-            if ("All" == chatName) {
-                ko.utils.arrayPushAll(self.activeUsers, users);
-            }
+        self.signalRClient.usersInChat = function (users) {
+            ko.utils.arrayPushAll(self.activeUsers, users);
         }
 
-        self.signalRClient.userJoinedChat = function (chatName, username) {
-            if ("All" == chatName) {
-                self.activeUsers.push(username);
-            }
+        self.signalRClient.userJoinedChat = function (username) {
+            self.activeUsers.push(username);
         }
 
-        self.signalRClient.userLeftChat = function (chatName, username) {
+        self.signalRClient.userLeftChat = function (username) {
             self.activeUsers.remove(username);
         }
     };

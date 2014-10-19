@@ -20,17 +20,9 @@
 
         $.connection.hub.start({ jsonp: true }).done(
             function() {
-                self.signalR.server.joinGame();
                 self.gameBoxView.getPlayerHands();
             }
         );
-
-        $(window).bind('beforeunload', function () {
-            self.signalR.server.leavePage();
-            if (self.gameBoxView.playing()) {
-                self.gameBoxView.leaveGame();
-            };
-        });
     };
 
     namespace("IW.All").GameBoxView = function(object) {
@@ -113,7 +105,7 @@
     namespace("IW.All").ActiveGameUsersView = function (object) {
         var self = this;
         self.signalRClient = object.signalRClient;
-        self.activeUsers = ko.observableArray([object.user]);
+        self.activeUsers = ko.observableArray([]);
 
         self.signalRClient.usersInGame = function (users) {
             ko.utils.arrayPushAll(self.activeUsers, users);

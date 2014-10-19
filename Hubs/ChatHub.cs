@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 
@@ -6,32 +7,43 @@ namespace InterWebs.Hubs
 {
     public class ChatHub : Hub
     {
-        private static readonly Dictionary<string, List<string>> ChatUsers = new Dictionary<string, List<string>>();  
+        private static readonly ConcurrentDictionary<string, string> UserConnection = new ConcurrentDictionary<string, string>();
 
-        public Task Send(string chatName, string message)
+        public override Task OnConnected()
         {
-            var userName = Context.User.Identity.Name;
-            return Clients.Others.newMessage(chatName, userName, message);
+            UserJoinedChat();
+            return base.OnConnected();
         }
 
-        public void JoinChat(string chatName)
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            UserLeftChat();
+            return base.OnDisconnected(stopCalled);
+        }
+
+        public Task Send(string message)
+        {
+            var userName = UserConnection[Context.ConnectionId];
+            return Clients.Others.newMessage(userName, message);
+        }
+
+        private async void UserJoinedChat()
         {
             var userName = Context.User.Identity.Name;
-            if (!ChatUsers.ContainsKey(chatName))
+            var userExists = UserConnection.Values.Any(x => x == userName);
+            UserConnection[Context.ConnectionId] = userName;
+            await Clients.Caller.UsersInChat(UserConnection.Values.Distinct());
+            if (!userExists)
             {
-                ChatUsers[chatName] = new List<string>();
+                await Clients.Others.UserJoinedChat(userName);
             }
-            var chatUsers = ChatUsers[chatName];
-            Clients.Caller.UsersInChat(chatName, chatUsers);
-            chatUsers.Add(userName);
-            Clients.Others.UserJoinedChat(chatName, userName);
         }
 
-        public Task LeaveChat(string chatName)
+        private async void UserLeftChat()
         {
-            var userName = Context.User.Identity.Name;
-            ChatUsers[chatName].RemoveAll(x => x == userName);
-            return Clients.Others.userLeftChat(chatName, userName);
+            string userName;
+            UserConnection.TryRemove(Context.ConnectionId, out userName);
+            await Clients.Others.userLeftChat(userName);
         }
     }
 }
