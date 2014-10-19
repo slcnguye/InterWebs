@@ -38,6 +38,7 @@
             <div class="panel-footer">
                 <button class="btn btn-default" type="button" data-bind="disable: gameFull(), visible: !playing(), text: $.t('Game.Join'), click: joinGame"></button>
                 <button class="btn btn-default" type="button" style="display: none;" data-bind="visible: playing(), text: $.t('Game.Leave'), click: leaveGame"></button>
+                <button class="btn btn-default" type="button" style="display: none;" data-bind="visible: playing(), text: $.t('Game.Shuffle'), click: shuffleDeck"></button>
             </div>
         </div>
     </div>

@@ -88,6 +88,16 @@ namespace InterWebs.Hubs
             return Clients.All.DrawCard(player.Id, cardIndex, newCard);
         }
 
+        public async void ShuffleDeck()
+        {
+            Deck.Shuffle();
+            foreach (var player in Players)
+            {
+                await Clients.All.DrawCard(player.Id, 0, -1);
+                await Clients.All.DrawCard(player.Id, 1, -1);
+            }
+        }
+
         public Task JoinGameTable(int player)
         {
             var userName = Context.User.Identity.Name;

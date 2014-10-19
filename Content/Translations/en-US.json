@@ -9,6 +9,7 @@
 		"GameRoom": "Game Room",
 		"Join": "Join",
 		"Leave": "Leave",
-		"ActiveUsers": "Active Users"
+		"ActiveUsers": "Active Users",
+		"Shuffle": "Shuffle"
 	}
 }

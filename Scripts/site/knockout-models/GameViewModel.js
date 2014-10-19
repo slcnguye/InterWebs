@@ -48,25 +48,29 @@
             self.signalRServer.drawCard(cardInfo.index);
         };
 
-        self.gameFull = function () {
+        self.shuffleDeck = function() {
+            self.signalRServer.shuffleDeck();
+        };
+
+        self.gameFull = function() {
             return self.players[0]().name() != "" &&
-                   self.players[1]().name() != "";
-        }
+                self.players[1]().name() != "";
+        };
 
         self.joinGame = function() {
             self.playing(true);
             var position = self.players[0]().name() == "" ? 0 : 1;
             self.signalRServer.joinGameTable(position);
             self.players[position]().name(self.user);
-        }
+        };
 
-        self.leaveGame = function () {
+        self.leaveGame = function() {
             self.playing(false);
             var name = self.players[0]().name();
             var position = name == self.user ? 0 : 1;
             self.signalRServer.leaveGameTable(position);
             self.players[position]().name("");
-        }
+        };
 
         self.getPlayerHands = function () {
             self.signalRServer.getAllPlayers().done(function (playersInfo) {
