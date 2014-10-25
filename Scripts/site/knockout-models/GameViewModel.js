@@ -20,7 +20,7 @@
 
         $.connection.hub.start({ jsonp: true }).done(
             function() {
-                self.gameBoxView.getPlayerHands();
+                self.gameBoxView.getAllPlayerNames();
             }
         );
     };
@@ -71,6 +71,7 @@
             self.playing(true);
             var position = self.players[0]().name() == "" ? 0 : 1;
             self.signalRServer.joinGameTable(position);
+            self.getPlayerHands();
             self.players[position]().name(self.user);
         };
 
@@ -80,6 +81,23 @@
             var position = name == self.user ? 0 : 1;
             self.signalRServer.leaveGameTable(position);
             self.players[position]().name("");
+
+            ko.utils.arrayForEach(self.players, function(player) {
+                player().cards()[0]({ src: self.getCard(-1), index: 0 });
+                player().cards()[1]({ src: self.getCard(-1), index: 1 });
+            });
+        };
+
+        self.getAllPlayerNames = function () {
+            self.signalRServer.getAllPlayerNames().done(function (playersInfo) {
+                playersInfo.forEach(function (playerInfo) {
+                    var player = self.players[playerInfo.Id]();
+                    player.name(playerInfo.Name);
+                    player.cards.push(ko.observable({ src: self.getCard(-1), index: 0 }));
+                    player.cards.push(ko.observable({ src: self.getCard(-1), index: 1 }));
+                });
+            });
+            self.loadedGame(true);
         };
 
         self.getPlayerHands = function () {
@@ -87,8 +105,8 @@
                 playersInfo.forEach(function (playerInfo) {
                     var player = self.players[playerInfo.Id]();
                     player.name(playerInfo.Name);
-                    player.cards.push(ko.observable({ src: self.getCard(playerInfo.Cards[0].Value), index: 0 }));
-                    player.cards.push(ko.observable({ src: self.getCard(playerInfo.Cards[1].Value), index: 1 }));
+                    player.cards()[0]({ src: self.getCard(playerInfo.Cards[0].Value), index: 0 });
+                    player.cards()[1]({ src: self.getCard(playerInfo.Cards[1].Value), index: 1 });
                 });
             });
             self.loadedGame(true);

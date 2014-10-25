@@ -67,7 +67,14 @@ namespace InterWebs.Hubs
 
         public Player[] GetAllPlayers()
         {
-            return WarGame.Players;
+            var playerName = Context.User.Identity.Name;
+            var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName);
+            return player == null ? null : WarGame.Players;
+        }
+
+        public object GetAllPlayerNames()
+        {
+            return WarGame.Players.Select(x => new { x.Id, x.Name });
         }
 
         public async void PlayCard(int cardIndex)
@@ -96,8 +103,8 @@ namespace InterWebs.Hubs
             Player winner;
             WarGame.PlayRound(p1CardPlayed.Value, p2CardPlayed.Value, out winner);
             await Clients.All.RoundWinner(winner.Id);
-            await Clients.All.DrawCard(0, p1CardPlayed.Value, WarGame.Players[0].Cards[p1CardPlayed.Value].Value);
-            await Clients.All.DrawCard(1, p2CardPlayed.Value, WarGame.Players[1].Cards[p2CardPlayed.Value].Value);
+            await Clients.Group("playing").DrawCard(0, p1CardPlayed.Value, WarGame.Players[0].Cards[p1CardPlayed.Value].Value);
+            await Clients.Group("playing").DrawCard(1, p2CardPlayed.Value, WarGame.Players[1].Cards[p2CardPlayed.Value].Value);
             p1CardPlayed = null;
             p2CardPlayed = null;
         }
@@ -126,8 +133,8 @@ namespace InterWebs.Hubs
             WarGame.StartNewGame();
             foreach (var player in WarGame.Players)
             {
-                await Clients.All.DrawCard(player.Id, 0, player.Cards[0].Value);
-                await Clients.All.DrawCard(player.Id, 1, player.Cards[1].Value);
+                await Clients.Group("playing").DrawCard(player.Id, 0, player.Cards[0].Value);
+                await Clients.Group("playing").DrawCard(player.Id, 1, player.Cards[1].Value);
             }
         }
 
@@ -135,12 +142,14 @@ namespace InterWebs.Hubs
         {
             var userName = Context.User.Identity.Name;
             WarGame.Players[player].Name = userName;
+            Groups.Add(Context.ConnectionId, "playing");
             return Clients.Others.UserJoinedGameTable(userName, player);
         }
 
         public Task LeaveGameTable(int player)
         {
             WarGame.Players[player].Name = "";
+            Groups.Remove(Context.ConnectionId, "playing");
             return Clients.Others.UserLeftGameTable(player);
         }
     }
