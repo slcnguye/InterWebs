@@ -53,7 +53,6 @@ input[type="checkbox"].input-validation-error {
     height: 555px;
 }
 
-
 .username-list {
     vertical-align: top;
 }
@@ -71,17 +70,22 @@ input[type="checkbox"].input-validation-error {
 
 .center-content {
     text-align: center;
-    vertical-align: middle;   
 }
 
-.game-card-area-top {
-    padding-top: 10px;
+.game-row {
+    height: calc(500px / 4);
 }
 
-.game-card-area-bottom {
-    padding-bottom: 10px;
+.game-card {
+    height: calc((500px / 4) - 30px);
 }
 
-.game-row, .game-card {
-    height: calc((500px / 4) - 10px);
+.card-selected-top {
+    -webkit-transition: -webkit-transform 0.2s linear;
+    -webkit-transform: translateY(20px);
+}
+
+.card-selected-bottom {
+    -webkit-transition: -webkit-transform 0.2s linear;
+    -webkit-transform: translateY(-20px);
 }

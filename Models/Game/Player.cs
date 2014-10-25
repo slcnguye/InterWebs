@@ -4,7 +4,7 @@ namespace InterWebs.Models.Game
 {
     public class Player
     {
-        private readonly List<int> cards = new List<int>();
+        private readonly List<Card> cards = new List<Card>();
         private string name = "";
 
         public string Name
@@ -13,7 +13,7 @@ namespace InterWebs.Models.Game
             set { name = value; }
         }
 
-        public List<int> Cards
+        public List<Card> Cards
         {
             get { return cards; }
         } 

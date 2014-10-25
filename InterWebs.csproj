@@ -229,8 +229,10 @@
     <Compile Include="Hubs\GameHub.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Game\Card.cs" />
     <Compile Include="Models\Game\Deck.cs" />
     <Compile Include="Models\Game\Player.cs" />
+    <Compile Include="Models\Game\WarGame.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -240,13 +242,16 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <None Include="Content\CardValueMapper.json">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Images\Playing Cards Back\Card_back.svg" />
-    <Content Include="Content\Images\Playing Cards\10_of_clubs.svg" />
-    <Content Include="Content\Images\Playing Cards\10_of_diamonds.svg" />
-    <Content Include="Content\Images\Playing Cards\10_of_hearts.svg" />
-    <Content Include="Content\Images\Playing Cards\10_of_spades.svg" />
+    <Content Include="Content\Images\Playing Cards\ten_of_clubs.svg" />
+    <Content Include="Content\Images\Playing Cards\ten_of_diamonds.svg" />
+    <Content Include="Content\Images\Playing Cards\ten_of_hearts.svg" />
+    <Content Include="Content\Images\Playing Cards\ten_of_spades.svg" />
     <Content Include="Content\Images\Playing Cards\2_of_clubs.svg" />
     <Content Include="Content\Images\Playing Cards\2_of_diamonds.svg" />
     <Content Include="Content\Images\Playing Cards\2_of_hearts.svg" />

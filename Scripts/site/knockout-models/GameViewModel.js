@@ -35,17 +35,27 @@
         self.backCardPath = object.backCardPath;
         self.playing = ko.observable(false);
         self.loadedGame = ko.observable(false);
+        self.roundMessage = ko.observable("");
         self.players = [
             ko.observable(new IW.All.Player({ playerId: 0, name: "" })),
             ko.observable(new IW.All.Player({ playerId: 1, name: "" }))
         ];
 
-        self.changeCard = function (cardInfo, event) {
+        self.cardClicked = function (cardInfo, event) {
             var player = ko.contextFor(event.target).$parent;
             if (player.name() != self.user) {
                 return;
             }
-            self.signalRServer.drawCard(cardInfo.index);
+
+            if (player.selectedCard() == cardInfo.index) {
+                // deselect card
+                player.selectedCard(null);
+                self.signalRServer.unplayCard(cardInfo.index);
+            } else {
+                // select card
+                player.selectedCard(cardInfo.index);
+                self.signalRServer.playCard(cardInfo.index);
+            }
         };
 
         self.shuffleDeck = function() {
@@ -77,8 +87,8 @@
                 playersInfo.forEach(function (playerInfo) {
                     var player = self.players[playerInfo.Id]();
                     player.name(playerInfo.Name);
-                    player.cards.push(ko.observable({ src: self.getCard(playerInfo.Cards[0]), index: 0 }));
-                    player.cards.push(ko.observable({ src: self.getCard(playerInfo.Cards[1]), index: 1 }));
+                    player.cards.push(ko.observable({ src: self.getCard(playerInfo.Cards[0].Value), index: 0 }));
+                    player.cards.push(ko.observable({ src: self.getCard(playerInfo.Cards[1].Value), index: 1 }));
                 });
             });
             self.loadedGame(true);
@@ -101,7 +111,12 @@
 
         self.signalRClient.drawCard = function (playerId, cardIndex, newCard) {
             var playerInfo = self.players[playerId]();
+            playerInfo.selectedCard(-1);
             playerInfo.cards()[cardIndex]({src: self.getCard(newCard), index: cardIndex});
+        };
+
+        self.signalRClient.roundWinner = function (playerId) {
+            self.roundMessage(self.players[playerId]().name() + "won round");
         };
     };
 

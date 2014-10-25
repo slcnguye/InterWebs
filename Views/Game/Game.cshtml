@@ -14,24 +14,26 @@
             <table class="gameboard" style="display: none" data-bind="visible: loadedGame">
                 <tbody>
                     <tr class=" row game-row" data-bind="with: players[0]">
-                        <td style="width: 25%">
+                        <td style="width: 15%">
                             <p data-bind="text: name"></p>
                         </td>
-                        <td class="center-content game-card-area-top" data-bind="foreach: cards">
-                            <img class="game-card" data-bind="click: $parents[1].changeCard, attr:{src: src}" alt="">
+                        <td class="center-content" data-bind="foreach: cards">
+                            <img class="game-card" data-bind="click: $parents[1].cardClicked, attr:{src: src}, css: {'card-selected-top': $parent.selectedCard() == index}" alt="">
                         </td>
-                        <td style="width: 25%"></td>
+                        <td style="width: 15%"></td>
+                    </tr>
+                    <tr class="row game-row">
+                        <p data-bind="text: roundMessage"></p>
                     </tr>
                     <tr class="row game-row"></tr>
-                    <tr class="row game-row"></tr>
                     <tr class="row game-row" data-bind="with: players[1]">
-                        <td style="width: 25%">
+                        <td style="width: 15%">
                             <p data-bind="text: name"></p>
                         </td>
-                        <td class="center-content game-card-area-bottom" data-bind="foreach: cards">
-                            <img class="game-card" data-bind="click: $parents[1].changeCard, attr:{src: src}" alt="">
+                        <td class="center-content" data-bind="foreach: cards">
+                            <img class="game-card" data-bind="click: $parents[1].cardClicked, attr:{src: src}, css: {'card-selected-bottom': $parent.selectedCard() == index}" alt="">
                         </td>
-                        <td style="width: 25%"></td>
+                        <td style="width: 15%"></td>
                     </tr>
                 </tbody>
             </table>

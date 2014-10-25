@@ -4,5 +4,6 @@
         self.name = ko.observable(object.name);
         self.playerId = object.playerId;
         self.cards = ko.observableArray([]);
+        self.selectedCard = ko.observable(-1);
     };
 }());

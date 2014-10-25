@@ -10,20 +10,16 @@ namespace InterWebs.Hubs
     {
         private static readonly ConcurrentDictionary<string, string> UserConnection = new ConcurrentDictionary<string, string>();
 
-        private static readonly Deck Deck;
-        private static readonly Player[] Players;
+        private static readonly WarGame WarGame;
+        private static int? p1CardPlayed;
+        private static int? p2CardPlayed;
 
         static GameHub()
         {
-            Deck = new Deck();
-            Deck.Shuffle();
-            var player1 = new Player {Id = 0};
-            player1.Cards.Add(-1);
-            player1.Cards.Add(-1);
-            var player2 = new Player {Id = 1};
-            player2.Cards.Add(-1);
-            player2.Cards.Add(-1);
-            Players = new[] {player1, player2};
+            WarGame = new WarGame();
+            WarGame.StartNewGame();
+            p1CardPlayed = null;
+            p2CardPlayed = null;
         }
 
         public override Task OnConnected()
@@ -57,12 +53,12 @@ namespace InterWebs.Hubs
 
             for (var i = 0; i < 2; ++i)
             {
-                if (Players[i].Name != userName)
+                if (WarGame.Players[i].Name != userName)
                 {
                     continue;
                 }
 
-                Players[i].Name = "";
+                WarGame.Players[i].Name = "";
                 await Clients.Others.UserLeftGameTable(i);
             }
 
@@ -71,43 +67,80 @@ namespace InterWebs.Hubs
 
         public Player[] GetAllPlayers()
         {
-            return Players;
+            return WarGame.Players;
         }
 
-        public Task DrawCard(int cardIndex)
+        public async void PlayCard(int cardIndex)
         {
             var playerName = Context.User.Identity.Name;
-            var player = Players.FirstOrDefault(x => x.Name == playerName);
+            var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName);
             if (player == null)
             {
-                return null;
+                return;
             }
 
-            var newCard = Deck.Draw();
-            player.Cards[cardIndex] = newCard;
-            return Clients.All.DrawCard(player.Id, cardIndex, newCard);
+            if (player.Id == 0)
+            {
+                p1CardPlayed = cardIndex;
+            }
+            if (player.Id == 1)
+            {
+                p2CardPlayed = cardIndex;
+            }
+
+            if (p1CardPlayed == null || p2CardPlayed == null)
+            {
+                return;
+            }
+
+            Player winner;
+            WarGame.PlayRound(p1CardPlayed.Value, p2CardPlayed.Value, out winner);
+            await Clients.All.RoundWinner(winner.Id);
+            await Clients.All.DrawCard(0, p1CardPlayed.Value, WarGame.Players[0].Cards[p1CardPlayed.Value].Value);
+            await Clients.All.DrawCard(1, p2CardPlayed.Value, WarGame.Players[1].Cards[p2CardPlayed.Value].Value);
+            p1CardPlayed = null;
+            p2CardPlayed = null;
+        }
+
+        public void UnplayCard(int cardIndex)
+        {
+            var playerName = Context.User.Identity.Name;
+            var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName);
+            if (player == null)
+            {
+                return;
+            }
+
+            if (player.Id == 0)
+            {
+                p1CardPlayed = null;
+            }
+            if (player.Id == 1)
+            {
+                p2CardPlayed = null;
+            }
         }
 
         public async void ShuffleDeck()
         {
-            Deck.Shuffle();
-            foreach (var player in Players)
+            WarGame.StartNewGame();
+            foreach (var player in WarGame.Players)
             {
-                await Clients.All.DrawCard(player.Id, 0, -1);
-                await Clients.All.DrawCard(player.Id, 1, -1);
+                await Clients.All.DrawCard(player.Id, 0, player.Cards[0].Value);
+                await Clients.All.DrawCard(player.Id, 1, player.Cards[1].Value);
             }
         }
 
         public Task JoinGameTable(int player)
         {
             var userName = Context.User.Identity.Name;
-            Players[player].Name = userName;
+            WarGame.Players[player].Name = userName;
             return Clients.Others.UserJoinedGameTable(userName, player);
         }
 
         public Task LeaveGameTable(int player)
         {
-            Players[player].Name = "";
+            WarGame.Players[player].Name = "";
             return Clients.Others.UserLeftGameTable(player);
         }
     }
