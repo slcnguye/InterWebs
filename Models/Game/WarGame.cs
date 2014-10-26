@@ -37,30 +37,35 @@ namespace InterWebs.Models.Game
             }
         }
 
-        public void PlayRound(int p1CardPlayed, int p2CardPlayed, out Player winner)
+        public void PlayRound(out Player winner)
         {
+            winner = null;
             // Run out of cards
-            if (p1CardPlayed == -1)
+            if (player1.PlayedCard == null || player1.PlayedCard == -1)
             {
                 //player1 Lost;
+                return;
             }
 
-            if (p2CardPlayed == -1)
+            if (player2.PlayedCard == null || player2.PlayedCard == -1)
             {
                 //player 2 Lost;
+                return;
             }
 
             // Winner of war battle
-            var p1Card = player1.Cards[p1CardPlayed];
-            var p2Card = player2.Cards[p2CardPlayed];
+            var p1Card = player1.Cards[player1.PlayedCard.Value];
+            var p2Card = player2.Cards[player2.PlayedCard.Value];
             var winnersDeck = p1Card.CompareTo(p2Card) > 0 ? player1Deck : player2Deck;
             winner = p1Card.CompareTo(p2Card) > 0 ? player1 : player2;
             winnersDeck.AddCard(p1Card, true);
             winnersDeck.AddCard(p2Card, true);
 
             // Draw new cards
-            player1.Cards[p1CardPlayed] = player1Deck.DrawCard();
-            player2.Cards[p2CardPlayed] = player2Deck.DrawCard();
+            player1.Cards[player1.PlayedCard.Value] = player1Deck.DrawCard();
+            player2.Cards[player2.PlayedCard.Value] = player2Deck.DrawCard();
+            player1.PlayedCard = null;
+            player2.PlayedCard = null;
         }
     }
 }

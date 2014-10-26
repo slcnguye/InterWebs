@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InterWebs.Models.Game;
@@ -11,15 +12,11 @@ namespace InterWebs.Hubs
         private static readonly ConcurrentDictionary<string, string> UserConnection = new ConcurrentDictionary<string, string>();
 
         private static readonly WarGame WarGame;
-        private static int? p1CardPlayed;
-        private static int? p2CardPlayed;
 
         static GameHub()
         {
             WarGame = new WarGame();
             WarGame.StartNewGame();
-            p1CardPlayed = null;
-            p2CardPlayed = null;
         }
 
         public override Task OnConnected()
@@ -72,9 +69,9 @@ namespace InterWebs.Hubs
             return player == null ? null : WarGame.Players;
         }
 
-        public object GetAllPlayerNames()
+        public IEnumerable<Player> GetAllPlayerNames()
         {
-            return WarGame.Players.Select(x => new { x.Id, x.Name });
+            return WarGame.Players.Select(x => new Player {Id = x.Id, Name = x.Name, PlayedCard = x.PlayedCard});
         }
 
         public async void PlayCard(int cardIndex)
@@ -86,30 +83,27 @@ namespace InterWebs.Hubs
                 return;
             }
 
-            if (player.Id == 0)
-            {
-                p1CardPlayed = cardIndex;
-            }
-            if (player.Id == 1)
-            {
-                p2CardPlayed = cardIndex;
-            }
+            player.PlayedCard = cardIndex;
+            await Clients.Others.CardPlayed(player.Id, cardIndex);
 
-            if (p1CardPlayed == null || p2CardPlayed == null)
+            if (WarGame.Players.Any(x => x.PlayedCard == null)) 
             {
                 return;
             }
 
+            var p1CardPlayed = WarGame.Players[0].PlayedCard.Value;
+            var p2CardPlayed = WarGame.Players[1].PlayedCard.Value;
+
             Player winner;
-            WarGame.PlayRound(p1CardPlayed.Value, p2CardPlayed.Value, out winner);
+            WarGame.PlayRound(out winner);
+            
+
             await Clients.All.RoundWinner(winner.Id);
-            await Clients.Group("playing").DrawCard(0, p1CardPlayed.Value, WarGame.Players[0].Cards[p1CardPlayed.Value].Value);
-            await Clients.Group("playing").DrawCard(1, p2CardPlayed.Value, WarGame.Players[1].Cards[p2CardPlayed.Value].Value);
-            p1CardPlayed = null;
-            p2CardPlayed = null;
+            await Clients.Group("playing").DrawCard(0, p1CardPlayed, WarGame.Players[0].Cards[p1CardPlayed].Value);
+            await Clients.Group("playing").DrawCard(1, p2CardPlayed, WarGame.Players[1].Cards[p2CardPlayed].Value);
         }
 
-        public void UnplayCard(int cardIndex)
+        public async void UnplayCard(int cardIndex)
         {
             var playerName = Context.User.Identity.Name;
             var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName);
@@ -118,14 +112,9 @@ namespace InterWebs.Hubs
                 return;
             }
 
-            if (player.Id == 0)
-            {
-                p1CardPlayed = null;
-            }
-            if (player.Id == 1)
-            {
-                p2CardPlayed = null;
-            }
+            player.PlayedCard = null;
+            
+            await Clients.Others.CardUnplayed(player.Id);
         }
 
         public async void ShuffleDeck()

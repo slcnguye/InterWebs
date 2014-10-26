@@ -95,6 +95,7 @@
                     player.name(playerInfo.Name);
                     player.cards.push(ko.observable({ src: self.getCard(-1), index: 0 }));
                     player.cards.push(ko.observable({ src: self.getCard(-1), index: 1 }));
+                    player.selectedCard(playerInfo.PlayedCard);
                 });
             });
             self.loadedGame(true);
@@ -107,6 +108,7 @@
                     player.name(playerInfo.Name);
                     player.cards()[0]({ src: self.getCard(playerInfo.Cards[0].Value), index: 0 });
                     player.cards()[1]({ src: self.getCard(playerInfo.Cards[1].Value), index: 1 });
+                    player.selectedCard(playerInfo.PlayedCard);
                 });
             });
             self.loadedGame(true);
@@ -136,6 +138,16 @@
         self.signalRClient.roundWinner = function (playerId) {
             self.roundMessage(self.players[playerId]().name() + "won round");
         };
+
+        self.signalRClient.cardPlayed = function (playerId, cardIndex) {
+            var playerInfo = self.players[playerId]();
+            playerInfo.selectedCard(cardIndex);
+        }
+
+        self.signalRClient.cardUnplayed = function (playerId) {
+            var playerInfo = self.players[playerId]();
+            playerInfo.selectedCard(-1);
+        }
     };
 
     namespace("IW.All").ActiveGameUsersView = function (object) {
