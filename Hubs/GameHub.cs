@@ -34,6 +34,7 @@ namespace InterWebs.Hubs
         private async void UserJoinedGame()
         {
             var userName = Context.User.Identity.Name;
+
             var userExists = UserConnection.Values.Any(x => x == userName);
             UserConnection[Context.ConnectionId] = userName;
             await Clients.Caller.UsersInGame(UserConnection.Values.Distinct());
@@ -47,7 +48,7 @@ namespace InterWebs.Hubs
         {
             string userName;
             UserConnection.TryRemove(Context.ConnectionId, out userName);
-
+            
             for (var i = 0; i < 2; ++i)
             {
                 if (WarGame.Players[i].Name != userName)
@@ -62,11 +63,11 @@ namespace InterWebs.Hubs
             await Clients.Others.UserLeftGame(userName);
         }
 
-        public Player[] GetAllPlayers()
+        public Player GetPlayer(int position)
         {
             var playerName = Context.User.Identity.Name;
             var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName);
-            return player == null ? null : WarGame.Players;
+            return player;
         }
 
         public IEnumerable<Player> GetAllPlayerNames()
@@ -86,21 +87,23 @@ namespace InterWebs.Hubs
             player.PlayedCard = cardIndex;
             await Clients.Others.CardPlayed(player.Id, cardIndex);
 
-            if (WarGame.Players.Any(x => x.PlayedCard == null)) 
+            if (WarGame.Players.Any(x => x.PlayedCard == -1)) 
             {
                 return;
             }
 
-            var p1CardPlayed = WarGame.Players[0].PlayedCard.Value;
-            var p2CardPlayed = WarGame.Players[1].PlayedCard.Value;
+            var player1 = WarGame.Players[0];
+            var player2 = WarGame.Players[1];
+            var p1CardPlayed = player1.PlayedCard;
+            var p2CardPlayed = player2.PlayedCard;
 
             Player winner;
             WarGame.PlayRound(out winner);
             
 
             await Clients.All.RoundWinner(winner.Id);
-            await Clients.Group("playing").DrawCard(0, p1CardPlayed, WarGame.Players[0].Cards[p1CardPlayed].Value);
-            await Clients.Group("playing").DrawCard(1, p2CardPlayed, WarGame.Players[1].Cards[p2CardPlayed].Value);
+            await Clients.Group(player1.Name).DrawCard(0, p1CardPlayed, player1.Cards[p1CardPlayed].Value);
+            await Clients.Group(player2.Name).DrawCard(1, p2CardPlayed, player2.Cards[p2CardPlayed].Value);
         }
 
         public async void UnplayCard(int cardIndex)
@@ -112,7 +115,7 @@ namespace InterWebs.Hubs
                 return;
             }
 
-            player.PlayedCard = null;
+            player.PlayedCard = -1;
             
             await Clients.Others.CardUnplayed(player.Id);
         }
@@ -122,23 +125,23 @@ namespace InterWebs.Hubs
             WarGame.StartNewGame();
             foreach (var player in WarGame.Players)
             {
-                await Clients.Group("playing").DrawCard(player.Id, 0, player.Cards[0].Value);
-                await Clients.Group("playing").DrawCard(player.Id, 1, player.Cards[1].Value);
+                await Clients.Group(player.Name).DrawCard(player.Id, 0, player.Cards[0].Value);
+                await Clients.Group(player.Name).DrawCard(player.Id, 1, player.Cards[1].Value);
             }
         }
 
         public Task JoinGameTable(int player)
         {
             var userName = Context.User.Identity.Name;
+            Groups.Add(Context.ConnectionId, userName);
             WarGame.Players[player].Name = userName;
-            Groups.Add(Context.ConnectionId, "playing");
             return Clients.Others.UserJoinedGameTable(userName, player);
         }
 
         public Task LeaveGameTable(int player)
         {
+            Groups.Remove(Context.ConnectionId, WarGame.Players[player].Name);
             WarGame.Players[player].Name = "";
-            Groups.Remove(Context.ConnectionId, "playing");
             return Clients.Others.UserLeftGameTable(player);
         }
     }

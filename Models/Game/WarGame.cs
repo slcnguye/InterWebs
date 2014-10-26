@@ -41,31 +41,31 @@ namespace InterWebs.Models.Game
         {
             winner = null;
             // Run out of cards
-            if (player1.PlayedCard == null || player1.PlayedCard == -1)
+            if (player1.PlayedCard == -1)
             {
                 //player1 Lost;
                 return;
             }
 
-            if (player2.PlayedCard == null || player2.PlayedCard == -1)
+            if (player2.PlayedCard == -1)
             {
                 //player 2 Lost;
                 return;
             }
 
             // Winner of war battle
-            var p1Card = player1.Cards[player1.PlayedCard.Value];
-            var p2Card = player2.Cards[player2.PlayedCard.Value];
+            var p1Card = player1.Cards[player1.PlayedCard];
+            var p2Card = player2.Cards[player2.PlayedCard];
             var winnersDeck = p1Card.CompareTo(p2Card) > 0 ? player1Deck : player2Deck;
             winner = p1Card.CompareTo(p2Card) > 0 ? player1 : player2;
             winnersDeck.AddCard(p1Card, true);
             winnersDeck.AddCard(p2Card, true);
 
             // Draw new cards
-            player1.Cards[player1.PlayedCard.Value] = player1Deck.DrawCard();
-            player2.Cards[player2.PlayedCard.Value] = player2Deck.DrawCard();
-            player1.PlayedCard = null;
-            player2.PlayedCard = null;
+            player1.Cards[player1.PlayedCard] = player1Deck.DrawCard();
+            player2.Cards[player2.PlayedCard] = player2Deck.DrawCard();
+            player1.PlayedCard = -1;
+            player2.PlayedCard = -1;
         }
     }
 }

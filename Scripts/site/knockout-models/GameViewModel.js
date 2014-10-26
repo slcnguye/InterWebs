@@ -70,8 +70,9 @@
         self.joinGame = function() {
             self.playing(true);
             var position = self.players[0]().name() == "" ? 0 : 1;
-            self.signalRServer.joinGameTable(position);
-            self.getPlayerHands();
+            self.signalRServer.joinGameTable(position).done(function() {
+                self.getPlayerHand(position);
+            });
             self.players[position]().name(self.user);
         };
 
@@ -101,15 +102,12 @@
             self.loadedGame(true);
         };
 
-        self.getPlayerHands = function () {
-            self.signalRServer.getAllPlayers().done(function (playersInfo) {
-                playersInfo.forEach(function (playerInfo) {
-                    var player = self.players[playerInfo.Id]();
-                    player.name(playerInfo.Name);
-                    player.cards()[0]({ src: self.getCard(playerInfo.Cards[0].Value), index: 0 });
-                    player.cards()[1]({ src: self.getCard(playerInfo.Cards[1].Value), index: 1 });
-                    player.selectedCard(playerInfo.PlayedCard);
-                });
+        self.getPlayerHand = function (position) {
+            self.signalRServer.getPlayer(position).done(function (playerInfo) {
+                var player = self.players[position]();
+                player.cards()[0]({ src: self.getCard(playerInfo.Cards[0].Value), index: 0 });
+                player.cards()[1]({ src: self.getCard(playerInfo.Cards[1].Value), index: 1 });
+                player.selectedCard(playerInfo.PlayedCard);
             });
             self.loadedGame(true);
         };
@@ -136,6 +134,9 @@
         };
 
         self.signalRClient.roundWinner = function (playerId) {
+            ko.utils.arrayForEach(self.players, function (player) {
+                player().selectedCard(-1);
+            });
             self.roundMessage(self.players[playerId]().name() + "won round");
         };
 
