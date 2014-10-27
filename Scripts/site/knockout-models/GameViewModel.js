@@ -133,10 +133,25 @@
             playerInfo.cards()[cardIndex]({src: self.getCard(newCard), index: cardIndex});
         };
 
+        self.signalRClient.showCard = function (playerId, cardIndex, newCard) {
+            var playerInfo = self.players[playerId]();
+            playerInfo.cards()[cardIndex]({ src: self.getCard(newCard), index: cardIndex });
+
+            setTimeout(function() {
+                playerInfo.selectedCard(-1);
+                if (!self.playing() || playerInfo.name() != self.user) {
+                    playerInfo.cards()[cardIndex]({ src: self.getCard(-1), index: cardIndex });
+                }
+                else {
+                    self.signalRServer.getCard(cardIndex, playerId).done(function(card) {
+                        playerInfo.cards()[cardIndex]({ src: self.getCard(card), index: cardIndex });
+                    });
+                }
+                self.roundMessage("");
+            }, 2000);
+        };
+
         self.signalRClient.roundWinner = function (playerId) {
-            ko.utils.arrayForEach(self.players, function (player) {
-                player().selectedCard(-1);
-            });
             self.roundMessage(self.players[playerId]().name() + "won round");
         };
 

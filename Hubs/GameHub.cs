@@ -97,13 +97,29 @@ namespace InterWebs.Hubs
             var p1CardPlayed = player1.PlayedCard;
             var p2CardPlayed = player2.PlayedCard;
 
+            Clients.All.ShowCard(player1.Id, p1CardPlayed, player1.Cards[p1CardPlayed].Value);
+            Clients.All.ShowCard(player2.Id, p2CardPlayed, player2.Cards[p2CardPlayed].Value);
+            
             Player winner;
             WarGame.PlayRound(out winner);
-            
+            if (winner == null)
+            {
+                return;
+            }
 
             await Clients.All.RoundWinner(winner.Id);
-            await Clients.Group(player1.Name).DrawCard(0, p1CardPlayed, player1.Cards[p1CardPlayed].Value);
-            await Clients.Group(player2.Name).DrawCard(1, p2CardPlayed, player2.Cards[p2CardPlayed].Value);
+        }
+
+        public int GetCard(int cardIndex, int playerId)
+        {
+            var playerName = Context.User.Identity.Name;
+            var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName && x.Id == playerId);
+            if (player == null)
+            {
+                return -1;
+            }
+
+            return player.Cards[cardIndex].Value;
         }
 
         public async void UnplayCard(int cardIndex)

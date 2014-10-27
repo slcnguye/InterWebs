@@ -27,7 +27,9 @@ namespace InterWebs.Models.Game
             var cards = Enumerable.Range(0, 52).OrderBy(card => Random.Next()).ToList();
             player1Deck = new Deck(cards.GetRange(0, 26));
             player2Deck = new Deck(cards.GetRange(26, 26));
-            
+
+            player1.PlayedCard = -1;
+            player2.PlayedCard = -1;
             player1.Cards.Clear();
             player2.Cards.Clear();
             for (var i = 0; i < CardsPerHand; i++)
