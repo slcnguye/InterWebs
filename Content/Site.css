@@ -72,12 +72,16 @@ input[type="checkbox"].input-validation-error {
     text-align: center;
 }
 
+.game-info-row {
+    height: calc(500px - 300px);
+}
+
 .game-row {
-    height: calc(500px / 4);
+    height: calc(500px - 350px);
 }
 
 .game-card {
-    height: calc((500px / 4) - 30px);
+    height: calc(150px - 30px);
 }
 
 .card-selected-top {
@@ -88,4 +92,15 @@ input[type="checkbox"].input-validation-error {
 .card-selected-bottom {
     -webkit-transition: -webkit-transform 0.2s linear;
     -webkit-transform: translateY(-20px);
+}
+
+.playerinfo {
+    text-align: center;
+    margin: 0;
+    font-weight: bold;
+}
+
+.gameinfo {
+    text-align: center;
+    margin: 0;
 }

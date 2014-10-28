@@ -13,29 +13,28 @@
             </div>
             <table class="gameboard" style="display: none" data-bind="visible: loadedGame">
                 <tbody>
-                    <tr class=" row game-row" data-bind="with: players[0]">
-                        <td style="width: 15%">
-                            <p data-bind="text: name"></p>
+                    <tr class="row game-row" data-bind="with: players[0]">
+                        <td style="width: 20%">
+                            <h3 class="playerinfo" data-bind="text: name"></h3>
                         </td>
                         <td class="center-content" data-bind="foreach: cards">
                             <img class="game-card" data-bind="click: $parents[1].cardClicked, attr:{src: src}, css: {'card-selected-top': $parent.selectedCard() == index}" alt="">
                         </td>
-                        <td style="width: 15%"></td>
+                        <td style="width: 20%"></td>
                     </tr>
-                    <tr class="row game-row">
-                        <td>
-                            <p data-bind="text: roundMessage"></p>
+                    <tr class="row game-info-row">
+                        <td data-bind="attr: { colspan: 3 }">
+                            <h3 class="gameinfo" data-bind="text: roundMessage"></h3>
                         </td>
                     </tr>
-                    <tr class="row game-row"></tr>
                     <tr class="row game-row" data-bind="with: players[1]">
-                        <td style="width: 15%">
-                            <p data-bind="text: name"></p>
+                        <td style="width: 20%">
+                            <h3 class="playerinfo" data-bind="text: name"></h3>
                         </td>
                         <td class="center-content" data-bind="foreach: cards">
                             <img class="game-card" data-bind="click: $parents[1].cardClicked, attr:{src: src}, css: {'card-selected-bottom': $parent.selectedCard() == index}" alt="">
                         </td>
-                        <td style="width: 15%"></td>
+                        <td style="width: 20%"></td>
                     </tr>
                 </tbody>
             </table>

@@ -27,6 +27,7 @@
 
     namespace("IW.All").GameBoxView = function(object) {
         var self = this;
+        var disableGameInteractions = false;
         self.user = object.user;
         self.signalRClient = object.signalRClient;
         self.signalRServer = object.signalRServer;
@@ -42,6 +43,10 @@
         ];
 
         self.cardClicked = function (cardInfo, event) {
+            if (disableGameInteractions) {
+                return;
+            }
+
             var player = ko.contextFor(event.target).$parent;
             if (player.name() != self.user) {
                 return;
@@ -134,6 +139,7 @@
         };
 
         self.signalRClient.showCard = function (playerId, cardIndex, newCard) {
+            disableGameInteractions = true;
             var playerInfo = self.players[playerId]();
             playerInfo.cards()[cardIndex]({ src: self.getCard(newCard), index: cardIndex });
 
@@ -148,11 +154,12 @@
                     });
                 }
                 self.roundMessage("");
+                disableGameInteractions = false;
             }, 2000);
         };
 
         self.signalRClient.roundWinner = function (playerId) {
-            self.roundMessage(self.players[playerId]().name() + "won round");
+            self.roundMessage(i18n.t("Game.RoundWinner", { player: self.players[playerId]().name() }));
         };
 
         self.signalRClient.cardPlayed = function (playerId, cardIndex) {

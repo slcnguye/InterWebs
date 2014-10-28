@@ -10,6 +10,7 @@
 		"Join": "Join",
 		"Leave": "Leave",
 		"ActiveUsers": "Active Users",
-		"Shuffle": "Shuffle"
+		"Shuffle": "Shuffle",
+		"RoundWinner": "__player__ won the round"
 	}
 }
