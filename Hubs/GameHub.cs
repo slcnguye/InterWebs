@@ -101,13 +101,21 @@ namespace InterWebs.Hubs
             Clients.All.ShowCard(player2.Id, p2CardPlayed, player2.Cards[p2CardPlayed].Value);
             
             Player winner;
-            WarGame.PlayRound(out winner);
-            if (winner == null)
-            {
-                return;
-            }
+            WarGame.RoundOutCome outcome;
+            WarGame.PlayRound(out winner, out outcome);
 
-            await Clients.All.RoundWinner(winner.Id);
+            switch (outcome)
+            {
+                case WarGame.RoundOutCome.Draw:
+                    await Clients.All.RoundOutcome("Draw");
+                    break;
+                case WarGame.RoundOutCome.PlayerWonGame:
+                    await Clients.All.RoundOutcome(winner.Name + " won the game!");
+                    break;
+                case WarGame.RoundOutCome.PlayerWonRound:
+                    await Clients.All.RoundOutcome(winner.Name + " won the round!");
+                    break;
+            }
         }
 
         public int GetCard(int cardIndex, int playerId)

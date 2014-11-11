@@ -166,8 +166,8 @@
             }, 2000);
         };
 
-        self.signalRClient.roundWinner = function (playerId) {
-            self.roundMessage(i18n.t("Game.RoundWinner", { player: self.players[playerId]().name() }));
+        self.signalRClient.roundOutcome = function (outcomeMessage) {
+            self.roundMessage(outcomeMessage);
         };
 
         self.signalRClient.cardPlayed = function (playerId, cardIndex) {

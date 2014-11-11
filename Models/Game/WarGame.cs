@@ -13,6 +13,13 @@ namespace InterWebs.Models.Game
         private readonly Player player2;
         private const int CardsPerHand = 2;
 
+        public enum RoundOutCome
+        {
+            PlayerWonGame,
+            PlayerWonRound,
+            Draw
+        }
+
         public WarGame()
         {
             player1 = new Player {Id = 0};
@@ -39,29 +46,45 @@ namespace InterWebs.Models.Game
             }
         }
 
-        public void PlayRound(out Player winner)
+        public void PlayRound(out Player winner, out RoundOutCome outcome)
         {
             winner = null;
             // Run out of cards
             if (player1.PlayedCard == -1)
             {
-                //player1 Lost;
+                outcome = RoundOutCome.PlayerWonGame;
+                winner = player2;
                 return;
             }
 
             if (player2.PlayedCard == -1)
             {
-                //player 2 Lost;
+                outcome = RoundOutCome.PlayerWonGame;
+                winner = player1;
                 return;
             }
 
             // Winner of war battle
             var p1Card = player1.Cards[player1.PlayedCard];
             var p2Card = player2.Cards[player2.PlayedCard];
-            var winnersDeck = p1Card.CompareTo(p2Card) > 0 ? player1Deck : player2Deck;
-            winner = p1Card.CompareTo(p2Card) > 0 ? player1 : player2;
-            winnersDeck.AddCard(p1Card, true);
-            winnersDeck.AddCard(p2Card, true);
+
+
+            var compareRank = p1Card.CompareTo(p2Card);
+            if (compareRank == 0)
+            {
+                player1Deck.AddCard(p1Card, true);
+                player2Deck.AddCard(p2Card, true);
+                outcome = RoundOutCome.Draw;
+            }
+            else
+            {
+                var player1Wins = compareRank > 0;
+                var winnersDeck = player1Wins ? player1Deck : player2Deck;
+                winner = player1Wins ? player1 : player2;
+                winnersDeck.AddCard(p1Card, true);
+                winnersDeck.AddCard(p2Card, true);   
+                outcome = RoundOutCome.PlayerWonRound;
+            }
 
             // Draw new cards
             player1.Cards[player1.PlayedCard] = player1Deck.DrawCard();
