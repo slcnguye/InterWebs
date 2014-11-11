@@ -40,8 +40,8 @@ input[type="checkbox"].input-validation-error {
 }
 
 .panel-display {
-    min-height: 500px; 
-    max-height: 500px;
+    min-height: 496px; 
+    max-height: 496px;
 }
 
 .gameboard {
@@ -50,7 +50,7 @@ input[type="checkbox"].input-validation-error {
 }
 
 .panel-user-info {
-    height: 555px;
+    height: 551px;
 }
 
 .username-list {

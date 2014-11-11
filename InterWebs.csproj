@@ -357,6 +357,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\site\knockout-extenders\AutoScroll.js" />
     <Content Include="Scripts\site\knockout-bindings\EnterKeyEvent.js" />
+    <Content Include="Scripts\site\knockout-models\ChatBoxView.js" />
     <Content Include="Scripts\site\knockout-models\GameViewModel.js" />
     <Content Include="Scripts\site\knockout-models\ChatViewModel.js" />
     <Content Include="Scripts\_references.js" />

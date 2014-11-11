@@ -1,7 +1,7 @@
 ﻿@using InterWebs.Extension
 
 <div id="Game">
-    <div class="col-md-9">
+    <div class="col-md-8">
         <div class="panel panel-info" data-bind="with: gameBoxView">
             <div class="panel-heading">
                 <h3 class="panel-title" data-i18n="Game.GameRoom"></h3>
@@ -45,13 +45,37 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3 hidden-xs hidden-sm" data-bind="with: activeGameUsersView">
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <h2 class="panel-title" data-i18n="Game.ActiveUsers"></h2>
-            </div>
-            <div class="username-list panel-body panel-user-info" data-bind="foreach: activeUsers">
-                <p data-bind="text: $data"></p>
+    <div class="col-md-4 hidden-xs hidden-sm">
+        <div class="panel panel-info">
+            <div>
+                <ul class="nav nav-tabs nav-justified" role="tablist">
+                    <li>
+                        <a href="#sidetab-users" data-toggle="tab" data-i18n="Game.ActiveUsers"></a>
+                    </li>
+                    <li class="active">
+                        <a href="#sidetab-chat" data-toggle="tab" data-i18n="Game.Chat"></a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane username-list panel-body panel-user-info" id="sidetab-users" data-bind="foreach: activeGameUsersView.activeUsers">
+                        <h5 data-bind="text: $data" style="font-weight: bold"></h5>
+                    </div>
+                    <div class="tab-pane active" id="sidetab-chat" data-bind="with: chatBoxView">
+                        <div id="ChatMessages" style="display: none" class="panel-body pre-scrollable panel-display" data-bind="visible: loadedMessages, foreach: chatMessages">
+                            <h5 style="font-weight: bold" data-bind="text: user + ':'"></h5>
+                            <p data-bind="text: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + text"></p>
+                            <hr />
+                        </div>
+                        <div class="panel-footer">
+                            <form class="input-group">
+                                <input type="text" class="form-control" data-bind="enable: loadedMessages, textInput: message, attr: {placeholder: $.t('Chat.EnterMessage')}, hasFocus: enterMessageFocus, executeOnEnter: sendMessage">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" data-bind="text: $.t('Chat.Send'), enable: message, click: sendMessage"></button>
+                                </span>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -64,7 +88,9 @@
             user: @Html.JavaScriptSerialize(ViewData["UserName"]),
             cards: @Html.JavaScriptSerialize(ViewData["Cards"]),
             cardPath: @Html.JavaScriptSerialize(ViewData["CardPath"]),
-            backCardPath: @Html.JavaScriptSerialize(ViewData["BackCardPath"])
+            backCardPath: @Html.JavaScriptSerialize(ViewData["BackCardPath"]),
+            chatMessages: @Html.JavaScriptSerialize(ViewData["ChatMessages"]),
+            storeMessageUrl: @Html.JavaScriptSerialize(Url.Action("StoreChatMessage"))
             }); 
 
         ko.applyBindings(vm, $('#Game')[0]);

@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using InterWebs.Domain.Model;
+using InterWebs.Domain.Repository;
 using InterWebs.Models.Game;
 using Newtonsoft.Json;
 
@@ -8,6 +10,14 @@ namespace InterWebs.Controllers
 {
     public class GameController : Controller
     {
+        private readonly IPersistenceOrientedRepository<ChatMessage> chatMessageRepository;
+
+        public GameController(IPersistenceOrientedRepository<ChatMessage> chatMessageRepository)
+        {
+            this.chatMessageRepository = chatMessageRepository;
+        }
+
+
         public ActionResult Game()
         {
             if (!User.Identity.IsAuthenticated)
@@ -26,8 +36,22 @@ namespace InterWebs.Controllers
             ViewBag.Cards = Card.CardsSource;
             ViewBag.CardPath = "/InterWebs/Content/Images/Playing Cards/";
             ViewBag.BackCardPath = "/InterWebs/Content/Images/Playing Cards Back/Card_back.svg";
+            ViewBag.ChatMessages = chatMessageRepository.GetAll(x => x.ChatName == "All").ToList();
 
             return View();   
+        }
+
+        [HttpPost]
+        public void StoreChatMessage(string message)
+        {
+            var chatMessage = new ChatMessage
+            {
+                ChatName = "All",
+                Message = message,
+                User = User.Identity.Name
+            };
+
+            chatMessageRepository.Insert(chatMessage);
         }
     }
 }

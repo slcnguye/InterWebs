@@ -1,21 +1,29 @@
 ﻿(function() {
     namespace("IW.All").GameViewModel = function (object) {
         var self = this;
-        self.user = object.user;
-        self.signalR = $.connection.gameHub;
+        self.gameSignalR = $.connection.gameHub;
+        self.chatSignalR = $.connection.chatHub;
 
         self.activeGameUsersView = new IW.All.ActiveGameUsersView({
-            signalRClient: self.signalR.client,
-            user: self.user
+            signalRClient: self.gameSignalR.client,
+            user: object.user
         });
 
         self.gameBoxView = new IW.All.GameBoxView({
-            signalRClient: self.signalR.client,
-            signalRServer: self.signalR.server,
+            signalRClient: self.gameSignalR.client,
+            signalRServer: self.gameSignalR.server,
             cards: object.cards,
             cardPath: object.cardPath,
             backCardPath: object.backCardPath,
-            user: self.user
+            user: object.user
+        });
+
+        self.chatBoxView = new IW.All.ChatBoxView({
+            signalRClient: self.chatSignalR.client,
+            signalRServer: self.chatSignalR.server,
+            chatMessages: object.chatMessages,
+            storeMessageUrl: object.storeMessageUrl,
+            user: object.user
         });
 
         $.connection.hub.start({ jsonp: true }).done(

@@ -9,7 +9,8 @@
 		"GameRoom": "Game Room",
 		"Join": "Join",
 		"Leave": "Leave",
-		"ActiveUsers": "Active Users",
+		"ActiveUsers": "Users",
+		"Chat": "Chat",
 		"Shuffle": "Shuffle",
 		"RoundWinner": "__player__ won the round"
 	}
