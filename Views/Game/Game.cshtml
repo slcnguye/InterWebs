@@ -39,7 +39,7 @@
                 </tbody>
             </table>
             <div class="panel-footer">
-                <button class="btn btn-default" type="button" data-bind="disable: gameFull(), visible: !playing(), text: $.t('Game.Join'), click: joinGame"></button>
+                <button class="btn btn-default" type="button" data-bind="disable: gameFull() || $parent.guestUser(), visible: !playing(), text: $.t('Game.Join'), click: joinGame"></button>
                 <button class="btn btn-default" type="button" style="display: none;" data-bind="visible: playing(), text: $.t('Game.Leave'), click: leaveGame"></button>
                 <button class="btn btn-default" type="button" style="display: none;" data-bind="visible: playing(), text: $.t('Game.Shuffle'), click: shuffleDeck"></button>
             </div>
@@ -68,9 +68,9 @@
                         </div>
                         <div class="panel-footer">
                             <form class="input-group">
-                                <input type="text" class="form-control" data-bind="enable: loadedMessages, textInput: message, attr: {placeholder: $.t('Chat.EnterMessage')}, hasFocus: enterMessageFocus, executeOnEnter: sendMessage">
+                                <input type="text" class="form-control" data-bind="enable: loadedMessages && !$parent.guestUser(), textInput: message, attr: {placeholder: $.t('Chat.EnterMessage')}, hasFocus: enterMessageFocus, executeOnEnter: sendMessage">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" data-bind="text: $.t('Chat.Send'), enable: message, click: sendMessage"></button>
+                                    <button class="btn btn-default" type="button" data-bind="text: $.t('Chat.Send'), enable: message && !$parent.guestUser(), click: sendMessage"></button>
                                 </span>
                             </form>
                         </div>

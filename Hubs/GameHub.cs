@@ -79,7 +79,7 @@ namespace InterWebs.Hubs
         {
             var playerName = Context.User.Identity.Name;
             var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName);
-            if (player == null)
+            if (player == null || playerName == "")
             {
                 return;
             }
@@ -134,7 +134,7 @@ namespace InterWebs.Hubs
         {
             var playerName = Context.User.Identity.Name;
             var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName);
-            if (player == null)
+            if (player == null || playerName == "")
             {
                 return;
             }
@@ -157,6 +157,11 @@ namespace InterWebs.Hubs
         public Task JoinGameTable(int player)
         {
             var userName = Context.User.Identity.Name;
+            if (string.IsNullOrWhiteSpace(userName))
+            {
+                return null;
+            }
+
             Groups.Add(Context.ConnectionId, userName);
             WarGame.Players[player].Name = userName;
             return Clients.Others.UserJoinedGameTable(userName, player);

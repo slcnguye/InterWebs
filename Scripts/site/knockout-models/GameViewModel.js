@@ -3,7 +3,7 @@
         var self = this;
         self.gameSignalR = $.connection.gameHub;
         self.chatSignalR = $.connection.chatHub;
-
+        
         self.activeGameUsersView = new IW.All.ActiveGameUsersView({
             signalRClient: self.gameSignalR.client,
             user: object.user
@@ -25,6 +25,10 @@
             storeMessageUrl: object.storeMessageUrl,
             user: object.user
         });
+
+        self.guestUser = function () {
+            return !object.user || object.user == "";
+        }
 
         $.connection.hub.start({ jsonp: true }).done(
             function() {
@@ -51,7 +55,7 @@
         ];
 
         self.cardClicked = function (cardInfo, event) {
-            if (disableGameInteractions) {
+            if (disableGameInteractions || !self.user || self.user == "") {
                 return;
             }
 
@@ -187,6 +191,10 @@
         self.activeUsers = ko.observableArray([]);
 
         self.signalRClient.usersInGame = function (users) {
+            if (!object.user || object.user == "") {
+                self.activeUsers.push($.t('Chat.YouAsGuest'));
+            }
+
             ko.utils.arrayPushAll(self.activeUsers, users);
         }
 

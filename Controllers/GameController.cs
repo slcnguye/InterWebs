@@ -20,11 +20,6 @@ namespace InterWebs.Controllers
 
         public ActionResult Game()
         {
-            if (!User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             if (Card.CardsSource == null)
             {
                 var file = System.IO.File.ReadAllText(Server.MapPath(@"~\Content\CardValueMapper.json"));

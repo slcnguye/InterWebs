@@ -3,7 +3,8 @@
 		"ActiveUsers": "Active Users",
 		"ChatRoom": "Chat Room",
 		"EnterMessage": "Enter Message",
-		"Send": "Send"
+		"Send": "Send",
+		"YouAsGuest": "You (Guest)"
 	},
 	"Game": {
 		"GameRoom": "Game Room",
