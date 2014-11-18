@@ -56,7 +56,7 @@ namespace InterWebs.Hubs
                     continue;
                 }
 
-                WarGame.Players[i].Name = "";
+                WarGame.Players[i].Name = string.Empty;
                 await Clients.Others.UserLeftGameTable(i);
             }
 
@@ -79,7 +79,7 @@ namespace InterWebs.Hubs
         {
             var playerName = Context.User.Identity.Name;
             var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName);
-            if (player == null || playerName == "")
+            if (player == null || playerName == string.Empty)
             {
                 return;
             }
@@ -118,6 +118,17 @@ namespace InterWebs.Hubs
             }
         }
 
+        public bool IsBlankCard(int cardIndex, int playerId)
+        {
+            var player = WarGame.Players.FirstOrDefault(x => x.Id == playerId);
+            if (player == null)
+            {
+                return true;
+            }
+
+            return player.Cards[cardIndex].Value == -2;
+        }
+
         public int GetCard(int cardIndex, int playerId)
         {
             var playerName = Context.User.Identity.Name;
@@ -134,7 +145,7 @@ namespace InterWebs.Hubs
         {
             var playerName = Context.User.Identity.Name;
             var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName);
-            if (player == null || playerName == "")
+            if (player == null || playerName == string.Empty)
             {
                 return;
             }
@@ -147,9 +158,10 @@ namespace InterWebs.Hubs
         public async void ShuffleDeck()
         {
             WarGame.StartNewGame();
+            await Clients.All.NewGame();
             foreach (var player in WarGame.Players)
             {
-                await Clients.Group(player.Name).DrawCard(player.Id, 0, player.Cards[0].Value);
+                Clients.Group(player.Name).DrawCard(player.Id, 0, player.Cards[0].Value);
                 await Clients.Group(player.Name).DrawCard(player.Id, 1, player.Cards[1].Value);
             }
         }
@@ -170,7 +182,7 @@ namespace InterWebs.Hubs
         public Task LeaveGameTable(int player)
         {
             Groups.Remove(Context.ConnectionId, WarGame.Players[player].Name);
-            WarGame.Players[player].Name = "";
+            WarGame.Players[player].Name = string.Empty;
             return Clients.Others.UserLeftGameTable(player);
         }
     }

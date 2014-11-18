@@ -15,6 +15,7 @@
             cards: object.cards,
             cardPath: object.cardPath,
             backCardPath: object.backCardPath,
+            blankCardPath: object.blankCardPath,
             user: object.user
         });
 
@@ -46,6 +47,7 @@
         self.cards = object.cards;
         self.cardPath = object.cardPath;
         self.backCardPath = object.backCardPath;
+        self.blankCardPath = object.blankCardPath;
         self.playing = ko.observable(false);
         self.loadedGame = ko.observable(false);
         self.roundMessage = ko.observable("");
@@ -129,11 +131,16 @@
             self.loadedGame(true);
         };
 
-        self.getCard = function (cardIndex) {
-            if (cardIndex < 0) {
+        self.getCard = function (card) {
+            if (card == -2) {
+                return self.blankCardPath;
+            }
+
+            if (card == -1) {
                 return self.backCardPath;
             }
-            return self.cardPath + self.cards[cardIndex];
+
+            return self.cardPath + self.cards[card];
         };
 
         self.signalRClient.userJoinedGameTable = function (username, player) {
@@ -158,7 +165,10 @@
             setTimeout(function() {
                 playerInfo.selectedCard(-1);
                 if (!self.playing() || playerInfo.name() != self.user) {
-                    playerInfo.cards()[cardIndex]({ src: self.getCard(-1), index: cardIndex });
+                    self.signalRServer.isBlankCard(cardIndex, playerId).done(function (valid) {
+                        var card = valid ? -2 : -1;
+                        playerInfo.cards()[cardIndex]({ src: self.getCard(card), index: cardIndex });
+                    });
                 }
                 else {
                     self.signalRServer.getCard(cardIndex, playerId).done(function(card) {
@@ -169,6 +179,14 @@
                 disableGameInteractions = false;
             }, 2000);
         };
+
+        self.signalRClient.newGame = function () {
+            self.players.forEach(function (player) {
+                player().cards()[0]({ src: self.getCard(-1), index: 0 });
+                player().cards()[1]({ src: self.getCard(-1), index: 1 });
+                player().selectedCard(-1);
+            });
+        }
 
         self.signalRClient.roundOutcome = function (outcomeMessage) {
             self.roundMessage(outcomeMessage);

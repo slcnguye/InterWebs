@@ -7,7 +7,7 @@ namespace InterWebs.Models.Game
     public class Deck
     {
         private static readonly Random Random = new Random();
-        private static readonly Card BlankCard = new Card { Value = -1 };
+        private static readonly Card BlankCard = new Card { Value = -2 };
         private List<Card> cards;
 
         public Deck()

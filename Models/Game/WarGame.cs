@@ -49,22 +49,6 @@ namespace InterWebs.Models.Game
         public void PlayRound(out Player winner, out RoundOutCome outcome)
         {
             winner = null;
-            // Run out of cards
-            if (player1.PlayedCard == -1)
-            {
-                outcome = RoundOutCome.PlayerWonGame;
-                winner = player2;
-                return;
-            }
-
-            if (player2.PlayedCard == -1)
-            {
-                outcome = RoundOutCome.PlayerWonGame;
-                winner = player1;
-                return;
-            }
-
-            // Winner of war battle
             var p1Card = player1.Cards[player1.PlayedCard];
             var p2Card = player2.Cards[player2.PlayedCard];
 
@@ -91,6 +75,18 @@ namespace InterWebs.Models.Game
             player2.Cards[player2.PlayedCard] = player2Deck.DrawCard();
             player1.PlayedCard = -1;
             player2.PlayedCard = -1;
+
+            if (player1.Cards.All(x => x.Value < 0))
+            {
+                outcome = RoundOutCome.PlayerWonGame;
+                winner = player2;
+            }
+
+            if (player2.Cards.All(x => x.Value < 0))
+            {
+                outcome = RoundOutCome.PlayerWonGame;
+                winner = player1;
+            }
         }
     }
 }

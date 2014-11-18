@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<svg width="167.0869141" height="242.6669922" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata id="metadata43">image/svg+xml</metadata>
+ <defs>
+  <radialGradient gradientTransform="matrix(-1.5605256,0.01828294,-0.02684055,-2.2909528,123.98377,58.809108)" gradientUnits="userSpaceOnUse" r="9.5" fy="18.137882" fx="48.231091" cy="18.137882" cx="48.231091" id="radialGradient3760" xlink:href="#linearGradient2984"/>
+  <linearGradient id="linearGradient2984">
+   <stop stop-color="#000000" id="stop2986" offset="0"/>
+   <stop stop-color="#000000" stop-opacity="0.656489" id="stop2988" offset="1"/>
+  </linearGradient>
+  <radialGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.1529891,-0.67391547,0.39482025,0.67549043,-233.63262,270.40076)" r="81.902771" fy="511.22299" fx="171.48665" cy="511.22299" cx="171.48665" id="radialGradient3792" xlink:href="#linearGradient3784"/>
+  <linearGradient id="linearGradient3784">
+   <stop stop-color="#ffffff" stop-opacity="0.534351" id="stop3786" offset="0"/>
+   <stop stop-color="#000000" stop-opacity="0" id="stop3788" offset="1"/>
+  </linearGradient>
+  <radialGradient xlink:href="#linearGradient3784-4" id="radialGradient3855" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.1529891,-0.67391547,0.39482025,0.67549043,-233.63262,270.40076)" cx="171.48665" cy="511.22299" fx="171.48665" fy="511.22299" r="81.902771"/>
+  <linearGradient id="linearGradient3784-4">
+   <stop stop-color="#ffffff" stop-opacity="0.519084" id="stop3786-8" offset="0"/>
+   <stop stop-color="#000000" stop-opacity="0" id="stop3788-6" offset="1"/>
+  </linearGradient>
+  <radialGradient xlink:href="#linearGradient3784-3" id="radialGradient3916" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.1529891,-0.67391547,0.39482025,0.67549043,-233.63262,270.40076)" cx="181.69392" cy="461.84113" fx="181.69392" fy="461.84113" r="81.902771"/>
+  <linearGradient id="linearGradient3784-3">
+   <stop stop-color="#ffffff" stop-opacity="0.70229" id="stop3786-86" offset="0"/>
+   <stop stop-color="#000000" stop-opacity="0" id="stop3788-2" offset="1"/>
+  </linearGradient>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g fill-rule="nonzero" clip-rule="nonzero" stroke="#000000" stroke-miterlimit="4" id="Layer_x0020_1">
+   <path fill="#FFFFFF" stroke-width="0.5" id="path5" d="m166.836914,235.547852c0,3.777344 -3.086914,6.869141 -6.871094,6.869141l-152.85498,0c-3.7749,0 -6.86084,-3.091797 -6.86084,-6.869141l0,-228.427732c0,-3.77735 3.08594,-6.87012 6.86084,-6.87012l152.85498,0c3.78418,0 6.871094,3.09277 6.871094,6.87012l0,228.427732z"/>
+   <g id="g7">
+    <g id="g9"/>
+   </g>
+   <g id="g15"/>
+   <g id="g19"/>
+   <g id="g23">
+    <g id="g25"/>
+   </g>
+   <g id="g31">
+    <g id="g33"/>
+   </g>
+  </g>
+ </g>
+</svg>
