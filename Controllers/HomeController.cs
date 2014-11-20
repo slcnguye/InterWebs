@@ -26,6 +26,11 @@ namespace InterWebs.Controllers
             return View();
         }
 
+        public ActionResult Resume()
+        {
+            return View();
+        }
+
         public ActionResult Chat()
         {
             if (!User.Identity.IsAuthenticated)
