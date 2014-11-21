@@ -114,6 +114,26 @@ input[type="checkbox"].input-validation-error {
     margin-left: auto;
 }
 
+#resume .name {
+    text-align: center;
+}
+
+#resume .contact-info {
+    text-align: center;
+}
+
+@media (min-width: 991px) {
+    #resume .name {
+        text-align: right; 
+        padding-right: 35px
+    }
+
+    #resume .contact-info {
+        text-align: left;
+        border-left: thin solid black;
+    }
+}
+
 #resume .wrapper {
     border: 1px solid #999;
     padding: 10px;

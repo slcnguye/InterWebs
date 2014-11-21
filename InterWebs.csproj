@@ -248,6 +248,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Images\Playing Cards Back\Card_back.svg" />
+    <Content Include="Content\Images\Playing Cards Back\Card_blank.svg" />
     <Content Include="Content\Images\Playing Cards\ten_of_clubs.svg" />
     <Content Include="Content\Images\Playing Cards\ten_of_diamonds.svg" />
     <Content Include="Content\Images\Playing Cards\ten_of_hearts.svg" />
@@ -363,7 +364,6 @@
     <Content Include="Scripts\site\knockout-models\GameViewModel.js" />
     <Content Include="Scripts\site\knockout-models\ChatViewModel.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Scripts\site\knockout-models\IndexViewModel.js" />
     <Content Include="Scripts\site\knockout-models\models\Player.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -376,7 +376,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />

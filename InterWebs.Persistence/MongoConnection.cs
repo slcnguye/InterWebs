@@ -28,6 +28,8 @@ namespace InterWebs.Persistence
         {
             if (Production)
             {
+                return
+                    "mongodb://MongoLab-rs:UrnZqH1gN2IcBWVqxXWGBQz7pnlJWcSCI4UvgRmU4Gk-@ds045077.mongolab.com:45077/MongoLab-rs";
                 return Environment.GetEnvironmentVariable("CUSTOMCONNSTR_MONGOLAB_URI");
             }
 
