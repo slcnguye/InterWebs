@@ -1,85 +1,18 @@
-﻿<div>
-@*    <style type="text/css">*@
-@*        * {*@
-@*            font-family: "Calibri", arial, Helvetica, Sans-serif;*@
-@*            margin: 0;*@
-@*            padding: 0;*@
-@*        }*@
-@**@
-@*        h1 {*@
-@*            font-size: 36px;*@
-@*            margin-bottom: 10px;*@
-@*            margin-top: 10px;*@
-@*            color: #000;*@
-@*        }*@
-@**@
-@*        h2 {*@
-@*            font-size: 18px;*@
-@*            color: #333;*@
-@*            margin-top: 10px;*@
-@*            text-transform: uppercase;*@
-@*        }*@
-@**@
-@*        hr {*@
-@*            color: #000;*@
-@*        }*@
-@**@
-@*        .wrapper {*@
-@*            border: 1px solid #999;*@
-@*            padding: 10px;*@
-@*        }*@
-@**@
-@*        .border {*@
-@*            width: 1000px;*@
-@*            margin-top: 30px;*@
-@*            padding: 5px;*@
-@*            border: 1px solid #CCCCCC;*@
-@*            margin-right: auto;*@
-@*            margin-bottom: 30px;*@
-@*            margin-left: auto;*@
-@*        }*@
-@**@
-@*        p {*@
-@*            margin-left: 10px;*@
-@*            margin-top: 10px;*@
-@*        }*@
-@**@
-@*        ul {*@
-@*            margin-left: 40px;*@
-@*        }*@
-@**@
-@*        p1 {*@
-@*            margin-left: 40px;*@
-@*        }*@
-@**@
-@*        .indent {*@
-@*            padding-left: 30px;*@
-@*        }*@
-@**@
-@*        ul ul {*@
-@*            list-style-type: circle;*@
-@*        }*@
-@**@
-@*        li {*@
-@*            margin-left: 20px;*@
-@*            padding-top: 4px;*@
-@*        }*@
-@*    </style>*@
-
+﻿<div id="resume">
     <div class="border">
         <div class="wrapper">
 
             <table width="100%">
                 <tbody>
                     <tr>
-                        <td class="col-md-8" style="text-align: right; padding-right: 25px">
+                        <td class="col-md-8" style="text-align: right; padding-right: 35px">
                             <h1>SANG NGUYEN</h1>
                         </td>
 
-                        <td class="col-md-4" style="border-left: thick solid black;">
+                        <td class="col-md-4" style="border-left: thin solid black;">
                             <div>
                                 <i class="fa fa-envelope contact-icon"></i>
-                                slcnguye@gmail.com
+                                <a style="color: black" href="mailto:slcnguye@gmail.com">slcnguye@gmail.com</a>
                             </div>
                             <div>
                                 <i class="fa fa-mobile-phone contact-icon"></i>
@@ -87,11 +20,11 @@
                             </div>
                             <div>
                                 <i class="fa fa-linkedin contact-icon"></i>
-                                <a href="http://ca.linkedin.com/pub/sang-nguyen/4a/410/a43/" target="_blank">ca.linkedin.com/pub/sang-nguyen</a>
+                                <a style="color: black" href="http://ca.linkedin.com/pub/sang-nguyen/4a/410/a43/" target="_blank">ca.linkedin.com/pub/sang-nguyen</a>
                             </div>
                             <div>
                                 <i class="fa fa-github contact-icon"></i>
-                                <a href="http://github.com/slcnguye" target="_blank">github.com/slcnguye</a>
+                                <a style="color: black" href="http://github.com/slcnguye" target="_blank">github.com/slcnguye</a>
                             </div>
                         </td>
                     </tr>
@@ -99,21 +32,23 @@
                 </tbody>
             </table>
             
-            <hr noshade="noshade" size="2" width="100%" align="center">
-
-            <h2>Work Experience</h2>
+            <div style="border-bottom: thin solid black; padding-top: 10px;"></div>
+            
+            <div>
+                <i class="fa fa-briefcase fa-2x large-icon" style="float: left;"></i>
+                <h2>Work Experience</h2>
+            </div>
             <p>
                 <b>Software Engineer</b>, Ultimate Software Group Inc, Weston, FL
                 <br>January 2014 - Present
                 <br>
             </p>
             <ul>
-                <li>Contributor to the <a href="http://lnkd.in/bVd7PpE" target="_blank">Legend</a>, a domain-specific language, used for behavior-driven development and automated testing. Legend is a visual studio extension and provides a English-based testing language that integrate with automation frameworks like Selenium.</li>
+                <li>Added ElasticSearch multi-language search support to <a href="https://recruiting.ultipro.com/usg1006/">Recruitment</a>.</li>
+                <li>Designed and implemented the DairyParser, <a href="http://lnkd.in/bVd7PpE" target="_blank">Legend</a>'s language parser.</li>
                 <li>Developed <a href="http://www.ulticoder.com">UltiCoder</a>, an online coding competition hosted by Ultimate Software.</li>
-                <li>Prototyped UltiMatt during 48-Hour Hackathon, UltiMatt is a recruitment game tool where candidates solve each level by modifying sections of game code.</li>
-                <br>Technologies: Visual Studio 2013, TFS, C#, dotPeek, dotTrace, PHP and JIRA.
+                 Technologies: Visual Studio 2013, TFS, C#, dotPeek, dotTrace, PHP and JIRA.
             </ul>
-            <br>
 
             <p>
                 <b>Support Software Developer</b>, NCR Canada Ltd, Waterloo, ON
@@ -121,37 +56,49 @@
                 <br>
             </p>
             <ul>
-                <li>Part of the Software Support Engineering team for APTRA Passport a check-processing software.</li>
-                <li>Handled low to high priority issues through troubleshooting, analysing and fixing reported issues.</li>
-                <li>Added appropriate documentation for ongoing support and maintenance of APTRA Passport.</li>
-                <li>Commended for consistent and quality work.</li>
-                <br>Technologies: Hibernate, jMock, Maven, JasperReport, WebEx, Batch scripts, SVN, Tortoise, Microsoft SQL Server 2005, SOAP, MyEclipse, Glassfish, WebSphere, Jenkins, JIRA and Crucible.
+                <li>Handled low to high priority support issues through analyzing and fixing reported issues.</li>
+                Technologies: Hibernate, jMock, JasperReport, SVN, Microsoft SQL Server 2005, JIRA.
             </ul>
-            <br>
+
             <p>
                 <b>Web Application Developer</b>, Blue Coat Systems, Waterloo, ON
                 <br>January 2012 - December 2012
             </p>
             <ul>
-                <li>Full-stack development on RBAC web-application to manage multiple Blue Coat devices over many locations.</li>
-                <li>Agile, test-driven development and pair-programming.</li>
-                <br>Technologies: Intellij, Teamcity, JProfiler, Perforce, CodeCollaborator, Rally, Cucumber and Selenium.
+                <li>Implemented Java automation steps for Cucumber acceptance testing.</li>
+                Technologies: Java, Teamcity, JProfiler, Perforce, Cucumber and Selenium.
             </ul>
             
-            <hr noshade="noshade" size="2" width="100%" align="center">
+            <div style="border-bottom: thin solid darkgray; padding-top: 10px;"></div>
 
-            <h2>Education</h2>
+            <div>
+                <i class="fa fa-graduation-cap fa-2x large-icon" style="float: left;"></i>
+                <h2>Education</h2>
+            </div>
             <p><strong>Candidate for Bachelor of Math</strong>, Honors Computer Science and Minor in Economics, September 2010 - 2015<br>University of Waterloo, Waterloo, ON</p>
             <p><strong>University of Waterloo Dean's Honor List</strong>, Winter 2012</p>
             <p><strong>University of Waterloo President's Scholarship</strong>, Fall 2010</p>
 
-            <hr noshade="noshade" size="2" width="100%" align="center">
+            <div style="border-bottom: thin solid darkgray; padding-top: 10px;"></div>
 
-            <h2>Projects &amp; Achievements</h2>
-            <p><b>Ultimate Software 48-Hour Best Internal Tool Award</b>, April 2014</p>
+            <div>
+                <i class="fa fa-paper-plane fa-2x large-icon" style="float: left;"></i>
+                <h2>Projects &amp; Achievements</h2>
+            </div>
+            <p><b>Personal Website</b></p>
+            <ul>
+                <li>Contains many mini-projects including: card game, chat room.</li>
+            </ul>
+
+            <p><b>US-Analytics, Ultimate Software 48-Hour Best Internal Tool Award</b>, October 2014</p>
+            <ul>
+                <li>A javascript analytics library that gives the ability to track any sort of event. Similar to <a href="https://mixpanel.com/" target="_blank">mixpanel</a>.</li>
+            </ul>
+
+            <p><b>UltiMatt, Ultimate Software 48-Hour Best Internal Tool Award</b>, April 2014</p>
             <ul>
                 <li>Worked on development of a problem-solving game for recruiting.</li>
-                <li>Player would modify editable sections of code to solve each level of the game.</li>
+                <li>Players would modify editable sections of code to solve each level of the game.</li>
             </ul>
 
             <p>
@@ -159,7 +106,7 @@
                 <b>2nd Place - UltiCoder Team Competition</b>, March 2014
             </p>
             <ul>
-                <li>UltiCoder (https://ulticoder.com/) is an ACM style coding competition hosted by Ultimate Software.</li>
+                <li><a href="http://www.ulticoder.com">UltiCoder</a> is an ACM style coding competition hosted by Ultimate Software.</li>
             </ul>
 
             <p><b>PayPal Miami Battlehack</b>, February 2014</p>
