@@ -1,15 +1,17 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using MongoDB.Driver;
 
 namespace InterWebs.Persistence
 {
     public static class MongoConnection
     {
-        private static MongoClient _mongoClient;
+        private const bool Production = true;
+        private static MongoClient mongoClient;
 
         private static MongoClient MongoClient
         {
-            get { return _mongoClient ?? (_mongoClient = new MongoClient(GetConnectionString())); }
+            get { return mongoClient ?? (mongoClient = new MongoClient(GetConnectionString())); }
         }
 
         private static MongoServer MongoServer
@@ -19,11 +21,16 @@ namespace InterWebs.Persistence
 
         internal static MongoDatabase GetDatabase()
         {
-            return MongoServer.GetDatabase("InterWebs");
+            return MongoServer.GetDatabase("MongoLab-rs");
         }
 
-        private static string GetConnectionString()
+        public static string GetConnectionString()
         {
+            if (Production)
+            {
+                return Environment.GetEnvironmentVariable("CUSTOMCONNSTR_MONGOLAB_URI");
+            }
+
             var connectionStringBuilder = new StringBuilder();
             var serverName = GetServerName();
 

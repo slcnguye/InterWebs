@@ -29,9 +29,9 @@ namespace InterWebs.Controllers
 
             ViewBag.UserName = User.Identity.Name;
             ViewBag.Cards = Card.CardsSource;
-            ViewBag.CardPath = "/InterWebs/Content/Images/Playing Cards/";
-            ViewBag.BackCardPath = "/InterWebs/Content/Images/Playing Cards Back/Card_back.svg";
-            ViewBag.BlankCardPath = "/InterWebs/Content/Images/Playing Cards Back/Card_blank.svg";
+            ViewBag.CardPath = "/Content/Images/Playing Cards/";
+            ViewBag.BackCardPath = "/Content/Images/Playing Cards Back/Card_back.svg";
+            ViewBag.BlankCardPath = "/Content/Images/Playing Cards Back/Card_blank.svg";
             ViewBag.ChatMessages = chatMessageRepository.GetAll(x => x.ChatName == "All").ToList();
 
             return View();   

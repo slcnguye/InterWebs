@@ -46,6 +46,12 @@ Temporary Items
 /InterWebs.Domain/obj/Debug
 /InterWebs.Persistence/bin/Debug
 /InterWebs.Persistence/obj/Debug
+/InterWebs/Properties/PublishProfiles
 Web.Debug.config
 Web.Release.config
 InterWebs.csproj.user
+/InterWebs.Domain/bin/Release
+/InterWebs.Domain/obj/Release
+/InterWebs.Persistence/bin/Release
+/InterWebs.Persistence/obj/Release
+/Properties/PublishProfiles
