@@ -122,7 +122,31 @@ input[type="checkbox"].input-validation-error {
     text-align: center;
 }
 
-@media (min-width: 991px) {
+#resume .horizontal-black-line {
+    border-bottom: thin solid black; 
+    padding-top: 10px;
+}
+
+#resume .horizontal-gray-line {
+    border-bottom: thin solid darkgray; 
+    padding-top: 10px;
+}
+
+#resume .body {
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 40px;
+}
+
+
+
+@media (min-width: 768px) {
+    #resume .body {
+        margin-left: auto;
+        margin-right: auto;
+        width: 650px;
+    }
+
     #resume .name {
         text-align: right; 
         padding-right: 35px
@@ -134,9 +158,25 @@ input[type="checkbox"].input-validation-error {
     }
 }
 
+@media (min-width: 1200px) {
+    #resume {
+        width: 85%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #resume .body {
+        margin-left: auto;
+        margin-right: auto;
+        width: 750px;
+    }
+}
+
 #resume .wrapper {
     border: 1px solid #999;
-    padding: 10px;
+    padding-top: 10px;
+    padding-left: 3%;
+    padding-right: 3%;
 }
 
 #resume .contact-icon {
