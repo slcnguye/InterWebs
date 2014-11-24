@@ -6,7 +6,7 @@ namespace InterWebs.Models.Game
     {
         private readonly List<Card> cards = new List<Card>();
         private string name = "";
-        private int playedCard = -1;
+        private int playedCardIndex = -1;
 
         public string Name
         {
@@ -19,10 +19,10 @@ namespace InterWebs.Models.Game
             get { return cards; }
         }
 
-        public int PlayedCard
+        public int PlayedCardIndex
         {
-            get { return playedCard; }
-            set { playedCard = value; }
+            get { return playedCardIndex; }
+            set { playedCardIndex = value; }
         }
 
         public int Id { get; set; }

@@ -35,8 +35,8 @@ namespace InterWebs.Models.Game
             player1Deck = new Deck(cards.GetRange(0, 26));
             player2Deck = new Deck(cards.GetRange(26, 26));
 
-            player1.PlayedCard = -1;
-            player2.PlayedCard = -1;
+            player1.PlayedCardIndex = -1;
+            player2.PlayedCardIndex = -1;
             player1.Cards.Clear();
             player2.Cards.Clear();
             for (var i = 0; i < CardsPerHand; i++)
@@ -49,8 +49,8 @@ namespace InterWebs.Models.Game
         public void PlayRound(out Player winner, out RoundOutCome outcome)
         {
             winner = null;
-            var p1Card = player1.Cards[player1.PlayedCard];
-            var p2Card = player2.Cards[player2.PlayedCard];
+            var p1Card = player1.Cards[player1.PlayedCardIndex];
+            var p2Card = player2.Cards[player2.PlayedCardIndex];
 
 
             var compareRank = p1Card.CompareTo(p2Card);
@@ -71,10 +71,10 @@ namespace InterWebs.Models.Game
             }
 
             // Draw new cards
-            player1.Cards[player1.PlayedCard] = player1Deck.DrawCard();
-            player2.Cards[player2.PlayedCard] = player2Deck.DrawCard();
-            player1.PlayedCard = -1;
-            player2.PlayedCard = -1;
+            player1.Cards[player1.PlayedCardIndex] = player1Deck.DrawCard();
+            player2.Cards[player2.PlayedCardIndex] = player2Deck.DrawCard();
+            player1.PlayedCardIndex = -1;
+            player2.PlayedCardIndex = -1;
 
             if (player1.Cards.All(x => x.Value < 0))
             {

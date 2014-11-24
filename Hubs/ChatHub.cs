@@ -21,29 +21,29 @@ namespace InterWebs.Hubs
             return base.OnDisconnected(stopCalled);
         }
 
-        public Task Send(string message)
+        public void Send(string message)
         {
             var userName = UserConnection[Context.ConnectionId];
-            return Clients.Others.newMessage(userName, message);
+            Task.Run(() => Clients.Others.newMessage(userName, message));
         }
 
-        private async void UserJoinedChat()
+        private void UserJoinedChat()
         {
             var userName = Context.User.Identity.Name;
             var userExists = UserConnection.Values.Any(x => x == userName);
             UserConnection[Context.ConnectionId] = userName;
-            await Clients.Caller.UsersInChat(UserConnection.Values.Distinct());
+            Task.Run(() => Clients.Caller.UsersInChat(UserConnection.Values.Distinct()));
             if (!userExists)
             {
-                await Clients.Others.UserJoinedChat(userName);
+                Task.Run(() => Clients.Others.UserJoinedChat(userName));
             }
         }
 
-        private async void UserLeftChat()
+        private void UserLeftChat()
         {
             string userName;
             UserConnection.TryRemove(Context.ConnectionId, out userName);
-            await Clients.Others.userLeftChat(userName);
+            Task.Run(() => Clients.Others.userLeftChat(userName));
         }
     }
 }

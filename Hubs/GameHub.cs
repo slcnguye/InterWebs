@@ -31,20 +31,21 @@ namespace InterWebs.Hubs
             return base.OnDisconnected(stopCalled);
         }
 
-        private async void UserJoinedGame()
+        private void UserJoinedGame()
         {
             var userName = Context.User.Identity.Name;
 
             var userExists = UserConnection.Values.Any(x => x == userName);
             UserConnection[Context.ConnectionId] = userName;
-            await Clients.Caller.UsersInGame(UserConnection.Values.Distinct());
+
+            Task.Run(() => Clients.Caller.UsersInGame(UserConnection.Values.Distinct()));
             if (!userExists)
             {
-                await Clients.Others.UserJoinedGame(userName);
+                Task.Run(() => Clients.Others.UserJoinedGame(userName));
             }
         }
 
-        private async void UserLeftGame()
+        private void UserLeftGame()
         {
             string userName;
             UserConnection.TryRemove(Context.ConnectionId, out userName);
@@ -57,10 +58,11 @@ namespace InterWebs.Hubs
                 }
 
                 WarGame.Players[i].Name = string.Empty;
-                await Clients.Others.UserLeftGameTable(i);
+                var playerIndex = i;
+                Task.Run(() => Clients.Others.UserLeftGameTable(playerIndex));
             }
 
-            await Clients.Others.UserLeftGame(userName);
+            Task.Run(() => Clients.Others.UserLeftGame(userName));
         }
 
         public Player GetPlayer(int position)
@@ -72,10 +74,10 @@ namespace InterWebs.Hubs
 
         public IEnumerable<Player> GetAllPlayerNames()
         {
-            return WarGame.Players.Select(x => new Player {Id = x.Id, Name = x.Name, PlayedCard = x.PlayedCard});
+            return WarGame.Players.Select(x => new Player {Id = x.Id, Name = x.Name, PlayedCardIndex = x.PlayedCardIndex});
         }
 
-        public async void PlayCard(int cardIndex)
+        public void PlayCard(int cardIndex)
         {
             var playerName = Context.User.Identity.Name;
             var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName);
@@ -84,21 +86,24 @@ namespace InterWebs.Hubs
                 return;
             }
 
-            player.PlayedCard = cardIndex;
-            await Clients.Others.CardPlayed(player.Id, cardIndex);
+            player.PlayedCardIndex = cardIndex;
+            Task.Run(() => Clients.Others.CardPlayed(player.Id, cardIndex));
 
-            if (WarGame.Players.Any(x => x.PlayedCard == -1)) 
+            if (WarGame.Players.Any(x => x.PlayedCardIndex == -1)) 
             {
                 return;
             }
 
             var player1 = WarGame.Players[0];
+            var p1CardPlayedIndex = player1.PlayedCardIndex;
+            var p1CardPlayedValue = player1.Cards[p1CardPlayedIndex].Value;
+            
             var player2 = WarGame.Players[1];
-            var p1CardPlayed = player1.PlayedCard;
-            var p2CardPlayed = player2.PlayedCard;
+            var p2CardPlayedIndex = player2.PlayedCardIndex;
+            var p2CardPlayedValue = player2.Cards[p2CardPlayedIndex].Value;
 
-            Clients.All.ShowCard(player1.Id, p1CardPlayed, player1.Cards[p1CardPlayed].Value);
-            Clients.All.ShowCard(player2.Id, p2CardPlayed, player2.Cards[p2CardPlayed].Value);
+            Task.Run(() => Clients.All.ShowCard(player1.Id, p1CardPlayedIndex, p1CardPlayedValue));
+            Task.Run(() => Clients.All.ShowCard(player2.Id, p2CardPlayedIndex, p2CardPlayedValue));
             
             Player winner;
             WarGame.RoundOutCome outcome;
@@ -107,13 +112,13 @@ namespace InterWebs.Hubs
             switch (outcome)
             {
                 case WarGame.RoundOutCome.Draw:
-                    await Clients.All.RoundOutcome("Draw");
+                    Task.Run(() => Clients.All.RoundOutcome("Draw"));
                     break;
                 case WarGame.RoundOutCome.PlayerWonGame:
-                    await Clients.All.RoundOutcome(winner.Name + " won the game!");
+                    Task.Run(() => Clients.All.RoundOutcome(winner.Name + " won the game!"));
                     break;
                 case WarGame.RoundOutCome.PlayerWonRound:
-                    await Clients.All.RoundOutcome(winner.Name + " won the round!");
+                    Task.Run(() => Clients.All.RoundOutcome(winner.Name + " won the round!"));
                     break;
             }
         }
@@ -141,7 +146,7 @@ namespace InterWebs.Hubs
             return player.Cards[cardIndex].Value;
         }
 
-        public async void UnplayCard(int cardIndex)
+        public void UnplayCard(int cardIndex)
         {
             var playerName = Context.User.Identity.Name;
             var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName);
@@ -150,40 +155,41 @@ namespace InterWebs.Hubs
                 return;
             }
 
-            player.PlayedCard = -1;
+            player.PlayedCardIndex = -1;
             
-            await Clients.Others.CardUnplayed(player.Id);
+            Task.Run(() => Clients.Others.CardUnplayed(player.Id));
         }
 
-        public async void ShuffleDeck()
+        public void ShuffleDeck()
         {
             WarGame.StartNewGame();
-            await Clients.All.NewGame();
+            Task.Run(() => Clients.All.NewGame());
             foreach (var player in WarGame.Players)
             {
-                Clients.Group(player.Name).DrawCard(player.Id, 0, player.Cards[0].Value);
-                await Clients.Group(player.Name).DrawCard(player.Id, 1, player.Cards[1].Value);
+                var playerCopy = player;
+                Task.Run(() => Clients.Group(playerCopy.Name).DrawCard(playerCopy.Id, 0, playerCopy.Cards[0].Value));
+                Task.Run(() => Clients.Group(playerCopy.Name).DrawCard(playerCopy.Id, 1, playerCopy.Cards[1].Value));
             }
         }
 
-        public Task JoinGameTable(int player)
+        public void JoinGameTable(int player)
         {
             var userName = Context.User.Identity.Name;
             if (string.IsNullOrWhiteSpace(userName))
             {
-                return null;
+                return;
             }
 
             Groups.Add(Context.ConnectionId, userName);
             WarGame.Players[player].Name = userName;
-            return Clients.Others.UserJoinedGameTable(userName, player);
+            Task.Run(() => Clients.Others.UserJoinedGameTable(userName, player));
         }
 
-        public Task LeaveGameTable(int player)
+        public void LeaveGameTable(int player)
         {
             Groups.Remove(Context.ConnectionId, WarGame.Players[player].Name);
             WarGame.Players[player].Name = string.Empty;
-            return Clients.Others.UserLeftGameTable(player);
+            Task.Run(() => Clients.Others.UserLeftGameTable(player));
         }
     }
 }
