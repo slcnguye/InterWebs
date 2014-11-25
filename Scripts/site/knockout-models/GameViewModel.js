@@ -182,8 +182,6 @@
 
         self.signalRClient.newGame = function () {
             self.players.forEach(function (player) {
-                player().cards()[0]({ src: self.getCard(-1), index: 0 });
-                player().cards()[1]({ src: self.getCard(-1), index: 1 });
                 player().selectedCard(-1);
             });
         }
