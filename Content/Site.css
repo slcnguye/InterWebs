@@ -93,6 +93,10 @@
     text-align: center;
 }
 
+#resume .contact-info {
+    text-align: center;
+}
+
 #resume .horizontal-black-line {
     border-bottom: thin solid black; 
     padding-top: 10px;
