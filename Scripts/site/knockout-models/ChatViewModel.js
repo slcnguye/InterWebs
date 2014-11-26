@@ -26,6 +26,10 @@
         self.activeUsers = ko.observableArray([]);
 
         self.signalRClient.usersInChat = function (users) {
+            if (!object.user || object.user == "") {
+                self.activeUsers.push($.t('Chat.YouAsGuest'));
+            }
+
             ko.utils.arrayPushAll(self.activeUsers, users);
         }
 

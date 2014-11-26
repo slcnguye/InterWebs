@@ -40,6 +40,11 @@ namespace InterWebs.Controllers
         [HttpPost]
         public void StoreChatMessage(string message)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return;
+            }
+
             var chatMessage = new ChatMessage
             {
                 ChatName = "All",

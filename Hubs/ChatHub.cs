@@ -24,6 +24,11 @@ namespace InterWebs.Hubs
         public void Send(string message)
         {
             var userName = UserConnection[Context.ConnectionId];
+            if (string.IsNullOrWhiteSpace(userName))
+            {
+                return;
+            }
+
             Task.Run(() => Clients.Others.newMessage(userName, message));
         }
 

@@ -1,5 +1,9 @@
 ﻿@using InterWebs.Extension
 
+@{
+    ViewBag.Title = "Game - Sang Nguyen";
+}
+
 <div id="Game">
     <div class="col-md-8">
         <div class="panel panel-info" data-bind="with: gameBoxView">
@@ -57,7 +61,7 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane username-list panel-body panel-user-info" id="sidetab-users" data-bind="foreach: activeGameUsersView.activeUsers">
+                    <div class="tab-pane username-list panel-body panel-side-info" id="sidetab-users" data-bind="foreach: activeGameUsersView.activeUsers">
                         <h5 data-bind="text: $data" style="font-weight: bold"></h5>
                     </div>
                     <div class="tab-pane active" id="sidetab-chat" data-bind="with: chatBoxView">
@@ -70,7 +74,7 @@
                             <form class="input-group">
                                 <input type="text" class="form-control" data-bind="enable: loadedMessages && !$parent.guestUser(), textInput: message, attr: {placeholder: $.t('Chat.EnterMessage')}, hasFocus: enterMessageFocus, executeOnEnter: sendMessage">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" data-bind="text: $.t('Chat.Send'), enable: message && !$parent.guestUser(), click: sendMessage"></button>
+                                    <button class="btn btn-default" type="button" data-bind="text: $.t('Chat.Send'), enable: message().length > 0 && !$parent.guestUser(), click: sendMessage"></button>
                                 </span>
                             </form>
                         </div>

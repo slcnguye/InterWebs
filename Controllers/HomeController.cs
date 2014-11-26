@@ -26,11 +26,6 @@ namespace InterWebs.Controllers
 
         public ActionResult Chat()
         {
-            if (!User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index");
-            }
-
             ViewBag.UserName = User.Identity.Name;
             ViewBag.ChatMessages = chatMessageRepository.GetAll(x => x.ChatName == "All").ToList();
             return View();   
@@ -39,6 +34,11 @@ namespace InterWebs.Controllers
         [HttpPost]
         public void StoreChatMessage(string message)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return;
+            }
+
             var chatMessage = new ChatMessage
             {
                 ChatName = "All",
