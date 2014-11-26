@@ -291,6 +291,7 @@
     <Content Include="Content\Images\Playing Cards\ace_of_clubs.svg" />
     <Content Include="Content\Images\Playing Cards\ace_of_diamonds.svg" />
     <Content Include="Content\Images\Playing Cards\ace_of_hearts.svg" />
+    <Content Include="Content\Images\Self\Sang Nguyen.png" />
     <Content Include="Content\Images\Unused Playing Cards\ace_of_spades.svg" />
     <Content Include="Content\Images\Playing Cards\ace_of_spades2.svg" />
     <Content Include="Content\Images\Unused Playing Cards\black_joker.svg" />

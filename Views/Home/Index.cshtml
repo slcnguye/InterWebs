@@ -3,28 +3,38 @@
 }
 
 <div id="Index">
-    <div class="well">
-        <h1>Welcome to my personal website</h1>
-        <p class="lead">Here lies side-projects + things about me. Open for your perusal!</p>
+    <div class="well well-lg">
+        <div class="row">
+            <img class="col-xxs-12 col-xs-3 col-md-2" src="~/Content/Images/Self/Sang Nguyen.png" alt="Image of myself" />
+            <div class="col-xxs-12 col-xs-9 col-md-10">
+                <h1>Greetings and salutations!</h1>
+                <p class="lead navbar-text">
+                    Welcome to my personal website. Here lies side-projects + things about me.
+                    <br />
+                    Open for your perusal!
+                </p>
+            </div>
+        </div>
     </div>
     
-    <div>
-        <h3>About Me</h3>
-        <p>
-            I often like to remind myself that learning is a skill. 
-            You need to learn to learn and like anything else the more you practice the better you get.
-            Your brain is like a map and everytime you learn you build a road. 
-            Naturally with more roads you get from one place to another quicker. 
-        </p>
-        <p class="hidden-xs">
-            Besides learning I also enjoy traveling. Below is a map of cities that I've traveled to. 
-            <br/>
-            I look forward to the next pin :)
-        </p>
-    </div>
-
-    <div class="row hidden-xs" style="margin-left: auto; margin-right: auto; width: 100%;">
-        <iframe style="width: 100%; height: 500px" src="https://mapsengine.google.com/map/u/0/embed?mid=zW8XZOtp1DNo.kpZVES8tJYUQ"></iframe>
+    <div class="panel panel-default">
+        <div class="panel-heading hidden-xs"><h3>About Me</h3></div>
+        <div class="panel-body">
+            <p class="navbar-text">
+                I often like to remind myself that learning is a skill.
+                You need to learn to learn and like anything else the more you practice the better you get.
+                Your brain is like a map and everytime you learn you build a road.
+                Naturally with more roads you get from one place to another quicker.
+            </p>
+            <p class="hidden-xs navbar-text">
+                Besides learning I also enjoy traveling. Below is a map of cities that I've traveled to.
+                <br>
+                I look forward to the next pin :)
+            </p>
+        </div>
+        <div class="row hidden-xs google-maps">
+            <iframe style="width: 100%; height: 500px" src="https://mapsengine.google.com/map/u/0/embed?mid=zW8XZOtp1DNo.kpZVES8tJYUQ"></iframe>
+        </div>
     </div>
 </div>
 
