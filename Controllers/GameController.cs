@@ -17,7 +17,7 @@ namespace InterWebs.Controllers
             this.chatMessageRepository = chatMessageRepository;
         }
 
-
+        [Route("projects/game")]
         public ActionResult Game()
         {
             if (Card.CardsSource == null)

@@ -14,16 +14,19 @@ namespace InterWebs.Controllers
             this.chatMessageRepository = chatMessageRepository;
         }
 
+        [Route("")]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Route("resume")]
         public ActionResult Resume()
         {
             return View();
         }
 
+        [Route("projects/chat")]
         public ActionResult Chat()
         {
             ViewBag.UserName = User.Identity.Name;
