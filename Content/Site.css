@@ -2,11 +2,13 @@
     padding-bottom: 20px;
 }
 
-/* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom: 50px;
+    padding-bottom: 15px;
+}
+
+.menu-icons {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
 }
 
 .no-margin {
@@ -80,7 +82,6 @@
 }
 
 #resume .border {
-    margin-top: 30px;
     padding: 5px;
     border: 1px solid #CCCCCC;
     margin-right: auto;
@@ -89,10 +90,6 @@
 }
 
 #resume .name {
-    text-align: center;
-}
-
-#resume .contact-info {
     text-align: center;
 }
 
@@ -152,7 +149,6 @@
 }
 
 #resume .contact-icon {
-    width: 14px;
     text-align: center;
 }
 

@@ -1,5 +1,6 @@
 ﻿{
 	"Chat": {
+		"LoginToChat": "You must be logged in to chat.",
 		"ActiveUsers": "Active Users",
 		"ChatRoom": "Chat Room",
 		"EnterMessage": "Enter Message",
@@ -7,6 +8,8 @@
 		"YouAsGuest": "You (Guest)"
 	},
 	"Game": {
+		"LoginToPlayAndChat": "You must be logged in to play or chat.",
+		"LoginToPlay": "You must be logged in to play.",
 		"GameRoom": "Game Room",
 		"Join": "Join",
 		"Leave": "Leave",
@@ -14,5 +17,8 @@
 		"Chat": "Chat",
 		"Shuffle": "Shuffle",
 		"RoundWinner": "__player__ won the round"
+	},
+	"Info": { 
+		"HeadsUp": "Heads up!"
 	}
 }

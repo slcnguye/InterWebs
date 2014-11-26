@@ -3,7 +3,8 @@
         var self = this;
         self.gameSignalR = $.connection.gameHub;
         self.chatSignalR = $.connection.chatHub;
-        
+        self.user = object.user;
+
         self.activeGameUsersView = new IW.All.ActiveGameUsersView({
             signalRClient: self.gameSignalR.client,
             user: object.user

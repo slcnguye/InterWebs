@@ -4,6 +4,8 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@ViewBag.Title</title>
+        <link rel="shortcut icon" href="~/Content/Icons/logo-sang2.ico">
+
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
         @Scripts.Render("~/bundles/jquery")
@@ -11,21 +13,16 @@
         @Scripts.Render("~/bundles/knockout")
         @Scripts.Render("~/bundles/site")
         @Scripts.Render("~/bundles/i18n")
-        @RenderSection("scripts", required: false)
+        @RenderSection("scripts", false)
     </head>
     <body>
-        <div class="navbar navbar-inverse navbar-static-top">
-            <div class="container">
-
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
+        @Html.Partial("_NavigationMenu")
         <div class="container body-content">
             @RenderBody()
         </div>
         <div class="panel-footer navbar-fixed-bottom">
             <div class="container">
-                <p class="text-muted no-margin">&copy; @DateTime.Now.Year - Sang's Application</p>
+                <p class="text-muted no-margin">&copy; @DateTime.Now.Year - Sang Nguyen</p>
             </div>
         </div>
     </body>

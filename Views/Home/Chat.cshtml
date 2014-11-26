@@ -5,6 +5,10 @@
 }
 
 <div id="Chat">
+    <div class="alert alert-warning" role="alert" style="display: none;" data-bind="visible: !user || user.length <= 0">
+        <strong data-i18n="Info.HeadsUp"></strong>
+        <p data-i18n="Chat.LoginToChat"></p>
+    </div>
     <div class="col-md-8">
         <div class="panel panel-info" data-bind="with: chatBoxView">
             <div class="panel-heading">

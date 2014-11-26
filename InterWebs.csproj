@@ -247,6 +247,9 @@
     </Content>
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Icons\logo-sang.ico" />
+    <Content Include="Content\Icons\logo-sang1.ico" />
+    <Content Include="Content\Icons\logo-sang2.ico" />
     <Content Include="Content\Images\Playing Cards Back\Card_back.svg" />
     <Content Include="Content\Images\Playing Cards Back\Card_blank.svg" />
     <Content Include="Content\Images\Playing Cards\ten_of_clubs.svg" />
@@ -386,7 +389,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_NavigationMenu.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
     <Content Include="Views\Game\Game.cshtml" />
     <Content Include="Views\Home\Resume.cshtml" />

@@ -5,6 +5,16 @@
 }
 
 <div id="Game">
+    <div style="display: none;" data-bind="visible: !user || user.length <= 0">
+        <div class="alert alert-warning hidden-md hidden-print hidden-lg" role="alert">
+            <strong data-i18n="Info.HeadsUp"></strong>
+            <p data-i18n="Game.LoginToPlay"></p>
+        </div>
+        <div class="alert alert-warning hidden-xs hidden-sm" role="alert">
+            <strong data-i18n="Info.HeadsUp"></strong>
+            <p data-i18n="Game.LoginToPlayAndChat"></p>
+        </div>
+    </div>
     <div class="col-md-8">
         <div class="panel panel-info" data-bind="with: gameBoxView">
             <div class="panel-heading">
