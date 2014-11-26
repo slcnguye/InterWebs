@@ -8,11 +8,11 @@ using Newtonsoft.Json;
 
 namespace InterWebs.Controllers
 {
-    public class GameController : Controller
+    public class ProjectsController : Controller
     {
         private readonly IPersistenceOrientedRepository<ChatMessage> chatMessageRepository;
 
-        public GameController(IPersistenceOrientedRepository<ChatMessage> chatMessageRepository)
+        public ProjectsController(IPersistenceOrientedRepository<ChatMessage> chatMessageRepository)
         {
             this.chatMessageRepository = chatMessageRepository;
         }
@@ -35,6 +35,14 @@ namespace InterWebs.Controllers
             ViewBag.ChatMessages = chatMessageRepository.GetAll(x => x.ChatName == "All").ToList();
 
             return View();   
+        }
+
+        [Route("projects/chat")]
+        public ActionResult Chat()
+        {
+            ViewBag.UserName = User.Identity.Name;
+            ViewBag.ChatMessages = chatMessageRepository.GetAll(x => x.ChatName == "All").ToList();
+            return View();
         }
 
         [HttpPost]

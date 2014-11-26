@@ -220,7 +220,7 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\GameController.cs" />
+    <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Extension\HtmlExtensionMethods.cs" />
     <Compile Include="Global.asax.cs">
@@ -391,8 +391,8 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_NavigationMenu.cshtml" />
-    <Content Include="Views\Home\Chat.cshtml" />
-    <Content Include="Views\Game\Game.cshtml" />
+    <Content Include="Views\Projects\Chat.cshtml" />
+    <Content Include="Views\Projects\Game.cshtml" />
     <Content Include="Views\Home\Resume.cshtml" />
   </ItemGroup>
   <ItemGroup />
