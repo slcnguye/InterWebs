@@ -36,9 +36,9 @@ namespace InterWebs
                 "~/Scripts/i18next-{version}.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css",
-                      "~/Content/font-awesome.css"));
+                      "~/Content/Styles/bootstrap.css",
+                      "~/Content/Styles/site.less",
+                      "~/Content/Styles/font-awesome.css"));
         }
     }
 }
