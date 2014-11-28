@@ -12,18 +12,18 @@
         <title>@ViewBag.Title</title>
         <link rel="shortcut icon" href="~/Content/Icons/logo-sang2.ico">
 
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @Scripts.Render("~/bundles/knockout")
-        @Scripts.Render("~/bundles/site")
-        @Scripts.Render("~/bundles/i18n")
+        @Styles.Render(BundleConfig.ContentStyles)
+        @Scripts.Render(BundleConfig.BundlesModernizr)
+        @Scripts.Render(BundleConfig.BundlesJquery)
+        @Scripts.Render(BundleConfig.BundlesBootstrap)
+        @Scripts.Render(BundleConfig.BundlesKnockout)
+        @Scripts.Render(BundleConfig.BundlesSite)
+        @Scripts.Render(BundleConfig.BundlesI18N)
         @RenderSection("scripts", false)
     </head>
     <body>
         @Html.Partial("_NavigationMenu")
-        <div class="container body-content">
+        <div class="container">
             @RenderBody()
         </div>
     </body>
