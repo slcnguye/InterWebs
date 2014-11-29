@@ -338,7 +338,7 @@
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Styles\Site.less" />
+    <Content Include="Content\Styles\site\site.less" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
@@ -354,8 +354,12 @@
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Content\Styles\site\resume.less" />
+    <Content Include="Content\Styles\site\bootstrap-extension.less" />
+    <Content Include="Content\Styles\site\index.less" />
     <None Include="Properties\PublishProfiles\sangnguyen - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\sangnguyen - Web Deploy.pubxml" />
+    <Content Include="README.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18next-1.7.4.js" />
     <Content Include="Scripts\i18next-1.7.4.min.js" />

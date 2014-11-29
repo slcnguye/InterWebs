@@ -40,8 +40,8 @@
 
             bundles.Add(new StyleBundle(ContentStyles)
                 .Include("~/Content/Styles/bootstrap.css")
-                .Include("~/Content/Styles/site.less")
-                .Include("~/Content/Styles/font-awesome.css"));
+                .Include("~/Content/Styles/font-awesome.css")
+                .IncludeDirectory("~/Content/Styles", "*.less", true));
         }
     }
 }

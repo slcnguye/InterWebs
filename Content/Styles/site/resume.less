@@ -1,0 +1,91 @@
+#resume {
+    .border {
+        padding: 5px;
+        border: 1px solid #CCCCCC;
+        margin-right: auto;
+        margin-bottom: 30px;
+        margin-left: auto;
+    }
+
+    .name {
+        text-align: center;
+    }
+
+    .contact-info {
+        text-align: center;
+    }
+
+    .horizontal-line {
+        padding-top: 10px;
+        border-bottom: thin solid;
+    }
+
+    .horizontal-black-line {
+        .horizontal-line;
+        border-bottom-color: black;
+        padding-top: 10px;
+    }
+
+    .horizontal-gray-line {
+        .horizontal-line;
+        border-bottom-color: darkgray;
+        padding-top: 10px;
+    }
+
+    .body {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .wrapper {
+        border: 1px solid #999;
+        padding-top: 10px;
+        padding-left: 3%;
+        padding-right: 3%;
+    }
+
+    .contact-icon {
+        text-align: center;
+    }
+
+    .large-icon {
+        width: 28px;
+        text-align: center;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+
+@media (min-width: 768px) {
+    #resume {
+        .body {
+            margin-left: auto;
+            margin-right: auto;
+            width: 650px;
+        }
+
+        .name {
+            text-align: right;
+            padding-right: 35px;
+        }
+
+        .contact-info {
+            text-align: left;
+            border-left: thin solid black;
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+    #resume {
+        width: 85%;
+        margin-left: auto;
+        margin-right: auto;
+
+        .body {
+            margin-left: auto;
+            margin-right: auto;
+            width: 750px;
+        }
+    }
+}
