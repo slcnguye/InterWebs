@@ -3,7 +3,25 @@
         var self = this;
         self.gameSignalR = $.connection.gameHub;
         self.chatSignalR = $.connection.chatHub;
-        self.user = object.user;
+        self.newUsername = ko.observable();
+        self.showWelcomeMessage = ko.observable(false);
+        self.user = ko.observable(object.user);
+
+        self.setUsername = function() {
+            if (self.user() != self.newUsername()) {
+                self.showWelcomeMessage(true);
+                $.post(object.setUsername + "?username=" + self.newUsername());
+                self.user(self.newUsername());
+
+                self.gameSignalR.server.addUser(self.user());
+                self.activeGameUsersView.setUsername(self.user());
+                self.gameBoxView.setUsername(self.user());
+                self.chatBoxView.setUsername(self.user());
+                setTimeout(function () {
+                    self.showWelcomeMessage(false);
+                }, 5000);
+            }
+        }
 
         self.activeGameUsersView = new IW.All.ActiveGameUsersView({
             signalRClient: self.gameSignalR.client,
@@ -29,7 +47,7 @@
         });
 
         self.guestUser = function () {
-            return !object.user || object.user == "";
+            return !self.user() || self.user() == "";
         }
 
         $.connection.hub.start({ jsonp: true }).done(
@@ -56,6 +74,10 @@
             ko.observable(new IW.All.Player({ playerId: 0, name: "" })),
             ko.observable(new IW.All.Player({ playerId: 1, name: "" }))
         ];
+
+        self.setUsername = function(username) {
+            self.user = username;
+        }
 
         self.cardClicked = function (cardInfo, event) {
             if (disableGameInteractions || !self.user || self.user == "") {
@@ -207,12 +229,22 @@
         self.signalRClient = object.signalRClient;
         self.activeUsers = ko.observableArray([]);
 
+        self.setUsername = function (username) {
+            self.activeUsers.remove($.t('Chat.YouAsGuest'));
+            self.activeUsers.unshift(username);
+        }
+
         self.signalRClient.usersInGame = function (users) {
             if (!object.user || object.user == "") {
                 self.activeUsers.push($.t('Chat.YouAsGuest'));
             }
 
             ko.utils.arrayPushAll(self.activeUsers, users);
+
+            var userIndex = self.activeUsers.indexOf(object.user);
+            if (userIndex == -1) {
+                self.activeUsers.unshift(object.user);
+            }
         }
 
         self.signalRClient.userJoinedGame = function (username) {

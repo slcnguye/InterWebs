@@ -11,6 +11,10 @@
         self.message = ko.observable("");
         self.loadedMessages = ko.observable(false);
 
+        self.setUsername = function (username) {
+            self.user = username;
+        }
+
         self.addChatHistory = function () {
             var messages = ko.observableArray([]).extend({ scrollFollow: '#ChatMessages' });
             object.chatMessages.forEach(function (message) {

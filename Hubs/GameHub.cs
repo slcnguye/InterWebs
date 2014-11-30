@@ -33,16 +33,18 @@ namespace InterWebs.Hubs
 
         private void UserJoinedGame()
         {
-            var userName = Context.User.Identity.Name;
-
-            var userExists = UserConnection.Values.Any(x => x == userName);
-            UserConnection[Context.ConnectionId] = userName;
-
+            var userName = Context.RequestCookies.ContainsKey("username")
+                ? Context.RequestCookies["username"].Value
+                : null;
+            
             Task.Run(() => Clients.Caller.UsersInGame(UserConnection.Values.Distinct()));
-            if (!userExists)
+
+            if (userName == null)
             {
-                Task.Run(() => Clients.Others.UserJoinedGame(userName));
+                return;
             }
+
+            AddUser(userName);
         }
 
         private void UserLeftGame()
@@ -65,9 +67,19 @@ namespace InterWebs.Hubs
             Task.Run(() => Clients.Others.UserLeftGame(userName));
         }
 
+        public void AddUser(string username)
+        {
+            var userExists = UserConnection.Values.Any(x => x == username);
+            UserConnection[Context.ConnectionId] = username;
+            if (!userExists)
+            {
+                Task.Run(() => Clients.Others.UserJoinedGame(username));
+            }
+        }
+
         public Player GetPlayer(int position)
         {
-            var playerName = Context.User.Identity.Name;
+            var playerName = GetUserName();
             var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName);
             return player;
         }
@@ -79,7 +91,7 @@ namespace InterWebs.Hubs
 
         public void PlayCard(int cardIndex)
         {
-            var playerName = Context.User.Identity.Name;
+            var playerName = GetUserName();
             var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName);
             if (player == null || playerName == string.Empty)
             {
@@ -136,7 +148,7 @@ namespace InterWebs.Hubs
 
         public int GetCard(int cardIndex, int playerId)
         {
-            var playerName = Context.User.Identity.Name;
+            var playerName = GetUserName();
             var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName && x.Id == playerId);
             if (player == null)
             {
@@ -148,7 +160,7 @@ namespace InterWebs.Hubs
 
         public void UnplayCard(int cardIndex)
         {
-            var playerName = Context.User.Identity.Name;
+            var playerName = GetUserName();
             var player = WarGame.Players.FirstOrDefault(x => x.Name == playerName);
             if (player == null || playerName == string.Empty)
             {
@@ -174,7 +186,7 @@ namespace InterWebs.Hubs
 
         public void JoinGameTable(int player)
         {
-            var userName = Context.User.Identity.Name;
+            var userName = GetUserName();
             if (string.IsNullOrWhiteSpace(userName))
             {
                 return;
@@ -190,6 +202,11 @@ namespace InterWebs.Hubs
             Groups.Remove(Context.ConnectionId, WarGame.Players[player].Name);
             WarGame.Players[player].Name = string.Empty;
             Task.Run(() => Clients.Others.UserLeftGameTable(player));
+        }
+
+        private string GetUserName()
+        {
+            return UserConnection[Context.ConnectionId];
         }
     }
 }

@@ -5,14 +5,39 @@
 }
 
 <div id="Game">
-    <div style="display: none;" data-bind="visible: !user || user.length <= 0">
-        <div class="alert alert-warning hidden-md hidden-print hidden-lg" role="alert">
-            <strong data-i18n="Info.HeadsUp"></strong>
-            <p data-i18n="Game.LoginToPlay"></p>
+    <div style="display: none;" data-bind="visible: !user() || user().length <= 0">
+        <div class="alert alert-warning row" role="alert">
+            <div class="col-xs-12">
+                <div class="pull-left">
+                    <strong data-i18n="Info.HeadsUp"></strong>
+                </div>
+                <div class="pull-left margin-left-10">
+                    <p class="hidden-md hidden-print hidden-lg" data-i18n="Game.EnterUsernameToPlay"></p>
+                    <p class="hidden-xs hidden-sm" data-i18n="Game.EnterUsernameToPlayAndChat"></p>
+                </div>
+            </div>
+            <div class="col-xxs-12 col-xs-7 col-sm-6 col-md-5 col-lg-4">
+                <form class="input-group">
+                    <input type="text" class="form-control" maxlength="15" data-bind="textInput: newUsername, attr: {placeholder: $.t('Info.EnterUserName')}, executeOnEnter: setUsername">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" data-bind="enable: newUsername() && newUsername().length > 0">
+                            <i class=" fa fa-check fa-lg" data-bind="css: {'checkmark' : newUsername() && newUsername().length > 0}, click: setUsername"></i>
+                        </button>
+                    </span>
+                </form>
+            </div>
         </div>
-        <div class="alert alert-warning hidden-xs hidden-sm" role="alert">
-            <strong data-i18n="Info.HeadsUp"></strong>
-            <p data-i18n="Game.LoginToPlayAndChat"></p>
+    </div>
+    <div style="display: none;" data-bind="visible: showWelcomeMessage()">
+        <div class="alert alert-success row" role="alert">
+            <div class="col-xs-12">
+                <div class="pull-left">
+                    <strong data-bind="text: $.t('Info.Welcome', {user: user()})"></strong>
+                </div>
+                <div class="pull-left margin-left-10">
+                    <p class="hidden-xs hidden-sm" data-bind="text: $.t('Game.WelcomeToGame')"></p>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-md-8">
@@ -105,8 +130,9 @@
             backCardPath: @(Html.JavaScriptSerialize(ViewData["BackCardPath"])),
             blankCardPath: @Html.JavaScriptSerialize(ViewData["BlankCardPath"]),
             chatMessages: @Html.JavaScriptSerialize(ViewData["ChatMessages"]),
-            storeMessageUrl: @Html.JavaScriptSerialize(Url.Action("StoreChatMessage"))
-            }); 
+            storeMessageUrl: @Html.JavaScriptSerialize(Url.Action("StoreChatMessage")),
+            setUsername: @Html.JavaScriptSerialize(Url.Action("SetUsername"))
+        });
 
         ko.applyBindings(vm, $('#Game')[0]);
     });

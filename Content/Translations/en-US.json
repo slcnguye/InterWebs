@@ -8,8 +8,9 @@
 		"YouAsGuest": "You (Guest)"
 	},
 	"Game": {
-		"LoginToPlayAndChat": "You must be logged in to play or chat.",
-		"LoginToPlay": "You must be logged in to play.",
+		"WelcomeToGame" : "Feel free to make yourself at home.",
+		"EnterUsernameToPlayAndChat": "You must enter a username to play or chat.",
+		"EnterUsernameToPlay": "You must enter a username to play.",
 		"GameRoom": "Game Room",
 		"Join": "Join",
 		"Leave": "Leave",
@@ -19,6 +20,8 @@
 		"RoundWinner": "__player__ won the round"
 	},
 	"Info": { 
-		"HeadsUp": "Heads up!"
+		"HeadsUp": "Heads up!",
+		"Welcome": "Welcome __user__!",
+		"EnterUserName": "Enter Username"
 	}
 }

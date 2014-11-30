@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using InterWebs.Domain.Model;
 using InterWebs.Domain.Repository;
@@ -27,7 +29,9 @@ namespace InterWebs.Controllers
                 Card.CardsSource = Directory.GetFiles(Server.MapPath(@"~\Content\Images\Playing Cards")).Select(Path.GetFileName).ToList();
             }
 
-            ViewBag.UserName = User.Identity.Name;
+            var usernameCookie = HttpContext.Request.Cookies["username"];
+
+            ViewBag.UserName = usernameCookie == null? null : usernameCookie.Value;
             ViewBag.Cards = Card.CardsSource;
             ViewBag.CardPath = Url.Content("~/Content/Images/Playing Cards/");
             ViewBag.BackCardPath = Url.Content("~/Content/Images/Playing Cards Back/Card_back.svg");
@@ -61,6 +65,15 @@ namespace InterWebs.Controllers
             };
 
             chatMessageRepository.Insert(chatMessage);
+        }
+
+        [HttpPost]
+        public void SetUsername(string username)
+        {
+            HttpContext.Response.Cookies.Add(new HttpCookie("username")
+            {
+                Value = username
+            });
         }
     }
 }
