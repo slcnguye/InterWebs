@@ -5,9 +5,39 @@
 }
 
 <div id="Chat">
-    <div class="alert alert-warning" role="alert" style="display: none;" data-bind="visible: !user || user.length <= 0">
-        <strong data-i18n="Info.HeadsUp"></strong>
-        <p data-i18n="Chat.LoginToChat"></p>
+    <div style="display: none;" data-bind="visible: !user() || user().length <= 0">
+        <div class="alert alert-warning row" role="alert">
+            <div class="col-xs-12">
+                <div class="pull-left">
+                    <strong data-i18n="Info.HeadsUp"></strong>
+                </div>
+                <div class="pull-left margin-left-10">
+                    <p data-i18n="Chat.LoginToChat"></p>
+                </div>
+            </div>
+            <div class="col-xxs-12 col-xs-7 col-sm-6 col-md-5 col-lg-4">
+                <form class="input-group">
+                    <input type="text" class="form-control" maxlength="15" data-bind="textInput: newUsername, attr: {placeholder: $.t('Info.EnterUserName')}, executeOnEnter: setUsername">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" data-bind="enable: newUsername() && newUsername().length > 0">
+                            <i class=" fa fa-check fa-lg" data-bind="css: {'checkmark' : newUsername() && newUsername().length > 0}, click: setUsername"></i>
+                        </button>
+                    </span>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div style="display: none;" data-bind="visible: showWelcomeMessage()">
+        <div class="alert alert-success row" role="alert">
+            <div class="col-xs-12">
+                <div class="pull-left">
+                    <strong data-bind="text: $.t('Info.Welcome', {user: user()})"></strong>
+                </div>
+                <div class="pull-left margin-left-10">
+                    <p class="hidden-xs hidden-sm" data-bind="text: $.t('Info.WelcomeUser')"></p>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-md-8">
         <div class="panel panel-info" data-bind="with: chatBoxView">
@@ -26,9 +56,9 @@
             </div>
             <div class="panel-footer">
                 <form class="input-group">
-                    <input type="text" class="form-control" data-bind="enable: loadedMessages && user.length > 0, textInput: message, attr: {placeholder: $.t('Chat.EnterMessage')}, hasFocus: enterMessageFocus, executeOnEnter: sendMessage">
+                    <input type="text" class="form-control" data-bind="enable: loadedMessages && !$parent.guestUser(), textInput: message, attr: {placeholder: $.t('Chat.EnterMessage')}, hasFocus: enterMessageFocus, executeOnEnter: sendMessage">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" data-bind="text: $.t('Chat.Send'), enable: message().length > 0 && user.length > 0, click: sendMessage"></button>
+                        <button class="btn btn-default" type="button" data-bind="text: $.t('Chat.Send'), enable: message().length > 0 && !$parent.guestUser(), click: sendMessage"></button>
                     </span>
                 </form>
             </div>
@@ -52,7 +82,8 @@
         var vm = new IW.All.ChatViewModel({
             user: @Html.JavaScriptSerialize(ViewData["UserName"]),
             chatMessages: @Html.JavaScriptSerialize(ViewData["ChatMessages"]),
-            storeMessageUrl: @Html.JavaScriptSerialize(Url.Action("StoreChatMessage"))
+            storeMessageUrl: @Html.JavaScriptSerialize(Url.Action("StoreChatMessage")),
+            setUsername: @Html.JavaScriptSerialize(Url.Action("SetUsername"))
             });
         ko.applyBindings(vm, $('#Chat')[0]);
     });

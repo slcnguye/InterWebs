@@ -8,7 +8,6 @@
 		"YouAsGuest": "You (Guest)"
 	},
 	"Game": {
-		"WelcomeToGame" : "Feel free to make yourself at home.",
 		"EnterUsernameToPlayAndChat": "You must enter a username to play or chat.",
 		"EnterUsernameToPlay": "You must enter a username to play.",
 		"GameRoom": "Game Room",
@@ -20,6 +19,7 @@
 		"RoundWinner": "__player__ won the round"
 	},
 	"Info": { 
+		"WelcomeUser" : "Feel free to make yourself at home.",
 		"HeadsUp": "Heads up!",
 		"Welcome": "Welcome __user__!",
 		"EnterUserName": "Enter Username"

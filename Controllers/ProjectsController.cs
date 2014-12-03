@@ -44,7 +44,9 @@ namespace InterWebs.Controllers
         [Route("projects/chat")]
         public ActionResult Chat()
         {
-            ViewBag.UserName = User.Identity.Name;
+            var usernameCookie = HttpContext.Request.Cookies["username"];
+
+            ViewBag.UserName = usernameCookie == null ? null : usernameCookie.Value; 
             ViewBag.ChatMessages = chatMessageRepository.GetAll(x => x.ChatName == "All").ToList();
             return View();
         }
@@ -52,7 +54,9 @@ namespace InterWebs.Controllers
         [HttpPost]
         public void StoreChatMessage(string message)
         {
-            if (!User.Identity.IsAuthenticated)
+            var usernameCookie = HttpContext.Request.Cookies["username"];
+            var username = usernameCookie == null ? null : usernameCookie.Value;
+            if (String.IsNullOrWhiteSpace(username))
             {
                 return;
             }
@@ -61,7 +65,7 @@ namespace InterWebs.Controllers
             {
                 ChatName = "All",
                 Message = message,
-                User = User.Identity.Name
+                User = username
             };
 
             chatMessageRepository.Insert(chatMessage);

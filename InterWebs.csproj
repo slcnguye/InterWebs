@@ -231,10 +231,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Extension\HtmlExtensionMethods.cs" />
@@ -243,12 +241,10 @@
     </Compile>
     <Compile Include="Hubs\GameHub.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Game\Card.cs" />
     <Compile Include="Models\Game\Deck.cs" />
     <Compile Include="Models\Game\Player.cs" />
     <Compile Include="Models\Game\WarGame.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -405,15 +401,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_NavigationMenu.cshtml" />
     <Content Include="Views\Projects\Chat.cshtml" />
     <Content Include="Views\Projects\Game.cshtml" />
