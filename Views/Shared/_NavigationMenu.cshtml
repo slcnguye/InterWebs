@@ -1,4 +1,4 @@
-﻿<div class="navbar navbar-inverse navbar-static-top">
+﻿<div id="navigationbar" class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -24,6 +24,7 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li data-bind='visible: showUserNameLink(), html: usernameLink'></li>
                 <li>
                     <a href="http://github.com/slcnguye" class="fa fa-github fa-3x hidden-xs" target="_blank"></a>
                     <a href="http://github.com/slcnguye" class="fa fa-github fa-2x hidden-lg hidden-md hidden-print hidden-sm" target="_blank"></a>
@@ -36,3 +37,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function () {
+        var username = '@Html.Action("GetUserName", "Home").ToString()';
+        var usernameLink = username.length > 0
+            ? '@Html.ActionLink("{0}", "Index", "Home")'.replace("{0}", username)
+            : '';
+
+        var viewModel = {
+            showUserNameLink: ko.observable(username.length > 0),
+            usernameLink: usernameLink
+        };
+
+        ko.applyBindings(viewModel, $('#navigationbar')[0]);
+    });
+</script>

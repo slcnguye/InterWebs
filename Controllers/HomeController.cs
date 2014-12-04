@@ -15,5 +15,11 @@ namespace InterWebs.Controllers
         {
             return View();
         }
+
+        public string GetUserName()
+        {
+            var usernameCookie = HttpContext.Request.Cookies["username"];
+            return usernameCookie == null ? null : usernameCookie.Value;
+        }
     }
 }

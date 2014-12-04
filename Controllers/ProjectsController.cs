@@ -72,12 +72,14 @@ namespace InterWebs.Controllers
         }
 
         [HttpPost]
-        public void SetUsername(string username)
+        public ActionResult SetUsername(string username)
         {
             HttpContext.Response.Cookies.Add(new HttpCookie("username")
             {
                 Value = username
             });
+
+            return PartialView("_NavigationMenu");
         }
     }
 }

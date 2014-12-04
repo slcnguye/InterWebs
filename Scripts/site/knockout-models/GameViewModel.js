@@ -10,9 +10,13 @@
         self.setUsername = function() {
             if (self.user() != self.newUsername()) {
                 self.showWelcomeMessage(true);
-                $.post(object.setUsername + "?username=" + self.newUsername());
-                self.user(self.newUsername());
+                $.post(object.setUsername + "?username=" + self.newUsername())
+                    .done(function (partialViewResult) {
+                        ko.cleanNode($("#navigationbar")[0]);
+                        $("#navigationbar").replaceWith(partialViewResult);
+                    });
 
+                self.user(self.newUsername());
                 self.gameSignalR.server.addUser(self.user());
                 self.activeGameUsersView.setUsername(self.user());
                 self.gameBoxView.setUsername(self.user());
