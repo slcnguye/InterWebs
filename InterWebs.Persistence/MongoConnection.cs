@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Text;
 using MongoDB.Driver;
 
 namespace InterWebs.Persistence
 {
     public static class MongoConnection
     {
-        private const bool Production = true;
         private static MongoClient mongoClient;
 
         private static MongoClient MongoClient
@@ -26,25 +24,9 @@ namespace InterWebs.Persistence
 
         public static string GetConnectionString()
         {
-            if (Production)
-            {
-                return Environment.GetEnvironmentVariable("CUSTOMCONNSTR_MONGOLAB_URI");
-            }
-
-            var connectionStringBuilder = new StringBuilder();
-            var serverName = GetServerName();
-
-            if (!serverName.StartsWith("mongodb://"))
-                connectionStringBuilder.Append("mongodb://");
-
-            connectionStringBuilder.Append(serverName);
-
-            return connectionStringBuilder.ToString();
-        }
-
-        private static string GetServerName()
-        {
-            return "localhost";
+            
+            return Environment.GetEnvironmentVariable("CUSTOMCONNSTR_MONGOLAB_URI") 
+                ?? Environment.GetEnvironmentVariable("CUSTOMCONNSTR_MONGOLAB_URI", EnvironmentVariableTarget.Machine);
         }
     }
 }
