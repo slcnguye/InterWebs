@@ -31,7 +31,7 @@ namespace InterWebs.Persistence.Repository
 
         private MongoCollection<TType> GetCollection<TType>()
         {
-            var mongoDb = MongoConnection.GetDatabase();
+            var mongoDb = MongoConnectionSettings.GetDatabase();
             var collectionName = typeof(TEntity).Name;
             if (!mongoDb.CollectionExists(collectionName))
             {
