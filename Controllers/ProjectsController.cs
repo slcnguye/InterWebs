@@ -36,7 +36,7 @@ namespace InterWebs.Controllers
             ViewBag.CardPath = Url.Content("~/Content/Images/Playing Cards/");
             ViewBag.BackCardPath = Url.Content("~/Content/Images/Playing Cards Back/Card_back.svg");
             ViewBag.BlankCardPath = Url.Content("~/Content/Images/Playing Cards Back/Card_blank.svg");
-            ViewBag.ChatMessages = chatMessageRepository.GetAll(x => x.ChatName == "All").ToList();
+            ViewBag.ChatMessages = chatMessageRepository.GetAll().ToList();
 
             return View();   
         }
@@ -47,7 +47,7 @@ namespace InterWebs.Controllers
             var usernameCookie = HttpContext.Request.Cookies["username"];
 
             ViewBag.UserName = usernameCookie == null ? null : usernameCookie.Value; 
-            ViewBag.ChatMessages = chatMessageRepository.GetAll(x => x.ChatName == "All").ToList();
+            ViewBag.ChatMessages = chatMessageRepository.GetAll().ToList();
             return View();
         }
 
@@ -63,7 +63,6 @@ namespace InterWebs.Controllers
 
             var chatMessage = new ChatMessage
             {
-                ChatName = "All",
                 Message = message,
                 User = username
             };

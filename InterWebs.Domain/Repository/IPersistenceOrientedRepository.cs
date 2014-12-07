@@ -11,6 +11,8 @@ namespace InterWebs.Domain.Repository
 
         IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> query);
 
+        IEnumerable<TEntity> GetAll();
+
         MongoCollection<TEntity> GetCollection();
     }
 }

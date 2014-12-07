@@ -22,6 +22,11 @@ namespace InterWebs.Persistence.Repository
             return GetCollection().AsQueryable().Where(query);
         }
 
+        public IEnumerable<TEntity> GetAll()
+        {
+            return GetCollection().AsQueryable();
+        }
+
         private MongoCollection<TEntity> collection;
 
         public MongoCollection<TEntity> GetCollection()
