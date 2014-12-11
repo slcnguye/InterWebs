@@ -50,6 +50,12 @@ namespace InterWebs.Controllers
             ViewBag.ChatMessages = chatMessageRepository.GetAll().ToList();
             return View();
         }
+        
+        [Route("projects")]
+        public ActionResult Projects()
+        {
+            return View();
+        }
 
         [HttpPost]
         public void StoreChatMessage(string message)

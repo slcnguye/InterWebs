@@ -19,11 +19,12 @@
         @Scripts.Render(BundleConfig.BundlesKnockout)
         @Scripts.Render(BundleConfig.BundlesSite)
         @Scripts.Render(BundleConfig.BundlesI18N)
+        @Scripts.Render(BundleConfig.BundlesImageSlider)
         @RenderSection("scripts", false)
     </head>
     <body>
         @Html.Partial("_NavigationMenu")
-        <div class="container">
+        <div class="container main-body">
             @RenderBody()
         </div>
     </body>

@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "Projects - Sang Nguyen";
+}
+
+<div id="projects">
+    <div class="panel panel-default panel-side affix hidden-xs">
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="#game" class="side-nav" data-bind="click: adjustAnchor">Game</a></li>
+            <li><a href="#chat" class="side-nav" data-bind="click: adjustAnchor">Chat</a></li>
+            <li><a href="#website" class="side-nav" data-bind="click: adjustAnchor">Personal Website</a></li>
+        </ul>
+    </div>
+    <div>
+        <div id="game" class="panel panel-default panel-main">
+            <div class="panel-heading">
+                <h3 class="project-title">
+                    <a href="@Url.Action("Game", "Projects")" target="_blank">
+                        Game
+                        <i class="fa fa-location-arrow"></i>
+                    </a>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="flexslider slider-margin">
+                        <ul class="slides">
+                            <li>
+                                <img src="~/Content/Images/Project Samples/Game-Example.png" alt="game project example" />                            
+                            </li>
+                            <li>
+                                <img src="~/Content/Images/Project Samples/Game-Example-2.png" alt="game project example 2" />
+                            </li>
+                        </ul>
+                    </div>
+                    <h4 class="col-xs-12">
+                        A spin-off of a War game. Players are able to play one card and the highest valued card wins.
+                    </h4>
+                    <p class="col-xs-12">
+                        The most challenging part of this project was being able to validate player actions. 
+                        Each revelant player action makes a call to the server using SignalR.
+                        Only players who are playing can choose to play a card from their own hand.
+                        Since the only way to associate a player is with their username, their username is stored with their signalR connection id.
+                        With that a certain degree of preventation can be done to verify that other players cannot see or play another player's hand.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div id="chat" class="panel panel-default panel-main">
+            <div class="panel-heading">
+                <h3 class="project-title">
+                    <a href="@Url.Action("Chat", "Projects")" target="_blank">
+                        Chat Room
+                        <i class="fa fa-location-arrow"></i>
+                    </a>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="flexslider slider-margin">
+                        <ul class="slides">
+                            <li>
+                                <img src="~/Content/Images/Project Samples/Chat-Example.png" alt="chat project example" />
+                            </li>
+                            <li>
+                                <img src="~/Content/Images/Project Samples/Chat-Example-2.png" alt="chat project example 2" />
+                            </li>
+                        </ul>
+                    </div>                    <h4 class="col-xs-12">
+                        A real-time chat room with a list of active users who are currently in the chat room.
+                    </h4>
+                    <p class="col-xs-12">
+                        The main technologies used are signalR and knockout.
+                        SignalR provides a clean way to keep the chat real-time and
+                        knockout allows for ui validation and restrictions such as disabling the send button
+                        if there are no messages or if the user does not have a username.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div id="website" class="panel panel-default panel-main">
+            <div class="panel-heading">
+                <h3 class="project-title">
+                    <a href="@Url.Action("Index", "Home")" target="_blank">
+                        Personal Website
+                        <i class="fa fa-location-arrow"></i>
+                    </a>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    Working.. working..
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var vm = new IW.All.ProjectsViewModel({});
+        ko.applyBindings(vm, $('#projects')[0]);
+
+        $('.flexslider').flexslider();
+    });
+</script>

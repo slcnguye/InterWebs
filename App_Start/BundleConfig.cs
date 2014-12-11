@@ -4,6 +4,7 @@
 
     public class BundleConfig
     {
+        public const string BundlesImageSlider = "~/bundles/jssorslider";
         public const string BundlesSite = "~/bundles/site";
         public const string BundlesJquery = "~/bundles/jquery";
         public const string BundlesKnockout = "~/bundles/knockout";
@@ -38,9 +39,13 @@
             bundles.Add(new ScriptBundle(BundlesI18N)
                 .Include("~/Scripts/i18next-{version}.js"));
 
+            bundles.Add(new ScriptBundle(BundlesImageSlider)
+                .Include("~/Scripts/jquery.flexslider-min.js"));
+
             bundles.Add(new StyleBundle(ContentStyles)
                 .Include("~/Content/Styles/bootstrap.css")
                 .Include("~/Content/Styles/font-awesome.css")
+                .Include("~/Content/Styles/flexslider.css")
                 .IncludeDirectory("~/Content/Styles", "*.less", true));
         }
     }

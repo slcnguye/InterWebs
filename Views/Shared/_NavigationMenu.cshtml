@@ -1,4 +1,4 @@
-﻿<div id="navigationbar" class="navbar navbar-inverse navbar-static-top">
+﻿<div id="navigationbar" class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,9 +17,11 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
+                        <li>@Html.ActionLink("View All", "Projects", "Projects")</li>
+                        <li class="divider"></li>
                         <li>@Html.ActionLink("Game", "Game", "Projects")</li>
                         <li>@Html.ActionLink("Chat", "Chat", "Projects")</li>
-                        @*                        <li class="divider"></li>*@
+                        <li class="divider hidden-md hidden-lg"></li>
                     </ul>
                 </li>
             </ul>
@@ -27,11 +29,13 @@
                 <li data-bind='visible: showUserNameLink(), html: usernameLink'></li>
                 <li>
                     <a href="http://github.com/slcnguye" class="fa fa-github fa-3x hidden-xs" target="_blank"></a>
-                    <a href="http://github.com/slcnguye" class="fa fa-github fa-2x hidden-lg hidden-md hidden-print hidden-sm" target="_blank"></a>
                 </li>
                 <li>
                     <a href="http://ca.linkedin.com/in/slcnguye" class="fa fa-linkedin fa-3x hidden-xs" target="_blank"></a>
-                    <a href="http://ca.linkedin.com/in/slcnguye" class="fa fa-linkedin fa-2x hidden-lg hidden-md hidden-print hidden-sm" target="_blank"></a>
+                </li>
+                <li class="hidden-lg hidden-md hidden-print hidden-sm margin-left-none">
+                    <a href="http://github.com/slcnguye" class="col-xxs-2 col-xs-1 fa fa-github fa-2x" target="_blank"></a>
+                    <a href="http://ca.linkedin.com/in/slcnguye" class="col-xs-1 fa fa-linkedin fa-2x" target="_blank"></a>
                 </li>
             </ul>
         </div>

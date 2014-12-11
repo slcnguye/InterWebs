@@ -249,6 +249,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\Project Samples\Chat-Example-2.png" />
+    <Content Include="Content\Images\Project Samples\Chat-Example.png" />
+    <Content Include="Content\Images\Project Samples\Game-Example-2.png" />
+    <Content Include="Content\Images\Project Samples\Game-Example.png" />
     <Content Include="Content\Styles\bootstrap-theme.css" />
     <Content Include="Content\Styles\bootstrap-theme.min.css" />
     <Content Include="Content\Styles\bootstrap.css" />
@@ -256,6 +260,7 @@
     <Content Include="Content\CardValueMapper.json">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\Styles\flexslider.css" />
     <Content Include="Content\Styles\font-awesome.css" />
     <Content Include="Content\Styles\font-awesome.min.css" />
     <Content Include="Content\Icons\logo-sang.ico" />
@@ -333,6 +338,7 @@
     <Content Include="Content\Images\Unused Playing Cards\red_joker.svg" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Styles\fonts\flexslider-icon.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Styles\site\site.less" />
     <Content Include="Scripts\bootstrap.js" />
@@ -353,6 +359,10 @@
     <Content Include="Content\Styles\site\resume.less" />
     <Content Include="Content\Styles\site\bootstrap-extension.less" />
     <Content Include="Content\Styles\site\index.less" />
+    <Content Include="Content\Styles\site\projects.less" />
+    <Content Include="Content\Styles\fonts\flexslider-icon.eot" />
+    <None Include="Content\Styles\fonts\flexslider-icon.ttf" />
+    <None Include="Content\Styles\fonts\flexslider-icon.woff" />
     <None Include="Properties\PublishProfiles\sangnguyen - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\sangnguyen - Web Deploy.pubxml" />
     <Content Include="README.md" />
@@ -366,6 +376,7 @@
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.flexslider-min.js" />
     <Content Include="Scripts\jquery.signalR-2.1.2.js" />
     <Content Include="Scripts\jquery.signalR-2.1.2.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -383,6 +394,7 @@
     <Content Include="Scripts\site\knockout-extenders\AutoScroll.js" />
     <Content Include="Scripts\site\knockout-bindings\EnterKeyEvent.js" />
     <Content Include="Scripts\site\knockout-models\ChatBoxView.js" />
+    <Content Include="Scripts\site\knockout-models\ProjectsViewModel.js" />
     <Content Include="Scripts\site\knockout-models\GameViewModel.js" />
     <Content Include="Scripts\site\knockout-models\ChatViewModel.js" />
     <Content Include="Scripts\_references.js" />
@@ -405,6 +417,7 @@
     <Content Include="Views\Projects\Chat.cshtml" />
     <Content Include="Views\Projects\Game.cshtml" />
     <Content Include="Views\Home\Resume.cshtml" />
+    <Content Include="Views\Projects\Projects.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
