@@ -361,8 +361,8 @@
     <Content Include="Content\Styles\site\index.less" />
     <Content Include="Content\Styles\site\projects.less" />
     <Content Include="Content\Styles\fonts\flexslider-icon.eot" />
-    <None Include="Content\Styles\fonts\flexslider-icon.ttf" />
-    <None Include="Content\Styles\fonts\flexslider-icon.woff" />
+    <Content Include="Content\Styles\fonts\flexslider-icon.ttf" />
+    <Content Include="Content\Styles\fonts\flexslider-icon.woff" />
     <None Include="Properties\PublishProfiles\sangnguyen - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\sangnguyen - Web Deploy.pubxml" />
     <Content Include="README.md" />
