@@ -19,6 +19,12 @@ namespace InterWebs.Controllers
             this.chatMessageRepository = chatMessageRepository;
         }
 
+        [Route("projects/tournament")]
+        public ActionResult Tournament()
+        {
+            return View();
+        }
+
         [Route("projects/game")]
         public ActionResult Game()
         {
@@ -53,6 +59,12 @@ namespace InterWebs.Controllers
         
         [Route("projects")]
         public ActionResult Projects()
+        {
+            return View();
+        }
+
+        [Route("projects/reader")]
+        public ActionResult EpubReader()
         {
             return View();
         }

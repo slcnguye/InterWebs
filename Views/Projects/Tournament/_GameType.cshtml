@@ -1,0 +1,16 @@
+﻿<!-- ko with: gametype -->
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+        <div style="height: 25px;"></div>
+        <h1 class="text-center " data-bind="text: $.t('Tournament.NewTournament')"></h1>
+        <div style="height: 25px;"></div>
+        <div class="form-group">
+            <form>
+                <input type="text" autofocus="autofocus" class="form-control input-lg text-center" data-bind="value: tournamentName, attr: {placeholder: $.t('Tournament.TournamentName')}">
+                <div style="height: 100px;"></div>
+                <button class="btn btn-default center-block" type="submit" data-bind="text: $.t('Tournament.Create'), click: createTournament"></button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /ko -->

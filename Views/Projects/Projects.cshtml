@@ -33,14 +33,13 @@
                         </ul>
                     </div>
                     <h4 class="col-xs-12">
-                        A spin-off of a War game. Players are able to play one card and the highest valued card wins.
+                        A spin-off of a War game. Select one of the two cards and after both players have selected a card the higher ranked card wins.
                     </h4>
                     <p class="col-xs-12">
-                        The most challenging part of this project was being able to validate player actions. 
-                        Each revelant player action makes a call to the server using SignalR.
-                        Only players who are playing can choose to play a card from their own hand.
-                        Since the only way to associate a player is with their username, their username is stored with their signalR connection id.
-                        With that a certain degree of preventation can be done to verify that other players cannot see or play another player's hand.
+                        The most challenging part of this project was being able to validate player's actions. 
+                        Each player's action makes a call to the server using SignalR.
+                        Only players can choose to play a card from their own hand.
+                        Each player is associated by their signalR connection id, with this id we can guarantee that players cannot see or play a card except from their own hand.
                     </p>
                 </div>
             </div>

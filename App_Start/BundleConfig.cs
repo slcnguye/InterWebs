@@ -27,6 +27,7 @@
 
             bundles.Add(new ScriptBundle(BundlesKnockout)
                 .Include("~/Scripts/knockout-{version}.js")
+                .Include("~/Scripts/knockout.validation.js")
                 .Include("~/Scripts/namespace.js"));
 
             bundles.Add(new ScriptBundle(BundlesModernizr)

@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Tournament - Sang Nguyen";
+}
+
+<div id="TournamentApp">
+    @Html.Partial("Tournament/_GameType")
+    @Html.Partial("Tournament/_EnterPlayers")
+</div>
+
+<script>
+    $(function () {
+        var app = new IW.Project.Tournament.AppViewModel(new IW.Project.Tournament.AppDataModel());
+
+        ko.validation.init({ grouping: { observable: false } });
+        ko.applyBindings(app, $('#TournamentApp')[0]);
+    });
+</script>

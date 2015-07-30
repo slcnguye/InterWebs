@@ -384,6 +384,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-3.2.0.js" />
+    <Content Include="Scripts\knockout.validation.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\namespace.js" />
@@ -394,11 +395,16 @@
     <Content Include="Scripts\site\knockout-extenders\AutoScroll.js" />
     <Content Include="Scripts\site\knockout-bindings\EnterKeyEvent.js" />
     <Content Include="Scripts\site\knockout-models\ChatBoxView.js" />
+    <Content Include="Scripts\site\knockout-models\data-models\tournament\AppDataModel.js" />
+    <Content Include="Scripts\site\knockout-models\data-models\tournament\Match.js" />
+    <Content Include="Scripts\site\knockout-models\partial-models\tournament\GameTypeViewModel.js" />
+    <Content Include="Scripts\site\knockout-models\partial-models\tournament\EnterPlayersViewModel.js" />
     <Content Include="Scripts\site\knockout-models\ProjectsViewModel.js" />
     <Content Include="Scripts\site\knockout-models\GameViewModel.js" />
     <Content Include="Scripts\site\knockout-models\ChatViewModel.js" />
+    <Content Include="Scripts\site\knockout-models\TournamentAppViewModel.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Scripts\site\knockout-models\models\Player.js" />
+    <Content Include="Scripts\site\knockout-models\data-models\Player.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -418,8 +424,14 @@
     <Content Include="Views\Projects\Game.cshtml" />
     <Content Include="Views\Home\Resume.cshtml" />
     <Content Include="Views\Projects\Projects.cshtml" />
+    <Content Include="Views\Projects\Tournament.cshtml" />
+    <Content Include="Views\Projects\Tournament\_GameType.cshtml" />
+    <Content Include="Views\Projects\Tournament\_EnterPlayers.cshtml" />
+    <Content Include="Views\Projects\EpubReader.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Angular\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

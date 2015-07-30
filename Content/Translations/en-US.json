@@ -23,5 +23,11 @@
 		"HeadsUp": "Heads up!",
 		"Welcome": "Welcome __user__!",
 		"EnterUserName": "Enter Username"
+	},
+	"Tournament": {
+		"TournamentName": "Tournament name...",
+		"NewTournament": "New Tournament",
+		"Create": "Create",
+		"EnterPlayers": ""
 	}
 }

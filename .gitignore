@@ -55,3 +55,4 @@ InterWebs.csproj.user
 /InterWebs.Persistence/bin/Release
 /InterWebs.Persistence/obj/Release
 /Properties/PublishProfiles
+*.sln.DotSettings.user
